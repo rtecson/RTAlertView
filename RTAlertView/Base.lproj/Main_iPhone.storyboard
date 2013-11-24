@@ -1,17 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4451" systemVersion="13A461" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3676"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
+        <!--Mzx View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="mzxViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ful-7f-bXs"/>
+                        <viewControllerLayoutGuide type="bottom" id="JtX-kW-6SE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iL9-EC-syw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UKw-aK-NL0">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Native" id="PHX-xS-oxd">
+                                        <connections>
+                                            <action selector="nativeButtonTapped:" destination="vXZ-lx-hvc" id="8N8-LA-2Na"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8mZ-od-l9x"/>
+                                    <barButtonItem title="Custom" id="pqU-4a-7X2">
+                                        <connections>
+                                            <action selector="customButtonTapped:" destination="vXZ-lx-hvc" id="uSq-Hh-6NX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V5B-wk-71i">
+                                <rect key="frame" x="36" y="272" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q3X-0O-bru">
+                                <rect key="frame" x="164" y="272" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBm-gx-JX7">
+                                <rect key="frame" x="164" y="144" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rAm-jh-dgH">
+                                <rect key="frame" x="36" y="144" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="Htv-xG-h7f"/>
+                                    <constraint firstAttribute="width" constant="120" id="MFi-G4-tmt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="V5B-wk-71i" secondAttribute="centerY" constant="-48" id="30j-B5-WWW"/>
+                            <constraint firstAttribute="centerX" secondItem="rAm-jh-dgH" secondAttribute="centerX" constant="64" id="5Dm-ww-VRm"/>
+                            <constraint firstAttribute="centerY" secondItem="gBm-gx-JX7" secondAttribute="centerY" constant="80" id="5TH-bt-d8I"/>
+                            <constraint firstItem="gBm-gx-JX7" firstAttribute="height" secondItem="rAm-jh-dgH" secondAttribute="height" id="7GE-IZ-LAf"/>
+                            <constraint firstAttribute="centerX" secondItem="Q3X-0O-bru" secondAttribute="centerX" constant="-64" id="Ai3-F5-Xzr"/>
+                            <constraint firstItem="Q3X-0O-bru" firstAttribute="width" secondItem="rAm-jh-dgH" secondAttribute="width" id="J5R-1Y-Gpe"/>
+                            <constraint firstAttribute="centerX" secondItem="V5B-wk-71i" secondAttribute="centerX" constant="64" id="LYk-fy-Zcw"/>
+                            <constraint firstItem="rAm-jh-dgH" firstAttribute="width" secondItem="V5B-wk-71i" secondAttribute="width" id="NQ7-8W-UKr"/>
+                            <constraint firstItem="UKw-aK-NL0" firstAttribute="leading" secondItem="iL9-EC-syw" secondAttribute="leading" id="ShU-t4-7Ue"/>
+                            <constraint firstAttribute="centerX" secondItem="gBm-gx-JX7" secondAttribute="centerX" constant="-64" id="aui-zt-Mjf"/>
+                            <constraint firstItem="rAm-jh-dgH" firstAttribute="height" secondItem="V5B-wk-71i" secondAttribute="height" id="bWX-oU-EtL"/>
+                            <constraint firstItem="JtX-kW-6SE" firstAttribute="top" secondItem="UKw-aK-NL0" secondAttribute="bottom" id="dPg-Rn-QUb"/>
+                            <constraint firstItem="Q3X-0O-bru" firstAttribute="height" secondItem="rAm-jh-dgH" secondAttribute="height" id="gT6-rh-jWH"/>
+                            <constraint firstAttribute="trailing" secondItem="UKw-aK-NL0" secondAttribute="trailing" id="ltR-yi-vcn"/>
+                            <constraint firstAttribute="centerY" secondItem="Q3X-0O-bru" secondAttribute="centerY" constant="-48" id="mH7-xF-930"/>
+                            <constraint firstItem="gBm-gx-JX7" firstAttribute="width" secondItem="rAm-jh-dgH" secondAttribute="width" id="p0c-LM-xBN"/>
+                            <constraint firstAttribute="centerY" secondItem="rAm-jh-dgH" secondAttribute="centerY" constant="80" id="ydA-r6-ZUO"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

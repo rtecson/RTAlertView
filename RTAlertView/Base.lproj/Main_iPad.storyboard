@@ -1,17 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4451" systemVersion="13A461" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3676"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
+        <!--Mzx View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="mzxViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nrv-WF-2fl"/>
+                        <viewControllerLayoutGuide type="bottom" id="6Y6-gO-IaN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vko-Hx-0nM">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tht-dJ-w7m">
+                                <rect key="frame" x="0.0" y="980" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Native" id="gin-21-ZtS">
+                                        <connections>
+                                            <action selector="nativeButtonTapped:" destination="BYZ-38-t0r" id="WTl-fy-yNU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="iIv-Eb-iqT"/>
+                                    <barButtonItem title="Custom" id="eJ8-Dr-csE">
+                                        <connections>
+                                            <action selector="customButtonTapped:" destination="BYZ-38-t0r" id="jO5-Cg-wVN"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WNz-8F-z6b" userLabel="Red">
+                                <rect key="frame" x="136" y="520" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EAS-T1-ois" userLabel="Yellow">
+                                <rect key="frame" x="392" y="520" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OrJ-sv-FES" userLabel="Blue">
+                                <rect key="frame" x="392" y="264" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXp-Kn-BcU" userLabel="Green">
+                                <rect key="frame" x="136" y="264" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="0rR-yp-P6L"/>
+                                    <constraint firstAttribute="width" constant="240" id="Opq-34-eAy"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="EAS-T1-ois" secondAttribute="centerY" constant="-128" id="2gC-ux-Kjc"/>
+                            <constraint firstAttribute="trailing" secondItem="Tht-dJ-w7m" secondAttribute="trailing" id="4Ez-hh-lhn"/>
+                            <constraint firstItem="eXp-Kn-BcU" firstAttribute="height" secondItem="WNz-8F-z6b" secondAttribute="height" id="7bS-mM-a5f"/>
+                            <constraint firstAttribute="centerX" secondItem="WNz-8F-z6b" secondAttribute="centerX" constant="128" id="Bnj-6f-qxS"/>
+                            <constraint firstAttribute="centerX" secondItem="OrJ-sv-FES" secondAttribute="centerX" constant="-128" id="CI6-Co-tWD"/>
+                            <constraint firstItem="OrJ-sv-FES" firstAttribute="height" secondItem="eXp-Kn-BcU" secondAttribute="height" id="H8h-Zz-DKQ"/>
+                            <constraint firstItem="EAS-T1-ois" firstAttribute="height" secondItem="eXp-Kn-BcU" secondAttribute="height" id="H9f-A1-e9G"/>
+                            <constraint firstAttribute="centerY" secondItem="eXp-Kn-BcU" secondAttribute="centerY" constant="128" id="JDg-hF-wTl"/>
+                            <constraint firstItem="EAS-T1-ois" firstAttribute="width" secondItem="eXp-Kn-BcU" secondAttribute="width" id="Kmw-oP-Qza"/>
+                            <constraint firstItem="Tht-dJ-w7m" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="bcO-z5-j7B"/>
+                            <constraint firstAttribute="centerY" secondItem="OrJ-sv-FES" secondAttribute="centerY" constant="128" id="d3s-Ht-kda"/>
+                            <constraint firstAttribute="centerY" secondItem="WNz-8F-z6b" secondAttribute="centerY" constant="-128" id="dBm-so-2D7"/>
+                            <constraint firstAttribute="centerX" secondItem="EAS-T1-ois" secondAttribute="centerX" constant="-128" id="fZt-iG-t2j"/>
+                            <constraint firstItem="OrJ-sv-FES" firstAttribute="width" secondItem="eXp-Kn-BcU" secondAttribute="width" id="ir4-9a-Us3"/>
+                            <constraint firstItem="6Y6-gO-IaN" firstAttribute="top" secondItem="Tht-dJ-w7m" secondAttribute="bottom" id="mAZ-n8-WY8"/>
+                            <constraint firstAttribute="centerX" secondItem="eXp-Kn-BcU" secondAttribute="centerX" constant="128" id="pPS-AJ-AO5"/>
+                            <constraint firstItem="eXp-Kn-BcU" firstAttribute="width" secondItem="WNz-8F-z6b" secondAttribute="width" id="wam-zY-djL"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

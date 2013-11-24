@@ -22,6 +22,8 @@
 		2A3DA4C018419F8B00378872 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3DA49F18419F8B00378872 /* UIKit.framework */; };
 		2A3DA4C818419F8B00378872 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A3DA4C618419F8B00378872 /* InfoPlist.strings */; };
 		2A3DA4CA18419F8B00378872 /* RTAlertViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4C918419F8B00378872 /* RTAlertViewTests.m */; };
+		2A3DA4D71841A05C00378872 /* Radial.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A3DA4D41841A05C00378872 /* Radial.png */; };
+		2A3DA4D81841A05C00378872 /* RTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4D61841A05C00378872 /* RTAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,9 @@
 		2A3DA4C518419F8B00378872 /* RTAlertViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RTAlertViewTests-Info.plist"; sourceTree = "<group>"; };
 		2A3DA4C718419F8B00378872 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A3DA4C918419F8B00378872 /* RTAlertViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewTests.m; sourceTree = "<group>"; };
+		2A3DA4D41841A05C00378872 /* Radial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Radial.png; sourceTree = "<group>"; };
+		2A3DA4D51841A05C00378872 /* RTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertView.h; sourceTree = "<group>"; };
+		2A3DA4D61841A05C00378872 /* RTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +119,7 @@
 		2A3DA4A118419F8B00378872 /* RTAlertView */ = {
 			isa = PBXGroup;
 			children = (
+				2A3DA4D31841A05C00378872 /* RTAlertView */,
 				2A3DA4AA18419F8B00378872 /* mzxAppDelegate.h */,
 				2A3DA4AB18419F8B00378872 /* mzxAppDelegate.m */,
 				2A3DA4AD18419F8B00378872 /* Main_iPhone.storyboard */,
@@ -153,6 +159,16 @@
 				2A3DA4C618419F8B00378872 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2A3DA4D31841A05C00378872 /* RTAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				2A3DA4D41841A05C00378872 /* Radial.png */,
+				2A3DA4D51841A05C00378872 /* RTAlertView.h */,
+				2A3DA4D61841A05C00378872 /* RTAlertView.m */,
+			);
+			path = RTAlertView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +252,7 @@
 				2A3DA4B718419F8B00378872 /* Images.xcassets in Resources */,
 				2A3DA4AF18419F8B00378872 /* Main_iPhone.storyboard in Resources */,
 				2A3DA4A618419F8B00378872 /* InfoPlist.strings in Resources */,
+				2A3DA4D71841A05C00378872 /* Radial.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A3DA4AC18419F8B00378872 /* mzxAppDelegate.m in Sources */,
+				2A3DA4D81841A05C00378872 /* RTAlertView.m in Sources */,
 				2A3DA4B518419F8B00378872 /* mzxViewController.m in Sources */,
 				2A3DA4A818419F8B00378872 /* main.m in Sources */,
 			);
@@ -475,6 +493,7 @@
 				2A3DA4CF18419F8B00378872 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2A3DA4D018419F8B00378872 /* Build configuration list for PBXNativeTarget "RTAlertViewTests" */ = {
 			isa = XCConfigurationList;
@@ -483,6 +502,7 @@
 				2A3DA4D218419F8B00378872 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
