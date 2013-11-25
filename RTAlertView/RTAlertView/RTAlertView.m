@@ -50,7 +50,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @interface RTAlertView ()
 
 @property (nonatomic, readwrite, getter=isVisible) BOOL visible;
-@property (nonatomic, readwrite) NSInteger numberOfButtons;
 @property (nonatomic, readwrite) NSInteger firstOtherButtonIndex;
 
 @property (strong, nonatomic) UIWindow *window;
@@ -69,12 +68,16 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (strong, nonatomic) NSString *cancelButtonTitle;
 
 @property (strong, nonatomic) NSMutableArray *buttonTitleArray;
+@property (strong, nonatomic) NSMutableArray *buttonArray;
+@property (nonatomic) NSInteger clickedButtonIndex;
 
 @end
 
 
 @implementation RTAlertView
 
+
+#pragma mark - Init
 
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
@@ -98,16 +101,15 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
         self.message = message;
         self.delegate = delegate;
         self.visible = NO;
-        self.numberOfButtons = 0;
         self.cancelButtonIndex = -1;
         self.firstOtherButtonIndex = -1;
+        self.clickedButtonIndex = -1;
         
         // Create cancel button if specified
         if (cancelButtonTitle != nil)
         {
             self.cancelButtonTitle = cancelButtonTitle;
             self.cancelButtonIndex = [self addButtonWithTitle:cancelButtonTitle];
-            self.numberOfButtons++;
         }
 
         // Variable number of otherButtonTitles
@@ -116,7 +118,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
         for (NSString *arg = otherButtonTitles; arg != nil; arg = va_arg(args, NSString*))
         {
             [self addButtonWithTitle:arg];
-            self.numberOfButtons++;
         }
         va_end(args);
     }
@@ -124,6 +125,43 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     return self;
 }
 
+
+#pragma mark - Getters
+
+- (NSInteger)numberOfButtons
+{
+    return self.buttonTitleArray.count;
+}
+
+
+- (NSInteger)firstOtherButtonIndex
+{
+    if ((self.cancelButtonIndex == 0) &&
+        (self.numberOfButtons > 1))
+    {
+        // Cancel button is first button, two or more buttons exist
+        return 1;
+    }
+    else if ((self.cancelButtonIndex == -1) &&
+             (self.numberOfButtons > 0))
+    {
+        // No cancel button, one or more buttons exist
+        return 0;
+    }
+    else if ((self.cancelButtonIndex > 0) &&
+             (self.numberOfButtons > 1))
+    {
+        // Cancel button is not first button
+        return 0;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+
+#pragma mark - Setters
 
 - (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
 {
@@ -136,31 +174,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 }
 
 
-- (NSInteger)firstOtherButtonIndex
-{
-    if ((self.cancelButtonIndex == 0) &&
-        (self.numberOfButtons > 1))
-    {
-        // Cancel button is first button, two more more buttons
-        return 1;
-    }
-    else if ((self.cancelButtonIndex == -1) &&
-             (self.numberOfButtons > 0))
-    {
-        // No cancel button, one or more buttons
-        return 0;
-    }
-    else if (self.cancelButtonIndex > 0)
-    {
-        // Cancel button is not first button
-        return 0;
-    }
-    else
-    {
-        return -1;
-    }
-}
-
+#pragma mark - "Public" methods
 
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
@@ -174,7 +188,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
         
         [self.buttonTitleArray addObject:title];
         
-        return self.numberOfButtons++;
+        return (self.numberOfButtons - 1);
     }
     else
     {
@@ -197,55 +211,45 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 }
 
 
+- (void)show
+{
+    if ([self.delegate respondsToSelector:@selector(willPresentAlertView:)])
+    {
+        [self.delegate willPresentAlertView:self];
+    }
+    
+    [self setupPositions];
+	[self setupWindow];
+    [self showAlertView];
+    
+    self.visible = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)])
+    {
+        [self.delegate didPresentAlertView:self];
+    }
+}
+
+
 - (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex
 {
     return nil;
 }
 
 
-- (void)show
+- (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex
+                             animated:(BOOL)animated
 {
-    [self setupPositions];
-	[self setupWindow];
-
-    [CATransaction begin]; {
-		CATransform3D transformFrom = CATransform3DMakeScale(1.26, 1.26, 1.0);
-		CATransform3D transformTo = CATransform3DMakeScale(1.0, 1.0, 1.0);
-		
-		kSpringAnimationClassName *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
-		modalTransformAnimation.fromValue = [NSValue valueWithCATransform3D:transformFrom];
-		modalTransformAnimation.toValue = [NSValue valueWithCATransform3D:transformTo];
-		self.alertContainerView.layer.transform = transformTo;
-		
-		// Zoom in the modal
-		[self.alertContainerView.layer addAnimation:modalTransformAnimation
-                                             forKey:@"transform"];
-		
-		kSpringAnimationClassName *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
-		opacityAnimation.fromValue = @0.0f;
-		opacityAnimation.toValue = @1.0f;
-		self.alertBackgroundView.layer.opacity = 1.0f;
-		self.guassianBlurView.layer.opacity = 1.0f;
-		self.alertBackgroundView.layer.opacity = 1.0f;
-		self.contentView.layer.opacity = 1.0f;
-		
-		// Fade in the gray background
-		[self.alertBackgroundView.layer addAnimation:opacityAnimation
-                                              forKey:@"opacity"];
-        
-		// Fade in the modal
-		// Would love to fade in all these things at once, but UIToolbar doesn't like it
-		[self.guassianBlurView.layer addAnimation:opacityAnimation
-                                           forKey:@"opacity"];
-		[self.alertBackgroundView.layer addAnimation:opacityAnimation
-                                              forKey:@"opacity"];
-		[self.contentView.layer addAnimation:opacityAnimation
-                                      forKey:@"opacity"];
-	} [CATransaction commit];
-
-    self.visible = YES;
+    if (buttonIndex < self.numberOfButtons)
+    {
+        self.clickedButtonIndex = buttonIndex;
+    }
+    
+    [self dismiss];
 }
 
+
+#pragma mark - "Internal" methods
 
 - (void)setupPositions
 {
@@ -255,10 +259,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     
     if (self.title != nil)
     {
-//        NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
-        
         NSDictionary *attributes = @{
-//                                     NSParagraphStyleAttributeName:paragrahStyle,
                                      NSForegroundColorAttributeName:self.titleColor,
                                      NSFontAttributeName:self.titleFont
                                      };
@@ -275,6 +276,8 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                            labelWidth,
                                            sizeThatFits.height);
         
+        [self.contentView addSubview:self.titleLabel];
+        
         yOffset += self.titleLabel.frame.size.height;
     }
     
@@ -285,11 +288,8 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     {
         self.messageLabel = [[UILabel alloc] init];
         self.messageLabel.numberOfLines = 0;
-        
-//        NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
-        
+
         NSDictionary *attributes = @{
-//                                     NSParagraphStyleAttributeName:paragrahStyle,
                                      NSForegroundColorAttributeName:self.messageColor,
                                      NSFontAttributeName:self.messageFont
                                      };
@@ -304,64 +304,204 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                              labelWidth,
                                              sizeThatFits.height);
         
+        [self.contentView addSubview:self.messageLabel];
+        
         yOffset += self.messageLabel.frame.size.height;
     }
     
     yOffset += kRtAlertViewTopAndBottomMargin;
     
-    if (self.cancelButtonTitle != nil)
+    UIView *buttonContainerView = nil;
+    if (self.numberOfButtons == 2)
     {
-        self.dividerLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                        yOffset - 1.0f,
-                                                                        kRtAlertViewWidth,
-                                                                        1.0f)];
-        self.dividerLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        buttonContainerView = [[UIView alloc] init];
+        buttonContainerView.frame = CGRectMake(0.0f,
+                                               yOffset,
+                                               kRtAlertViewWidth,
+                                               kRtAlertViewButtonHeight);
+        buttonContainerView.backgroundColor = [UIColor clearColor];
+        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
+
+        UIView *dividerLineView = [self setupDividerLineAtY:0.0f];
+        [buttonContainerView addSubview:dividerLineView];
+        NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
         
-        // We put our 0.5px high view in to a container that's 1px high
-        // This is because autoresizing was rounding up to 1 and messing things up
-        // autolayout might fix this
-        UIView *dividerLineViewInner = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                0.5f,
-                                                                                kRtAlertViewWidth,
-                                                                                0.5f)];
-        dividerLineViewInner.backgroundColor = kRtAlertViewDividerLineColor;
-        dividerLineViewInner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        UIView *horizontalDividerLineView = [self setupHorizontalDividerLineAtY:0.0f];
+        [buttonContainerView addSubview:horizontalDividerLineView];
+        NSLog(@"horizontalDividerLineView: x=%f, y=%f, w=%f, h=%f", horizontalDividerLineView.frame.origin.x, horizontalDividerLineView.frame.origin.y, horizontalDividerLineView.frame.size.width, horizontalDividerLineView.frame.size.height);
         
-        [self.dividerLineView addSubview:dividerLineViewInner];
-        
-        self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.cancelButton setTitle:self.cancelButtonTitle
-                           forState:UIControlStateNormal];
-        self.cancelButton.titleEdgeInsets = UIEdgeInsetsMake(1.0f,
-                                                             0.0f,
-                                                             0.0f,
-                                                             0.0f);
-        [self.cancelButton setTitleColor:self.cancelButtonColor
-                                forState:UIControlStateNormal];
-        [self.cancelButton setBackgroundImage:[self imageFromColor:kRtAlertViewButtonBackgroundColor]
-                                     forState:UIControlStateHighlighted];
-        self.cancelButton.titleLabel.font = self.cancelButtonFont;
-        [self.cancelButton addTarget:self
-                              action:@selector(buttonTapped:)
-                    forControlEvents:UIControlEventTouchUpInside];
-        self.cancelButton.frame = CGRectMake(0.0f,
-                                             yOffset,
-                                             kRtAlertViewWidth,
-                                             kRtAlertViewButtonHeight);
-        self.cancelButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        for (int i=0; i<self.numberOfButtons; i++)
+        {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            if (self.buttonArray == nil)
+            {
+                self.buttonArray = [[NSMutableArray alloc] init];
+            }
+            [self.buttonArray addObject:button];
+            
+            [button setTitle:[self.buttonTitleArray objectAtIndex:i]
+                    forState:UIControlStateNormal];
+            button.titleEdgeInsets = UIEdgeInsetsMake(1.0f,
+                                                      0.0f,
+                                                      0.0f,
+                                                      0.0f);
+
+            if (i == self.cancelButtonIndex)
+            {
+                [button setTitleColor:self.cancelButtonColor
+                             forState:UIControlStateNormal];
+                button.titleLabel.font = self.cancelButtonFont;
+                [button setBackgroundImage:[self imageFromColor:[self.cancelButtonColor colorWithAlphaComponent:0.1f]]
+                                  forState:UIControlStateHighlighted];
+            }
+            else
+            {
+                [button setTitleColor:self.otherButtonColor
+                             forState:UIControlStateNormal];
+                button.titleLabel.font = self.otherButtonFont;
+                [button setBackgroundImage:[self imageFromColor:[self.otherButtonColor colorWithAlphaComponent:0.1f]]
+                                  forState:UIControlStateHighlighted];
+            }
+            
+            [button addTarget:self
+                       action:@selector(buttonTapped:)
+             forControlEvents:UIControlEventTouchUpInside];
+
+            button.frame = CGRectMake((i * (kRtAlertViewWidth / 2.0f)),
+                                      yOffset - buttonContainerView.frame.origin.y,
+                                      (kRtAlertViewWidth / 2.0f),
+                                      kRtAlertViewButtonHeight);
+            button.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+            UIViewAutoresizingFlexibleTopMargin;
+            
+            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
+            [buttonContainerView addSubview:button];
+        }
         
         yOffset += kRtAlertViewButtonHeight;
     }
-    
+    else if (self.numberOfButtons > 0)
+    {
+        buttonContainerView = [[UIView alloc] init];
+        buttonContainerView.frame = CGRectMake(0.0f,
+                                               yOffset,
+                                               kRtAlertViewWidth,
+                                               (self.numberOfButtons * kRtAlertViewButtonHeight));
+        buttonContainerView.backgroundColor = [UIColor clearColor];
+        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
+
+        for (int i=0; i<self.numberOfButtons; i++)
+        {
+            UIView *dividerLineView = [self setupDividerLineAtY:(yOffset - buttonContainerView.frame.origin.y)];
+            [buttonContainerView addSubview:dividerLineView];
+            NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
+
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            if (self.buttonArray == nil)
+            {
+                self.buttonArray = [[NSMutableArray alloc] init];
+            }
+            [self.buttonArray addObject:button];
+
+            [button setTitle:[self.buttonTitleArray objectAtIndex:i]
+                    forState:UIControlStateNormal];
+            button.titleEdgeInsets = UIEdgeInsetsMake(1.0f,
+                                                      0.0f,
+                                                      0.0f,
+                                                      0.0f);
+
+            if (i == self.cancelButtonIndex)
+            {
+                [button setTitleColor:self.cancelButtonColor
+                             forState:UIControlStateNormal];
+                button.titleLabel.font = self.cancelButtonFont;
+                [button setBackgroundImage:[self imageFromColor:[self.cancelButtonColor colorWithAlphaComponent:0.1f]]
+                                  forState:UIControlStateHighlighted];
+            }
+            else
+            {
+                [button setTitleColor:self.otherButtonColor
+                             forState:UIControlStateNormal];
+                button.titleLabel.font = self.otherButtonFont;
+                [button setBackgroundImage:[self imageFromColor:[self.otherButtonColor colorWithAlphaComponent:0.1f]]
+                                  forState:UIControlStateHighlighted];
+            }
+            
+            [button addTarget:self
+                       action:@selector(buttonTapped:)
+             forControlEvents:UIControlEventTouchUpInside];
+
+            button.frame = CGRectMake(0.0f,
+                                      yOffset - buttonContainerView.frame.origin.y,
+                                      kRtAlertViewWidth,
+                                      kRtAlertViewButtonHeight);
+            button.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                                      UIViewAutoresizingFlexibleTopMargin;
+
+            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
+            [buttonContainerView addSubview:button];
+
+            yOffset += kRtAlertViewButtonHeight;
+        }
+    }
+
     CGFloat alertHeight = yOffset;
     [self setupWithSize:CGSizeMake(kRtAlertViewWidth,
                                    alertHeight)];
     
     // Add everything to the content view
-    [self.contentView addSubview:self.titleLabel];
-    [self.contentView addSubview:self.messageLabel];
-    [self.contentView addSubview:self.dividerLineView];
-    [self.contentView addSubview:self.cancelButton];
+    if (self.titleLabel != nil)
+    {
+        [self.contentView addSubview:self.titleLabel];
+    }
+    if (self.messageLabel != nil)
+    {
+        [self.contentView addSubview:self.messageLabel];
+    }
+    if (buttonContainerView != nil)
+    {
+        [self.contentView addSubview:buttonContainerView];
+    }
+}
+
+
+- (UIView *)setupDividerLineAtY:(CGFloat)yOffset
+{
+    UIView *dividerLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                       yOffset - 1.0f,
+                                                                       kRtAlertViewWidth,
+                                                                       1.0f)];
+    dividerLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                                       UIViewAutoresizingFlexibleTopMargin;
+    UIView *dividerLineViewInner = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                            0.5f,
+                                                                            kRtAlertViewWidth,
+                                                                            0.5f)];
+    dividerLineViewInner.backgroundColor = kRtAlertViewDividerLineColor;
+    dividerLineViewInner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [dividerLineView addSubview:dividerLineViewInner];
+
+    return dividerLineView;
+}
+
+
+- (UIView *)setupHorizontalDividerLineAtY:(CGFloat)yOffset
+{
+    UIView *horizontalDividerLineView = [[UIView alloc] initWithFrame:CGRectMake((kRtAlertViewWidth / 2.0f),
+                                                                                 yOffset,
+                                                                                 1.0f,
+                                                                                 kRtAlertViewButtonHeight)];
+    horizontalDividerLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+                                                 UIViewAutoresizingFlexibleTopMargin;
+    UIView *horizontalDividerLineViewInner = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                      0.0f,
+                                                                                      0.5f,
+                                                                                      kRtAlertViewButtonHeight)];
+    horizontalDividerLineViewInner.backgroundColor = kRtAlertViewDividerLineColor;
+    horizontalDividerLineViewInner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [horizontalDividerLineView addSubview:horizontalDividerLineViewInner];
+    
+    return horizontalDividerLineView;
 }
 
 
@@ -471,6 +611,45 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 }
 
 
+- (void)showAlertView
+{
+    [CATransaction begin]; {
+		CATransform3D transformFrom = CATransform3DMakeScale(1.26, 1.26, 1.0);
+		CATransform3D transformTo = CATransform3DMakeScale(1.0, 1.0, 1.0);
+		
+		kSpringAnimationClassName *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
+		modalTransformAnimation.fromValue = [NSValue valueWithCATransform3D:transformFrom];
+		modalTransformAnimation.toValue = [NSValue valueWithCATransform3D:transformTo];
+		self.alertContainerView.layer.transform = transformTo;
+		
+		// Zoom in the modal
+		[self.alertContainerView.layer addAnimation:modalTransformAnimation
+                                             forKey:@"transform"];
+		
+		kSpringAnimationClassName *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
+		opacityAnimation.fromValue = @0.0f;
+		opacityAnimation.toValue = @1.0f;
+		self.alertBackgroundView.layer.opacity = 1.0f;
+		self.guassianBlurView.layer.opacity = 1.0f;
+		self.alertBackgroundView.layer.opacity = 1.0f;
+		self.contentView.layer.opacity = 1.0f;
+		
+		// Fade in the gray background
+		[self.alertBackgroundView.layer addAnimation:opacityAnimation
+                                              forKey:@"opacity"];
+        
+		// Fade in the modal
+		// Would love to fade in all these things at once, but UIToolbar doesn't like it
+		[self.guassianBlurView.layer addAnimation:opacityAnimation
+                                           forKey:@"opacity"];
+		[self.alertBackgroundView.layer addAnimation:opacityAnimation
+                                              forKey:@"opacity"];
+		[self.contentView.layer addAnimation:opacityAnimation
+                                      forKey:@"opacity"];
+	} [CATransaction commit];
+}
+
+
 - (id)springAnimationForKeyPath:(NSString *)keyPath
 {
 	kSpringAnimationClassName *animation = [[kSpringAnimationClassName alloc] init];
@@ -490,12 +669,49 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 - (void)buttonTapped:(id)sender
 {
-    NSLog(@"Button tapped");
+    self.clickedButtonIndex = -1;
+    int i = 0;
+    while ((i < self.buttonArray.count) &&
+           (self.clickedButtonIndex == -1))
+    {
+        if ([self.buttonArray objectAtIndex:i] == sender)
+        {
+            self.clickedButtonIndex = i;
+        }
+
+        i++;
+    }
+
+    NSLog(@"Button %ld (%@) tapped", (long)self.clickedButtonIndex, [self.buttonTitleArray objectAtIndex:self.clickedButtonIndex]);
+    if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)])
+    {
+        [self.delegate alertView:self
+            clickedButtonAtIndex:self.clickedButtonIndex];
+    }
+
     [self dismiss];
 }
 
 
 - (void)dismiss
+{
+    if ([self.delegate respondsToSelector:@selector(alertView:willDismissWithButtonIndex:)])
+    {
+        [self.delegate alertView:self
+      willDismissWithButtonIndex:self.clickedButtonIndex];
+    }
+    
+    [self dismissAlertView];
+    
+    if ([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)])
+    {
+        [self.delegate alertView:self
+       didDismissWithButtonIndex:self.clickedButtonIndex];
+    }
+}
+
+
+- (void)dismissAlertView
 {
 	[CATransaction begin]; {
 		CATransform3D transformFrom = CATransform3DMakeScale(1.0, 1.0, 1.0);
@@ -541,103 +757,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 	// Release window from memory
 	self.window.hidden = YES;
 	self.window = nil;
-}
-
-
-- (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex
-                             animated:(BOOL)animated
-{
-    
-}
-
-
-#pragma mark - UIAppearance setters
-
-- (void)setTitleColor:(UIColor *)titleColor
-{
-    if (_titleColor != titleColor)
-    {
-        _titleColor = titleColor;
-    }
-    
-    return;
-}
-
-
-- (void)setTitleFont:(UIFont *)titleFont
-{
-    if (_titleFont != titleFont)
-    {
-        _titleFont = titleFont;
-    }
-
-    return;
-}
-
-
-- (void)setMessageColor:(UIColor *)messageColor
-{
-    if (_messageColor != messageColor)
-    {
-        _messageColor = messageColor;
-    }
-    
-    return;
-}
-
-
-- (void)setMessageFont:(UIFont *)messageFont
-{
-    if (_messageFont != messageFont)
-    {
-        _messageFont = messageFont;
-    }
-    
-    return;
-}
-
-
-- (void)setCancelButtonColor:(UIColor *)cancelButtonColor
-{
-    if (_cancelButtonColor != cancelButtonColor)
-    {
-        _cancelButtonColor = cancelButtonColor;
-    }
-    
-    return;
-}
-
-
-- (void)setCancelButtonFont:(UIFont *)cancelButtonFont
-{
-    if (_cancelButtonFont != cancelButtonFont)
-    {
-        _cancelButtonFont = cancelButtonFont;
-    }
-    
-    return;
-}
-
-
-- (void)setOtherButtonColor:(UIColor *)otherButtonColor
-{
-    if (_otherButtonColor != otherButtonColor)
-    {
-        _otherButtonColor = otherButtonColor;
-    }
-    
-    return;
-}
-
-
-- (void)setOtherButtonFont:(UIFont *)otherButtonFont
-{
-    if (_otherButtonFont != otherButtonFont)
-    {
-        _otherButtonFont = otherButtonFont;
-    }
-    
-    return;
 }
 
 

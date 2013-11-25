@@ -34,12 +34,15 @@
 
 @class RTAlertView;
 
-@protocol RTAlertViewDelegate <UIAlertViewDelegate>
+@protocol RTAlertViewDelegate <NSObject>
+
+@optional
 
 -     (void)alertView:(RTAlertView *)alertView
  clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(RTAlertView *)alertView;
+
 - (void)willPresentAlertView:(RTAlertView *)alertView;
 - (void)didPresentAlertView:(RTAlertView *)alertView;
 -           (void)alertView:(RTAlertView *)alertView
@@ -80,13 +83,13 @@
 @property (nonatomic) NSInteger cancelButtonIndex;
 @property (nonatomic, readonly) NSInteger firstOtherButtonIndex;
 
-@property (strong, nonatomic) UIColor *titleColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont *titleFont UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *messageColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont *messageFont UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *cancelButtonColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont *cancelButtonFont UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *otherButtonColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont *otherButtonFont UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *titleColor;
+@property (strong, nonatomic) UIFont *titleFont;
+@property (strong, nonatomic) UIColor *messageColor;
+@property (strong, nonatomic) UIFont *messageFont;
+@property (strong, nonatomic) UIColor *cancelButtonColor;
+@property (strong, nonatomic) UIFont *cancelButtonFont;
+@property (strong, nonatomic) UIColor *otherButtonColor;
+@property (strong, nonatomic) UIFont *otherButtonFont;
 
 @end
