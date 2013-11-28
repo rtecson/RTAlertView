@@ -320,15 +320,15 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                kRtAlertViewWidth,
                                                kRtAlertViewButtonHeight);
         buttonContainerView.backgroundColor = [UIColor clearColor];
-        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
+//        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
 
         UIView *dividerLineView = [self setupDividerLineAtY:0.0f];
         [buttonContainerView addSubview:dividerLineView];
-        NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
+//        NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
         
         UIView *horizontalDividerLineView = [self setupHorizontalDividerLineAtY:0.0f];
         [buttonContainerView addSubview:horizontalDividerLineView];
-        NSLog(@"horizontalDividerLineView: x=%f, y=%f, w=%f, h=%f", horizontalDividerLineView.frame.origin.x, horizontalDividerLineView.frame.origin.y, horizontalDividerLineView.frame.size.width, horizontalDividerLineView.frame.size.height);
+//        NSLog(@"horizontalDividerLineView: x=%f, y=%f, w=%f, h=%f", horizontalDividerLineView.frame.origin.x, horizontalDividerLineView.frame.origin.y, horizontalDividerLineView.frame.size.width, horizontalDividerLineView.frame.size.height);
         
         for (int i=0; i<self.numberOfButtons; i++)
         {
@@ -373,8 +373,8 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                       kRtAlertViewButtonHeight);
             button.autoresizingMask = UIViewAutoresizingFlexibleWidth |
             UIViewAutoresizingFlexibleTopMargin;
-            
-            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
+
+//            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
             [buttonContainerView addSubview:button];
         }
         
@@ -388,13 +388,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                kRtAlertViewWidth,
                                                (self.numberOfButtons * kRtAlertViewButtonHeight));
         buttonContainerView.backgroundColor = [UIColor clearColor];
-        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
+//        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
 
         for (int i=0; i<self.numberOfButtons; i++)
         {
             UIView *dividerLineView = [self setupDividerLineAtY:(yOffset - buttonContainerView.frame.origin.y)];
             [buttonContainerView addSubview:dividerLineView];
-            NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
+//            NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
 
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             if (self.buttonArray == nil)
@@ -438,7 +438,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
             button.autoresizingMask = UIViewAutoresizingFlexibleWidth |
                                       UIViewAutoresizingFlexibleTopMargin;
 
-            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
+//            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
             [buttonContainerView addSubview:button];
 
             yOffset += kRtAlertViewButtonHeight;
@@ -473,13 +473,24 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                        1.0f)];
     dividerLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
                                        UIViewAutoresizingFlexibleTopMargin;
-    UIView *dividerLineViewInner = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                            0.5f,
-                                                                            kRtAlertViewWidth,
-                                                                            0.5f)];
-    dividerLineViewInner.backgroundColor = kRtAlertViewDividerLineColor;
-    dividerLineViewInner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [dividerLineView addSubview:dividerLineViewInner];
+
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+        ([UIScreen mainScreen].scale == 2.0))
+    {
+        // Retina display, divider line is 0.5px high
+        UIView *dividerLineViewInner = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                0.5f,
+                                                                                kRtAlertViewWidth,
+                                                                                0.5f)];
+        dividerLineViewInner.backgroundColor = kRtAlertViewDividerLineColor;
+        dividerLineViewInner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [dividerLineView addSubview:dividerLineViewInner];
+    }
+    else
+    {
+        // Non-retina display, divider line is 1px high
+        dividerLineView.backgroundColor = kRtAlertViewDividerLineColor;
+    }
 
     return dividerLineView;
 }
@@ -561,7 +572,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                         self.alertContainerView.frame.size.width,
                                                                         self.alertContainerView.frame.size.height)];
 	self.guassianBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	
 	[self.alertContainerView addSubview:self.guassianBlurView];
 	
 	self.alertBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,

@@ -24,6 +24,7 @@
 		2A3DA4CA18419F8B00378872 /* RTAlertViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4C918419F8B00378872 /* RTAlertViewTests.m */; };
 		2A3DA4D71841A05C00378872 /* Radial.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A3DA4D41841A05C00378872 /* Radial.png */; };
 		2A3DA4D81841A05C00378872 /* RTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4D61841A05C00378872 /* RTAlertView.m */; };
+		2ABD107618472157008205DD /* colorwheel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2ABD107518472157008205DD /* colorwheel.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		2A3DA4D41841A05C00378872 /* Radial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Radial.png; sourceTree = "<group>"; };
 		2A3DA4D51841A05C00378872 /* RTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertView.h; sourceTree = "<group>"; };
 		2A3DA4D61841A05C00378872 /* RTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertView.m; sourceTree = "<group>"; };
+		2ABD107518472157008205DD /* colorwheel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = colorwheel.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				2A3DA4B018419F8B00378872 /* Main_iPad.storyboard */,
 				2A3DA4B318419F8B00378872 /* mzxViewController.h */,
 				2A3DA4B418419F8B00378872 /* mzxViewController.m */,
+				2ABD107518472157008205DD /* colorwheel.jpg */,
 				2A3DA4B618419F8B00378872 /* Images.xcassets */,
 				2A3DA4A218419F8B00378872 /* Supporting Files */,
 			);
@@ -250,6 +253,7 @@
 			files = (
 				2A3DA4B218419F8B00378872 /* Main_iPad.storyboard in Resources */,
 				2A3DA4B718419F8B00378872 /* Images.xcassets in Resources */,
+				2ABD107618472157008205DD /* colorwheel.jpg in Resources */,
 				2A3DA4AF18419F8B00378872 /* Main_iPhone.storyboard in Resources */,
 				2A3DA4A618419F8B00378872 /* InfoPlist.strings in Resources */,
 				2A3DA4D71841A05C00378872 /* Radial.png in Resources */,
