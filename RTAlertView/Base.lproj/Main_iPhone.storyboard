@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="colorwheel.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="RZC-bu-E6v">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="colorwheel.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="RZC-bu-E6v">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -31,18 +31,30 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8mZ-od-l9x"/>
                                     <barButtonItem title="Custom" id="pqU-4a-7X2">
+                                        <color key="tintColor" cyan="0.65861265120967749" magenta="0.0" yellow="0.70589717741935487" black="0.22139616935483872" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                         <connections>
                                             <action selector="customButtonTapped:" destination="vXZ-lx-hvc" id="uSq-Hh-6NX"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ILg-hS-kpK" userLabel="gaussianBlurContainerView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILg-hS-kpK" userLabel="gaussianBlurContainerView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="lGK-XV-kAw"/>
+                                </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pad-ZQ-RiX">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9l-MY-Fxi" userLabel="gaussianBlurDividerLineContainerView">
+                                <rect key="frame" x="0.0" y="130" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="ozT-ax-7jd"/>
+                                </constraints>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pad-ZQ-RiX" userLabel="numberOfOtherButtonsSegmentedControl">
                                 <rect key="frame" x="20" y="52" width="280" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
@@ -51,9 +63,27 @@
                                     <segment title="2"/>
                                     <segment title="3"/>
                                 </segments>
+                                <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                <connections>
+                                    <action selector="numberOfOtherButtonsSelected:" destination="vXZ-lx-hvc" eventType="valueChanged" id="o38-IB-61W"/>
+                                </connections>
                             </segmentedControl>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select Number of Other Buttons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ssb-N5-V9T">
-                                <rect key="frame" x="20" y="28" width="247" height="21"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="O1K-ZM-vQh" userLabel="alertStyleSegmentedControl">
+                                <rect key="frame" x="20" y="92" width="280" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Default"/>
+                                    <segment title="Plain" width="44"/>
+                                    <segment title="Secure"/>
+                                    <segment title="Login/Password" width="113"/>
+                                </segments>
+                                <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                <connections>
+                                    <action selector="alertViewStyleSelected:" destination="vXZ-lx-hvc" eventType="valueChanged" id="1bV-fq-rie"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number of Other Buttons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ssb-N5-V9T">
+                                <rect key="frame" x="20" y="28" width="194" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -62,16 +92,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="RZC-bu-E6v" secondAttribute="centerX" id="5NZ-LC-thP"/>
-                            <constraint firstAttribute="centerY" secondItem="RZC-bu-E6v" secondAttribute="centerY" id="DUn-Iw-8oB"/>
+                            <constraint firstAttribute="trailing" secondItem="O9l-MY-Fxi" secondAttribute="trailing" id="1IN-bf-aoZ"/>
+                            <constraint firstItem="JtX-kW-6SE" firstAttribute="top" secondItem="RZC-bu-E6v" secondAttribute="bottom" id="1wM-iU-eWq"/>
+                            <constraint firstAttribute="trailing" secondItem="ILg-hS-kpK" secondAttribute="trailing" id="CBT-6n-ri8"/>
+                            <constraint firstItem="O9l-MY-Fxi" firstAttribute="leading" secondItem="iL9-EC-syw" secondAttribute="leading" id="JdR-QG-djT"/>
+                            <constraint firstItem="ILg-hS-kpK" firstAttribute="leading" secondItem="iL9-EC-syw" secondAttribute="leading" id="SKm-Ny-l7u"/>
                             <constraint firstItem="UKw-aK-NL0" firstAttribute="leading" secondItem="iL9-EC-syw" secondAttribute="leading" id="ShU-t4-7Ue"/>
+                            <constraint firstAttribute="trailing" secondItem="RZC-bu-E6v" secondAttribute="trailing" id="Vqw-43-rm5"/>
+                            <constraint firstItem="RZC-bu-E6v" firstAttribute="top" secondItem="iL9-EC-syw" secondAttribute="top" id="bq4-8w-0So"/>
                             <constraint firstItem="JtX-kW-6SE" firstAttribute="top" secondItem="UKw-aK-NL0" secondAttribute="bottom" id="dPg-Rn-QUb"/>
+                            <constraint firstItem="RZC-bu-E6v" firstAttribute="leading" secondItem="iL9-EC-syw" secondAttribute="leading" id="eik-98-6uM"/>
+                            <constraint firstItem="ILg-hS-kpK" firstAttribute="top" secondItem="iL9-EC-syw" secondAttribute="top" id="iuw-y7-fAv"/>
                             <constraint firstAttribute="trailing" secondItem="UKw-aK-NL0" secondAttribute="trailing" id="ltR-yi-vcn"/>
+                            <constraint firstItem="O9l-MY-Fxi" firstAttribute="top" secondItem="ILg-hS-kpK" secondAttribute="bottom" id="nkb-ev-pru"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="gaussianBlurContainerView" destination="ILg-hS-kpK" id="hqG-b3-eLV"/>
-                        <outlet property="numberOfOtherButtonsControl" destination="pad-ZQ-RiX" id="dMt-2n-qQG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

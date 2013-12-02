@@ -41,8 +41,6 @@
 -     (void)alertView:(RTAlertView *)alertView
  clickedButtonAtIndex:(NSInteger)buttonIndex;
 
-- (BOOL)alertViewShouldEnableFirstOtherButton:(RTAlertView *)alertView;
-
 - (void)willPresentAlertView:(RTAlertView *)alertView;
 - (void)didPresentAlertView:(RTAlertView *)alertView;
 -           (void)alertView:(RTAlertView *)alertView

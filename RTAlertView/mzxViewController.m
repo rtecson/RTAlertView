@@ -11,11 +11,17 @@
 #import "RTAlertView.h"
 
 
-@interface mzxViewController ()
+#define kCustomColor [UIColor colorWithRed:(55.0f/255.0f) green:(130.0f/255.0f) blue:(75.0f/255.0f) alpha:1.0f]
+
+
+@interface mzxViewController () <UIAlertViewDelegate,
+                                 RTAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *numberOfOtherButtonsControl;
+@property (weak, nonatomic) IBOutlet UIView *gaussianBlurDividerLine;
+
 @property (nonatomic) NSInteger numberOfOtherButtons;
+@property (nonatomic) UIAlertViewStyle alertViewStyle;
 
 @end
 
@@ -31,10 +37,9 @@
     UIToolbar *gaussianBlurView = [[UIToolbar alloc] initWithFrame:self.gaussianBlurContainerView.bounds];
 	gaussianBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.gaussianBlurContainerView addSubview:gaussianBlurView];
-
-    [self.numberOfOtherButtonsControl addTarget:self
-                                         action:@selector(numberOfOtherButtonsSelected:)
-                               forControlEvents:UIControlEventValueChanged];
+    
+    self.alertViewStyle = UIAlertViewStyleDefault;
+    self.numberOfOtherButtons = 0;
 }
 
 
@@ -45,21 +50,19 @@
 }
 
 
+#pragma mark - IBActions
+
 - (IBAction)nativeButtonTapped:(id)sender
 {
-/*
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Test"
-                                                        message:@"Message here"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Done"
-                                              otherButtonTitles:nil];
-*/
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Test"
                                                         message:@"Message here"
                                                        delegate:nil
                                               cancelButtonTitle:nil
                                               otherButtonTitles:nil];
-    
+    alertView.delegate = self;
+
+    alertView.alertViewStyle = self.alertViewStyle;
+
     for (int i=0; i<self.numberOfOtherButtons; i++)
     {
         [alertView addButtonWithTitle:[NSString stringWithFormat:@"Button %d", i]];
@@ -78,15 +81,19 @@
                                                              delegate:nil
                                                     cancelButtonTitle:nil
                                                     otherButtonTitles:nil];
-    
+    customAlertView.delegate = self;
+
+    customAlertView.alertViewStyle = self.alertViewStyle;
+
     for (int i=0; i<self.numberOfOtherButtons; i++)
     {
         [customAlertView addButtonWithTitle:[NSString stringWithFormat:@"Button %d", i]];
     }
     customAlertView.cancelButtonIndex = [customAlertView addButtonWithTitle:@"Done"];
     NSLog(@"cancelButtonIndex = %ld", (long)customAlertView.cancelButtonIndex);
-//    customAlertView.otherButtonColor = [UIColor colorWithRed:(255.0f/255.0f) green:(104.0f/255.0f) blue:(14.0f/255.0f) alpha:1.0f];
-//    customAlertView.cancelButtonColor = [UIColor colorWithRed:(255.0f/255.0f) green:(104.0f/255.0f) blue:(14.0f/255.0f) alpha:1.0f];
+    
+    customAlertView.otherButtonColor = kCustomColor;
+    customAlertView.cancelButtonColor = kCustomColor;
 
 	[customAlertView show];
 }
@@ -99,6 +106,90 @@
 
     self.numberOfOtherButtons = selectedSegment;
     NSLog(@"Number of other buttons = %ld", (long)self.numberOfOtherButtons);
+}
+
+
+- (IBAction)alertViewStyleSelected:(id)sender
+{
+    UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
+    NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
+
+    switch (selectedSegment)
+    {
+        case 3:
+            self.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+            break;
+        case 2:
+            self.alertViewStyle = UIAlertViewStyleSecureTextInput;
+            break;
+        case 1:
+            self.alertViewStyle = UIAlertViewStylePlainTextInput;
+            break;
+        case 0:
+        default:
+            self.alertViewStyle = UIAlertViewStyleDefault;
+            break;
+    }
+
+    NSString *alertViewStyleString = nil;
+    switch (self.alertViewStyle)
+    {
+        case UIAlertViewStylePlainTextInput:
+            alertViewStyleString = @"Plain Text";
+            break;
+        case UIAlertViewStyleSecureTextInput:
+            alertViewStyleString = @"Secure Text";
+            break;
+        case UIAlertViewStyleLoginAndPasswordInput:
+            alertViewStyleString = @"Login/Password";
+            break;
+        case UIAlertViewStyleDefault:
+        default:
+            alertViewStyleString = @"Default";
+            break;
+    }
+    NSLog(@"Alert view style selected = %@", alertViewStyleString);
+}
+
+
+#pragma mark - RTAlertView Delegate methods
+
+-     (void)alertView:(RTAlertView *)alertView
+ clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Clicked button at index %d in %@", buttonIndex, [[alertView class] description]);
+}
+
+
+- (void)willPresentAlertView:(RTAlertView *)alertView
+{
+    NSLog(@"Will present %@", [[alertView class] description]);
+}
+
+
+- (void)didPresentAlertView:(RTAlertView *)alertView
+{
+    NSLog(@"Did present %@", [[alertView class] description]);
+}
+
+
+-           (void)alertView:(RTAlertView *)alertView
+ willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Will dismiss %@ with button index %d", [[alertView class] description], buttonIndex);
+}
+
+
+-          (void)alertView:(RTAlertView *)alertView
+ didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Did dismiss %@ with button index %d", [[alertView class] description], buttonIndex);
+}
+
+
+- (void)alertViewCancel:(RTAlertView *)alertView
+{
+    NSLog(@"Will cancel %@", [[alertView class] description]);
 }
 
 

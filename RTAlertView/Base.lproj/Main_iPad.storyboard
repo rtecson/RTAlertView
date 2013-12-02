@@ -31,26 +31,38 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="iIv-Eb-iqT"/>
                                     <barButtonItem title="Custom" id="eJ8-Dr-csE">
+                                        <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                         <connections>
                                             <action selector="customButtonTapped:" destination="BYZ-38-t0r" id="jO5-Cg-wVN"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xz0-ro-Akx" userLabel="gaussianBlurContainerView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xz0-ro-Akx" userLabel="gaussianBlurContainerView">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="76"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="76" id="bYm-5u-mBm"/>
+                                </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select Number of Other Buttons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wF1-GQ-NgM">
-                                <rect key="frame" x="20" y="36" width="254" height="21"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZrJ-VD-Ssf" userLabel="gaussianBlurDividerLineContainerView">
+                                <rect key="frame" x="0.0" y="76" width="768" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="31g-CF-vpv"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number of Other Buttons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wF1-GQ-NgM">
+                                <rect key="frame" x="20" y="36" width="204" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MBu-ff-8da">
-                                <rect key="frame" x="282" y="33" width="325" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MBu-ff-8da" userLabel="numberOfOtherButtonsSegmentedControl">
+                                <rect key="frame" x="223" y="33" width="164" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="0"/>
@@ -58,16 +70,40 @@
                                     <segment title="2"/>
                                     <segment title="3"/>
                                 </segments>
+                                <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                <connections>
+                                    <action selector="numberOfOtherButtonsSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="eeB-hG-mZt"/>
+                                </connections>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-Ex-nJ3" userLabel="alertViewStyleSegmentedControl">
+                                <rect key="frame" x="395" y="33" width="353" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Default"/>
+                                    <segment title="Plain" width="64"/>
+                                    <segment title="Secure"/>
+                                    <segment title="Login/Password" width="131"/>
+                                </segments>
+                                <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                <connections>
+                                    <action selector="alertViewStyleSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="kzq-Ot-ijy"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="xz0-ro-Akx" secondAttribute="trailing" id="3wB-bT-XcM"/>
                             <constraint firstAttribute="trailing" secondItem="Tht-dJ-w7m" secondAttribute="trailing" id="4Ez-hh-lhn"/>
                             <constraint firstAttribute="centerY" secondItem="1T1-94-pfj" secondAttribute="centerY" id="4GD-En-rIy"/>
                             <constraint firstAttribute="centerX" secondItem="1T1-94-pfj" secondAttribute="centerX" id="5IH-OH-Znx"/>
+                            <constraint firstItem="ZrJ-VD-Ssf" firstAttribute="top" secondItem="xz0-ro-Akx" secondAttribute="bottom" id="81H-21-mxt"/>
                             <constraint firstItem="1T1-94-pfj" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="BaD-WI-j5W"/>
+                            <constraint firstItem="xz0-ro-Akx" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="GHt-wy-SpY"/>
+                            <constraint firstAttribute="trailing" secondItem="ZrJ-VD-Ssf" secondAttribute="trailing" id="O9F-ZT-KJp"/>
                             <constraint firstItem="1T1-94-pfj" firstAttribute="top" secondItem="vko-Hx-0nM" secondAttribute="top" id="QFT-fP-1gZ"/>
+                            <constraint firstItem="xz0-ro-Akx" firstAttribute="top" secondItem="vko-Hx-0nM" secondAttribute="top" id="af3-7y-ZJW"/>
                             <constraint firstItem="Tht-dJ-w7m" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="bcO-z5-j7B"/>
+                            <constraint firstItem="ZrJ-VD-Ssf" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="bvD-Vo-pi2"/>
                             <constraint firstItem="6Y6-gO-IaN" firstAttribute="top" secondItem="Tht-dJ-w7m" secondAttribute="bottom" id="mAZ-n8-WY8"/>
                             <constraint firstAttribute="trailing" secondItem="1T1-94-pfj" secondAttribute="trailing" id="naY-or-bBI"/>
                             <constraint firstItem="6Y6-gO-IaN" firstAttribute="top" secondItem="1T1-94-pfj" secondAttribute="bottom" id="zUB-YX-sNi"/>
@@ -75,7 +111,7 @@
                     </view>
                     <connections>
                         <outlet property="gaussianBlurContainerView" destination="xz0-ro-Akx" id="aDy-h1-niZ"/>
-                        <outlet property="numberOfOtherButtonsControl" destination="MBu-ff-8da" id="Uxm-uM-KDF"/>
+                        <outlet property="gaussianBlurDividerLine" destination="ZrJ-VD-Ssf" id="x3z-on-ylw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

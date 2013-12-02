@@ -71,6 +71,8 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (strong, nonatomic) NSMutableArray *buttonArray;
 @property (nonatomic) NSInteger clickedButtonIndex;
 
+@property (strong, nonatomic) NSMutableArray *textFieldArray;
+
 @end
 
 
@@ -126,6 +128,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 }
 
 
+- (void)dealloc
+{
+    self.buttonArray = nil;
+    self.buttonTitleArray = nil;
+}
+
+
 #pragma mark - Getters
 
 - (NSInteger)numberOfButtons
@@ -161,7 +170,84 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 }
 
 
+- (NSMutableArray *)textFieldArray
+{
+    if (_textFieldArray == nil)
+    {
+        switch (self.alertViewStyle)
+        {
+            case UIAlertViewStyleLoginAndPasswordInput:
+            {
+                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:2];
+                
+                UITextField *loginTextField = [[UITextField alloc] init];
+                loginTextField.secureTextEntry = NO;
+                loginTextField.backgroundColor = [UIColor whiteColor];
+                loginTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                loginTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+                loginTextField.returnKeyType = UIReturnKeyNext;
+                loginTextField.borderStyle = UITextBorderStyleRoundedRect;
+                loginTextField.placeholder = @"Login";
+                [_textFieldArray addObject:loginTextField];
+                
+                UITextField *passwordTextField = [[UITextField alloc] init];
+                passwordTextField.secureTextEntry = YES;
+                passwordTextField.backgroundColor = [UIColor whiteColor];
+                passwordTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+                passwordTextField.returnKeyType = UIReturnKeyNext;
+                passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
+                passwordTextField.placeholder = @"Password";
+                [_textFieldArray addObject:passwordTextField];
+            }
+                break;
+            case UIAlertViewStyleSecureTextInput:
+            {
+                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
+                UITextField *secureTextField = [[UITextField alloc] init];
+                secureTextField.secureTextEntry = YES;
+                secureTextField.backgroundColor = [UIColor whiteColor];
+                secureTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                secureTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+                secureTextField.returnKeyType = UIReturnKeyNext;
+                secureTextField.borderStyle = UITextBorderStyleRoundedRect;
+                [_textFieldArray addObject:secureTextField];
+            }
+                break;
+            case UIAlertViewStylePlainTextInput:
+            {
+                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
+                UITextField *plainTextField = [[UITextField alloc] init];
+                plainTextField.secureTextEntry = NO;
+                plainTextField.backgroundColor = [UIColor whiteColor];
+                plainTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
+                plainTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+                plainTextField.returnKeyType = UIReturnKeyNext;
+                plainTextField.borderStyle = UITextBorderStyleRoundedRect;
+                [_textFieldArray addObject:plainTextField];
+            }
+                break;
+            case UIAlertViewStyleDefault:
+            default:
+            {
+                _textFieldArray = nil;
+            }
+                break;
+        }
+    }
+    
+    return _textFieldArray;
+}
+
+
 #pragma mark - Setters
+
+- (void)alertViewStyle:(UIAlertViewStyle)alertViewStyle
+{
+    self.textFieldArray = nil;
+    _alertViewStyle = alertViewStyle;
+}
+
 
 - (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
 {
@@ -233,7 +319,31 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 - (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex
 {
-    return nil;
+    // TODO: Raise NSRangeException if textFieldIndex is inconsistent with alertViewStyle
+    if (self.alertViewStyle == UIAlertViewStyleDefault)
+    {
+        return nil;
+    }
+    
+    if (textFieldIndex < 0)
+    {
+        return nil;
+    }
+
+    if ((self.alertViewStyle == UIAlertViewStyleLoginAndPasswordInput) &&
+        (textFieldIndex > 1))
+    {
+        return nil;
+    }
+    
+    if (((self.alertViewStyle == UIAlertViewStylePlainTextInput) ||
+         (self.alertViewStyle == UIAlertViewStyleSecureTextInput)) &&
+        (textFieldIndex > 0))
+    {
+        return nil;
+    }
+
+    return [self.textFieldArray objectAtIndex:textFieldIndex];
 }
 
 
@@ -269,6 +379,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                          attributes:attributes];
         self.titleLabel.numberOfLines = 0;
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.backgroundColor = [UIColor clearColor];
         
         CGSize sizeThatFits = [self.titleLabel sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
         self.titleLabel.frame = CGRectMake(kRtAlertViewSideMargin,
@@ -288,6 +399,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     {
         self.messageLabel = [[UILabel alloc] init];
         self.messageLabel.numberOfLines = 0;
+        self.messageLabel.backgroundColor = [UIColor clearColor];
 
         NSDictionary *attributes = @{
                                      NSForegroundColorAttributeName:self.messageColor,
@@ -310,7 +422,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     }
     
     yOffset += kRtAlertViewTopAndBottomMargin;
-    
+
     UIView *buttonContainerView = nil;
     if (self.numberOfButtons == 2)
     {
@@ -372,7 +484,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                       (kRtAlertViewWidth / 2.0f),
                                       kRtAlertViewButtonHeight);
             button.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-            UIViewAutoresizingFlexibleTopMargin;
+                                      UIViewAutoresizingFlexibleTopMargin;
 
 //            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
             [buttonContainerView addSubview:button];
@@ -692,7 +804,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
         i++;
     }
 
-    NSLog(@"Button %ld (%@) tapped", (long)self.clickedButtonIndex, [self.buttonTitleArray objectAtIndex:self.clickedButtonIndex]);
+//    NSLog(@"Button %ld (%@) tapped", (long)self.clickedButtonIndex, [self.buttonTitleArray objectAtIndex:self.clickedButtonIndex]);
     if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)])
     {
         [self.delegate alertView:self
@@ -711,6 +823,12 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
       willDismissWithButtonIndex:self.clickedButtonIndex];
     }
     
+    if ((self.cancelButtonIndex == self.clickedButtonIndex) &&
+        ([self.delegate respondsToSelector:@selector(alertViewCancel:)]))
+    {
+        [self.delegate alertViewCancel:self];
+    }
+
     [self dismissAlertView];
     
     if ([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)])
