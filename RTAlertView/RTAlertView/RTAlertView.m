@@ -31,8 +31,19 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 #define kRtAlertViewButtonBackgroundColor [UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:0.6]
 #define kRtAlertViewBackgroundViewColor   [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]
 
+static CGFloat kRtAlertViewSingleTextFieldContainerHeight = 48.0f;
+static CGFloat kRtAlertViewDoubleTextFieldContainerHeight = 77.0f;
+static NSString *kRtAlertViewSingleTextFieldBackgroundImage = @"bg-single-textfield";
+static NSString *kRtAlertViewDoubleTextFieldBackgroundImage = @"bg-double-textfield";
+static CGFloat kRtAlertViewTextFieldOriginX = 15.0f;
+static CGFloat kRtAlertViewTextFieldOriginY = 22.0f;
+static CGFloat kRtAlertViewTextFieldBackgroundWidth = 240.0f;
+static CGFloat kRtAlertViewSingleTextFieldBackgroundHeight = 30.0f;
+static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
+
 
 #define kSpringAnimationClassName CASpringAnimation
+
 
 @interface CASpringAnimation : CABasicAnimation
 - (float)damping;
@@ -182,21 +193,23 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                 
                 UITextField *loginTextField = [[UITextField alloc] init];
                 loginTextField.secureTextEntry = NO;
-                loginTextField.backgroundColor = [UIColor whiteColor];
+                loginTextField.backgroundColor = [UIColor clearColor];
                 loginTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
                 loginTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
                 loginTextField.returnKeyType = UIReturnKeyNext;
-                loginTextField.borderStyle = UITextBorderStyleRoundedRect;
+                loginTextField.borderStyle = UITextBorderStyleNone;
+                loginTextField.font = [loginTextField.font fontWithSize:13.0f];
                 loginTextField.placeholder = @"Login";
                 [_textFieldArray addObject:loginTextField];
                 
                 UITextField *passwordTextField = [[UITextField alloc] init];
                 passwordTextField.secureTextEntry = YES;
-                passwordTextField.backgroundColor = [UIColor whiteColor];
+                passwordTextField.backgroundColor = [UIColor clearColor];
                 passwordTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
                 passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
                 passwordTextField.returnKeyType = UIReturnKeyNext;
-                passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
+                passwordTextField.borderStyle = UITextBorderStyleNone;
+                passwordTextField.font = [passwordTextField.font fontWithSize:13.0f];
                 passwordTextField.placeholder = @"Password";
                 [_textFieldArray addObject:passwordTextField];
             }
@@ -206,11 +219,12 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                 _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
                 UITextField *secureTextField = [[UITextField alloc] init];
                 secureTextField.secureTextEntry = YES;
-                secureTextField.backgroundColor = [UIColor whiteColor];
+                secureTextField.backgroundColor = [UIColor clearColor];
                 secureTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
                 secureTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
                 secureTextField.returnKeyType = UIReturnKeyNext;
-                secureTextField.borderStyle = UITextBorderStyleRoundedRect;
+                secureTextField.borderStyle = UITextBorderStyleNone;
+                secureTextField.font = [secureTextField.font fontWithSize:13.0f];
                 [_textFieldArray addObject:secureTextField];
             }
                 break;
@@ -219,11 +233,12 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                 _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
                 UITextField *plainTextField = [[UITextField alloc] init];
                 plainTextField.secureTextEntry = NO;
-                plainTextField.backgroundColor = [UIColor whiteColor];
+                plainTextField.backgroundColor = [UIColor clearColor];
                 plainTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
                 plainTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
                 plainTextField.returnKeyType = UIReturnKeyNext;
-                plainTextField.borderStyle = UITextBorderStyleRoundedRect;
+                plainTextField.borderStyle = UITextBorderStyleNone;
+                plainTextField.font = [plainTextField.font fontWithSize:13.0f];
                 [_textFieldArray addObject:plainTextField];
             }
                 break;
@@ -420,6 +435,76 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
         
         yOffset += self.messageLabel.frame.size.height;
     }
+
+    UIView *textFieldContainerView = nil;
+    switch (self.alertViewStyle)
+    {
+        case UIAlertViewStylePlainTextInput:
+        case UIAlertViewStyleSecureTextInput:
+        {
+            CGFloat textFieldContainerViewHeight = kRtAlertViewSingleTextFieldContainerHeight;
+            textFieldContainerView = [[UIView alloc] init];
+            textFieldContainerView.frame = CGRectMake(0.0f,
+                                                      yOffset,
+                                                      kRtAlertViewWidth,
+                                                      textFieldContainerViewHeight);
+            
+            UIImageView *textFieldBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kRtAlertViewSingleTextFieldBackgroundImage]];
+            textFieldBackground.frame = CGRectMake(kRtAlertViewTextFieldOriginX,
+                                                   kRtAlertViewTextFieldOriginY,
+                                                   kRtAlertViewTextFieldBackgroundWidth,
+                                                   kRtAlertViewSingleTextFieldBackgroundHeight);
+            [textFieldContainerView addSubview:textFieldBackground];
+
+            UITextField *textField1 = (self.alertViewStyle == UIAlertViewStylePlainTextInput) ? [self textFieldAtIndex:0] : [self textFieldAtIndex:1];
+            textField1.frame = CGRectMake(kRtAlertViewTextFieldOriginX + 6.0f,
+                                          kRtAlertViewTextFieldOriginY,
+                                          kRtAlertViewTextFieldBackgroundWidth - 6.0f,
+                                          kRtAlertViewSingleTextFieldBackgroundHeight);
+            [textFieldContainerView addSubview:textField1];
+
+            yOffset += textFieldContainerViewHeight;
+        }
+            break;
+        case UIAlertViewStyleLoginAndPasswordInput:
+        {
+            CGFloat textFieldContainerViewHeight = kRtAlertViewDoubleTextFieldContainerHeight;
+            textFieldContainerView = [[UIView alloc] init];
+            textFieldContainerView.frame = CGRectMake(0.0f,
+                                                      yOffset,
+                                                      kRtAlertViewWidth,
+                                                      textFieldContainerViewHeight);
+            
+            UIImageView *textFieldBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kRtAlertViewDoubleTextFieldBackgroundImage]];
+            textFieldBackground.frame = CGRectMake(kRtAlertViewTextFieldOriginX,
+                                                   kRtAlertViewTextFieldOriginY,
+                                                   kRtAlertViewTextFieldBackgroundWidth,
+                                                   kRtAlertViewDoubleTextFieldBackgroundHeight);
+            [textFieldContainerView addSubview:textFieldBackground];
+            
+            UITextField *textField1 = [self textFieldAtIndex:0];
+            UITextField *textField2 = [self textFieldAtIndex:1];
+            textField1.frame = CGRectMake(kRtAlertViewTextFieldOriginX + 6.0f,
+                                          kRtAlertViewTextFieldOriginY,
+                                          kRtAlertViewTextFieldBackgroundWidth - 6.0f,
+                                          kRtAlertViewSingleTextFieldBackgroundHeight);
+            textField2.frame = CGRectMake(kRtAlertViewTextFieldOriginX + 6.0f,
+                                          kRtAlertViewTextFieldOriginY + kRtAlertViewSingleTextFieldBackgroundHeight,
+                                          kRtAlertViewTextFieldBackgroundWidth - 6.0f,
+                                          kRtAlertViewSingleTextFieldBackgroundHeight);
+            [textFieldContainerView addSubview:textField1];
+            [textFieldContainerView addSubview:textField2];
+            
+            yOffset += textFieldContainerViewHeight;
+        }
+            break;
+        case UIAlertViewStyleDefault:
+        default:
+        {
+            // Do nothing, no textfield
+        }
+            break;
+    }
     
     yOffset += kRtAlertViewTopAndBottomMargin;
 
@@ -569,6 +654,10 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     if (self.messageLabel != nil)
     {
         [self.contentView addSubview:self.messageLabel];
+    }
+    if (textFieldContainerView != nil)
+    {
+        [self.contentView addSubview:textFieldContainerView];
     }
     if (buttonContainerView != nil)
     {
