@@ -257,7 +257,7 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
 
 #pragma mark - Setters
 
-- (void)alertViewStyle:(UIAlertViewStyle)alertViewStyle
+- (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
 {
     self.textFieldArray = nil;
     _alertViewStyle = alertViewStyle;
@@ -381,13 +381,15 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
     CGFloat labelWidth = kRtAlertViewWidth - (kRtAlertViewSideMargin * 2.0f);
     
     CGFloat yOffset = kRtAlertViewTopAndBottomMargin;
-    
+
+    CGFloat scrollViewOffset = 0.0f;
+
     if (self.title != nil)
     {
         NSDictionary *attributes = @{
                                      NSForegroundColorAttributeName:self.titleColor,
                                      NSFontAttributeName:self.titleFont
-                                     };
+                                   };
         
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:self.title
@@ -396,18 +398,18 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.backgroundColor = [UIColor clearColor];
         
-        CGSize sizeThatFits = [self.titleLabel sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
+        CGSize sizeThatFits = [self.titleLabel sizeThatFits:CGSizeMake(labelWidth,
+                                                                       MAXFLOAT)];
         self.titleLabel.frame = CGRectMake(kRtAlertViewSideMargin,
-                                           yOffset,
+                                           scrollViewOffset,
                                            labelWidth,
                                            sizeThatFits.height);
-        
-        [self.contentView addSubview:self.titleLabel];
-        
+
         yOffset += self.titleLabel.frame.size.height;
+        scrollViewOffset += self.titleLabel.frame.size.height;
     }
     
-    // 4 px gap between title and message, even if a title doesn't exist
+    // 4pt gap between title and message, even if a title doesn't exist
     yOffset += 4.0f;
     
     if (self.message != nil)
@@ -419,7 +421,7 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
         NSDictionary *attributes = @{
                                      NSForegroundColorAttributeName:self.messageColor,
                                      NSFontAttributeName:self.messageFont
-                                     };
+                                   };
         
         self.messageLabel.attributedText = [[NSAttributedString alloc] initWithString:self.message
                                                                            attributes:attributes];
@@ -427,13 +429,31 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
         
         CGSize sizeThatFits = [self.messageLabel sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
         self.messageLabel.frame = CGRectMake(kRtAlertViewSideMargin,
-                                             yOffset,
+                                             scrollViewOffset,
                                              labelWidth,
                                              sizeThatFits.height);
-        
-        [self.contentView addSubview:self.messageLabel];
-        
+
         yOffset += self.messageLabel.frame.size.height;
+        scrollViewOffset += self.messageLabel.frame.size.height;
+    }
+
+    UIScrollView *scrollView = nil;
+    if ((self.title != nil) ||
+        (self.message != nil))
+    {
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                    kRtAlertViewTopAndBottomMargin,
+                                                                    kRtAlertViewWidth,
+                                                                    scrollViewOffset)];
+        scrollView.backgroundColor = [UIColor clearColor];
+        if (self.title != nil)
+        {
+            [scrollView addSubview:self.titleLabel];
+        }
+        if (self.message != nil)
+        {
+            [scrollView addSubview:self.messageLabel];
+        }
     }
 
     UIView *textFieldContainerView = nil;
@@ -456,7 +476,7 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
                                                    kRtAlertViewSingleTextFieldBackgroundHeight);
             [textFieldContainerView addSubview:textFieldBackground];
 
-            UITextField *textField1 = (self.alertViewStyle == UIAlertViewStylePlainTextInput) ? [self textFieldAtIndex:0] : [self textFieldAtIndex:1];
+            UITextField *textField1 = [self textFieldAtIndex:0];
             textField1.frame = CGRectMake(kRtAlertViewTextFieldOriginX + 6.0f,
                                           kRtAlertViewTextFieldOriginY,
                                           kRtAlertViewTextFieldBackgroundWidth - 6.0f,
@@ -647,13 +667,9 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
                                    alertHeight)];
     
     // Add everything to the content view
-    if (self.titleLabel != nil)
+    if (scrollView != nil)
     {
-        [self.contentView addSubview:self.titleLabel];
-    }
-    if (self.messageLabel != nil)
-    {
-        [self.contentView addSubview:self.messageLabel];
+        [self.contentView addSubview:scrollView];
     }
     if (textFieldContainerView != nil)
     {
@@ -761,9 +777,9 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
                                                                        maskRect.size.width,
                                                                        maskRect.size.height)];
 	self.alertContainerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-    UIViewAutoresizingFlexibleRightMargin |
-    UIViewAutoresizingFlexibleTopMargin |
-    UIViewAutoresizingFlexibleBottomMargin;
+                                               UIViewAutoresizingFlexibleRightMargin |
+                                               UIViewAutoresizingFlexibleTopMargin |
+                                               UIViewAutoresizingFlexibleBottomMargin;
 	[self.alertContainerView.layer setMasksToBounds:YES];
     self.alertContainerView.backgroundColor = [UIColor clearColor];
 	[self.alertContainerView.layer setCornerRadius:kRtAlertViewCornerRadius];
@@ -788,7 +804,7 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
     self.alertBackgroundView.alpha = 0.2f;
     
     [self.alertContainerView addSubview:self.alertBackgroundView];
-    
+
 	self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
                                                                 0.0f,
                                                                 self.alertContainerView.frame.size.width,
@@ -824,7 +840,8 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
 
 - (void)showAlertView
 {
-    [CATransaction begin]; {
+    [CATransaction begin];
+    {
 		CATransform3D transformFrom = CATransform3DMakeScale(1.26, 1.26, 1.0);
 		CATransform3D transformTo = CATransform3DMakeScale(1.0, 1.0, 1.0);
 		
@@ -857,7 +874,8 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
                                               forKey:@"opacity"];
 		[self.contentView.layer addAnimation:opacityAnimation
                                       forKey:@"opacity"];
-	} [CATransaction commit];
+	}
+    [CATransaction commit];
 }
 
 
@@ -930,7 +948,8 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
 
 - (void)dismissAlertView
 {
-	[CATransaction begin]; {
+	[CATransaction begin];
+    {
 		CATransform3D transformFrom = CATransform3DMakeScale(1.0, 1.0, 1.0);
 		CATransform3D transformTo = CATransform3DMakeScale(0.840, 0.840, 1.0);
 		
@@ -941,7 +960,8 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
 		self.alertContainerView.layer.transform = transformTo;
 		
 		// Zoom out the modal
-		[self.alertContainerView.layer addAnimation:modalTransformAnimation forKey:@"transform"];
+		[self.alertContainerView.layer addAnimation:modalTransformAnimation
+                                             forKey:@"transform"];
 		
 		kSpringAnimationClassName *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
 		opacityAnimation.fromValue = @1.0f;
@@ -952,14 +972,19 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
 		self.contentView.layer.opacity = 0.0;
 		
 		// Fade out the gray background
-		[self.backgroundTransparentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+		[self.backgroundTransparentView.layer addAnimation:opacityAnimation
+                                                    forKey:@"opacity"];
 		
 		// Fade out the modal
 		// Would love to fade out all these things at once, but UIToolbar doesn't like it
-		[self.guassianBlurView.layer addAnimation:opacityAnimation forKey:@"opacity"];
-		[self.fullScreenContainerView.layer addAnimation:opacityAnimation forKey:@"opacity"];
-		[self.contentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
-	} [CATransaction commit];
+		[self.guassianBlurView.layer addAnimation:opacityAnimation
+                                           forKey:@"opacity"];
+		[self.fullScreenContainerView.layer addAnimation:opacityAnimation
+                                                  forKey:@"opacity"];
+		[self.contentView.layer addAnimation:opacityAnimation
+                                      forKey:@"opacity"];
+	}
+    [CATransaction commit];
 }
 
 
