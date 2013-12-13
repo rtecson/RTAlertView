@@ -7,7 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RTAlertViewController">
             <connections>
                 <outlet property="alertContainerView" destination="hh5-Kl-FGE" id="Td1-K5-y9f"/>
-                <outlet property="backgroundTransparentView" destination="uV7-2h-Lby" id="Ka6-oJ-cr3"/>
+                <outlet property="blackTransparentContainerView" destination="uV7-2h-Lby" id="WMD-jE-xFI"/>
                 <outlet property="contentView" destination="wbd-i8-Twu" id="QBn-Rd-iua"/>
                 <outlet property="gaussianBlurContainerView" destination="TKa-2p-Gsh" id="WR7-lB-TKR"/>
                 <outlet property="view" destination="1" id="9pR-Sf-2rU"/>
@@ -18,11 +18,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-2h-Lby" userLabel="backgroundTransparentView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-2h-Lby" userLabel="blackTransparentContainerView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ql-OV-tH3" userLabel="blackTransparent">
+                        <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ql-OV-tH3" userLabel="blackTransparentView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

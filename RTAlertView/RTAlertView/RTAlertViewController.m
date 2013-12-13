@@ -50,7 +50,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 // IBOutlets
 
-@property (weak, nonatomic) IBOutlet UIView *backgroundTransparentView;
+@property (weak, nonatomic) IBOutlet UIView *blackTransparentContainerView;
 @property (weak, nonatomic) IBOutlet UIView *alertContainerView;
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
@@ -454,13 +454,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 		RTSpringAnimation *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
 		opacityAnimation.fromValue = @0.0f;
 		opacityAnimation.toValue = @1.0f;
-		self.backgroundTransparentView.layer.opacity = 1.0f;
+		self.blackTransparentContainerView.layer.opacity = 1.0f;
 		self.gaussianBlurContainerView.layer.opacity = 1.0f;
 		self.view.layer.opacity = 1.0f;
 		self.contentView.layer.opacity = 1.0f;
 		
 		// Fade in
-		[self.backgroundTransparentView.layer addAnimation:opacityAnimation
+		[self.blackTransparentContainerView.layer addAnimation:opacityAnimation
                                               forKey:@"opacity"];
 
 		// Fade in the modal
@@ -518,13 +518,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 		RTSpringAnimation *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
 		opacityAnimation.fromValue = @1.0f;
 		opacityAnimation.toValue = @0.0f;
-		self.backgroundTransparentView.layer.opacity = 0.0;
+		self.blackTransparentContainerView.layer.opacity = 0.0;
 		self.gaussianBlurContainerView.layer.opacity = 0.0;
 		self.view.layer.opacity = 0.0;
 		self.contentView.layer.opacity = 0.0;
 		
 		// Fade out the gray background
-		[self.backgroundTransparentView.layer addAnimation:opacityAnimation
+		[self.blackTransparentContainerView.layer addAnimation:opacityAnimation
                                                     forKey:@"opacity"];
 
 		// Fade out the modal
