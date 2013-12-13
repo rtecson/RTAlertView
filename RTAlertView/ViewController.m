@@ -1,20 +1,20 @@
 //
-//  mzxViewController.m
+//  ViewController.m
 //  RTAlertView
 //
-//  Created by Roland on 11/23/2013.
-//  Copyright (c) 2013 MoozX Internet Ventures. All rights reserved.
+//  Created by Roland Tecson on 11/23/2013.
+//  Copyright (c) 2013 12 Harmonic Studios. All rights reserved.
 //
 
 
-#import "mzxViewController.h"
+#import "ViewController.h"
 #import "RTAlertView.h"
 
 
 #define kCustomColor [UIColor colorWithRed:(55.0f/255.0f) green:(130.0f/255.0f) blue:(75.0f/255.0f) alpha:1.0f]
 
 
-@interface mzxViewController () <UIAlertViewDelegate,
+@interface ViewController () <UIAlertViewDelegate,
                                  RTAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
@@ -26,7 +26,7 @@
 @end
 
 
-@implementation mzxViewController
+@implementation ViewController
 
 
 - (void)viewDidLoad
@@ -96,6 +96,12 @@
     customAlertView.cancelButtonColor = kCustomColor;
 
 	[customAlertView show];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0f * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
+    {
+        [customAlertView dismissWithClickedButtonIndex:0
+                                              animated:YES];
+    });
 }
 
 

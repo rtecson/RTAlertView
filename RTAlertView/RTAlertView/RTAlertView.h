@@ -1,9 +1,9 @@
 //
 //  RTAlertView.h
-//  Woodshed
+//  RTAlertView
 //
 //  Created by Roland Tecson on 11/22/2013.
-//  Copyright (c) 2013 MoozX Internet Ventures. All rights reserved.
+//  Copyright (c) 2013 12 Harmonic Studios. All rights reserved.
 //
 // The MIT License (MIT)
 //
@@ -53,7 +53,7 @@
 @end
 
 
-@interface RTAlertView : UIView
+@interface RTAlertView : NSObject
 
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message

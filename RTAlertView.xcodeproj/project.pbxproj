@@ -12,10 +12,10 @@
 		2A3DA4A018419F8B00378872 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3DA49F18419F8B00378872 /* UIKit.framework */; };
 		2A3DA4A618419F8B00378872 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A3DA4A418419F8B00378872 /* InfoPlist.strings */; };
 		2A3DA4A818419F8B00378872 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4A718419F8B00378872 /* main.m */; };
-		2A3DA4AC18419F8B00378872 /* mzxAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4AB18419F8B00378872 /* mzxAppDelegate.m */; };
+		2A3DA4AC18419F8B00378872 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4AB18419F8B00378872 /* AppDelegate.m */; };
 		2A3DA4AF18419F8B00378872 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A3DA4AD18419F8B00378872 /* Main_iPhone.storyboard */; };
 		2A3DA4B218419F8B00378872 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A3DA4B018419F8B00378872 /* Main_iPad.storyboard */; };
-		2A3DA4B518419F8B00378872 /* mzxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4B418419F8B00378872 /* mzxViewController.m */; };
+		2A3DA4B518419F8B00378872 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4B418419F8B00378872 /* ViewController.m */; };
 		2A3DA4B718419F8B00378872 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3DA4B618419F8B00378872 /* Images.xcassets */; };
 		2A3DA4BE18419F8B00378872 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3DA4BD18419F8B00378872 /* XCTest.framework */; };
 		2A3DA4BF18419F8B00378872 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3DA49B18419F8B00378872 /* Foundation.framework */; };
@@ -24,6 +24,8 @@
 		2A3DA4CA18419F8B00378872 /* RTAlertViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4C918419F8B00378872 /* RTAlertViewTests.m */; };
 		2A3DA4D81841A05C00378872 /* RTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3DA4D61841A05C00378872 /* RTAlertView.m */; };
 		2A4F3E091850395B00971351 /* RTAlertView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A4F3E081850395B00971351 /* RTAlertView.xcassets */; };
+		2A8F49F7185389CB005855E7 /* RTAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */; };
+		2A8F49FA1853AD4F005855E7 /* RTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,12 +47,12 @@
 		2A3DA4A518419F8B00378872 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A3DA4A718419F8B00378872 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A3DA4A918419F8B00378872 /* RTAlertView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTAlertView-Prefix.pch"; sourceTree = "<group>"; };
-		2A3DA4AA18419F8B00378872 /* mzxAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mzxAppDelegate.h; sourceTree = "<group>"; };
-		2A3DA4AB18419F8B00378872 /* mzxAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mzxAppDelegate.m; sourceTree = "<group>"; };
+		2A3DA4AA18419F8B00378872 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2A3DA4AB18419F8B00378872 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2A3DA4AE18419F8B00378872 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		2A3DA4B118419F8B00378872 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		2A3DA4B318419F8B00378872 /* mzxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mzxViewController.h; sourceTree = "<group>"; };
-		2A3DA4B418419F8B00378872 /* mzxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mzxViewController.m; sourceTree = "<group>"; };
+		2A3DA4B318419F8B00378872 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2A3DA4B418419F8B00378872 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2A3DA4B618419F8B00378872 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2A3DA4BC18419F8B00378872 /* RTAlertViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTAlertViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A3DA4BD18419F8B00378872 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -60,6 +62,9 @@
 		2A3DA4D51841A05C00378872 /* RTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertView.h; sourceTree = "<group>"; };
 		2A3DA4D61841A05C00378872 /* RTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertView.m; sourceTree = "<group>"; };
 		2A4F3E081850395B00971351 /* RTAlertView.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RTAlertView.xcassets; sourceTree = "<group>"; };
+		2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTAlertViewController.xib; sourceTree = "<group>"; };
+		2A8F49F81853AD4F005855E7 /* RTAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertViewController.h; sourceTree = "<group>"; };
+		2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,12 +125,12 @@
 			isa = PBXGroup;
 			children = (
 				2A3DA4D31841A05C00378872 /* RTAlertView */,
-				2A3DA4AA18419F8B00378872 /* mzxAppDelegate.h */,
-				2A3DA4AB18419F8B00378872 /* mzxAppDelegate.m */,
+				2A3DA4AA18419F8B00378872 /* AppDelegate.h */,
+				2A3DA4AB18419F8B00378872 /* AppDelegate.m */,
 				2A3DA4AD18419F8B00378872 /* Main_iPhone.storyboard */,
 				2A3DA4B018419F8B00378872 /* Main_iPad.storyboard */,
-				2A3DA4B318419F8B00378872 /* mzxViewController.h */,
-				2A3DA4B418419F8B00378872 /* mzxViewController.m */,
+				2A3DA4B318419F8B00378872 /* ViewController.h */,
+				2A3DA4B418419F8B00378872 /* ViewController.m */,
 				2A3DA4B618419F8B00378872 /* Images.xcassets */,
 				2A3DA4A218419F8B00378872 /* Supporting Files */,
 			);
@@ -166,6 +171,9 @@
 			children = (
 				2A3DA4D51841A05C00378872 /* RTAlertView.h */,
 				2A3DA4D61841A05C00378872 /* RTAlertView.m */,
+				2A8F49F81853AD4F005855E7 /* RTAlertViewController.h */,
+				2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */,
+				2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */,
 				2A4F3E081850395B00971351 /* RTAlertView.xcassets */,
 			);
 			path = RTAlertView;
@@ -249,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A3DA4B218419F8B00378872 /* Main_iPad.storyboard in Resources */,
+				2A8F49F7185389CB005855E7 /* RTAlertViewController.xib in Resources */,
 				2A3DA4B718419F8B00378872 /* Images.xcassets in Resources */,
 				2A3DA4AF18419F8B00378872 /* Main_iPhone.storyboard in Resources */,
 				2A3DA4A618419F8B00378872 /* InfoPlist.strings in Resources */,
@@ -271,10 +280,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A3DA4AC18419F8B00378872 /* mzxAppDelegate.m in Sources */,
+				2A3DA4AC18419F8B00378872 /* AppDelegate.m in Sources */,
 				2A3DA4D81841A05C00378872 /* RTAlertView.m in Sources */,
-				2A3DA4B518419F8B00378872 /* mzxViewController.m in Sources */,
+				2A3DA4B518419F8B00378872 /* ViewController.m in Sources */,
 				2A3DA4A818419F8B00378872 /* main.m in Sources */,
+				2A8F49FA1853AD4F005855E7 /* RTAlertViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

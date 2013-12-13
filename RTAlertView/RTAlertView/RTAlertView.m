@@ -1,88 +1,19 @@
 //
 //  RTAlertView.m
-//  Woodshed
+//  RTAlertView
 //
 //  Created by Roland Tecson on 11/22/2013.
-//  Copyright (c) 2013 MoozX Internet Ventures. All rights reserved.
+//  Copyright (c) 2013 12 Harmonic Studios. All rights reserved.
 //
 
 
 #import "RTAlertView.h"
-
-
-static CGFloat kRtAlertViewSideMargin = 15.0f;
-static CGFloat kRtAlertViewTopAndBottomMargin = 19.0f;
-static CGFloat kRtAlertViewWidth = 270.0f;
-static CGFloat kRtAlertViewButtonHeight = 44.0f;
-
-#define kRtAlertViewTitleColor [UIColor blackColor]
-#define kRtAlertViewTitleFont  [UIFont boldSystemFontOfSize:17.0f]
-#define kRtAlertViewMessageColor [UIColor blackColor]
-#define kRtAlertViewMessageFont  [UIFont systemFontOfSize:14.0f]
-#define kRtAlertViewCancelButtonColor [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
-#define kRtAlertViewCancelButtonFont  [UIFont boldSystemFontOfSize:17.0f]
-#define kRtAlertViewOtherButtonColor [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
-#define kRtAlertViewOtherButtonFont  [UIFont systemFontOfSize:17.0f]
-
-static CGFloat kRtAlertViewCornerRadius = 7.0f;
-
-#define kRtAlertViewDividerLineColor      [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f]
-#define kRtAlertViewDefaultiOS7BlueColor  [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
-#define kRtAlertViewButtonBackgroundColor [UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:0.6]
-#define kRtAlertViewBackgroundViewColor   [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]
-
-static CGFloat kRtAlertViewSingleTextFieldContainerHeight = 48.0f;
-static CGFloat kRtAlertViewDoubleTextFieldContainerHeight = 77.0f;
-static NSString *kRtAlertViewSingleTextFieldBackgroundImage = @"bg-single-textfield";
-static NSString *kRtAlertViewDoubleTextFieldBackgroundImage = @"bg-double-textfield";
-static CGFloat kRtAlertViewTextFieldOriginX = 15.0f;
-static CGFloat kRtAlertViewTextFieldOriginY = 22.0f;
-static CGFloat kRtAlertViewTextFieldBackgroundWidth = 240.0f;
-static CGFloat kRtAlertViewSingleTextFieldBackgroundHeight = 30.0f;
-static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
-
-
-#define kSpringAnimationClassName CASpringAnimation
-
-
-@interface CASpringAnimation : CABasicAnimation
-- (float)damping;
-- (double)durationForEpsilon:(double)arg1;
-- (float)mass;
-- (void)setDamping:(float)arg1;
-- (void)setMass:(float)arg1;
-- (void)setStiffness:(float)arg1;
-- (void)setVelocity:(float)arg1;
-- (float)stiffness;
-- (float)velocity;
-@end
+#import "RTAlertViewController.h"
 
 
 @interface RTAlertView ()
 
-@property (nonatomic, readwrite, getter=isVisible) BOOL visible;
-@property (nonatomic, readwrite) NSInteger firstOtherButtonIndex;
-
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UIView *fullScreenContainerView;
-@property (strong, nonatomic) UIView *backgroundTransparentView;
-@property (strong, nonatomic) UIView *alertContainerView;
-@property (strong, nonatomic) UIView *guassianBlurView;
-@property (strong, nonatomic) UIView *alertBackgroundView;
-@property (strong, nonatomic) UIView *contentView;
-@property (strong, nonatomic) UILabel *titleLabel;
-@property (strong, nonatomic) UILabel *messageLabel;
-@property (strong, nonatomic) UIView *dividerLineView;
-
-@property (strong, nonatomic) UIButton *cancelButton;
-
-@property (strong, nonatomic) NSString *cancelButtonTitle;
-
-@property (strong, nonatomic) NSMutableArray *buttonTitleArray;
-@property (strong, nonatomic) NSMutableArray *buttonArray;
-@property (nonatomic) NSInteger clickedButtonIndex;
-
-@property (strong, nonatomic) NSMutableArray *textFieldArray;
+@property (strong, nonatomic) RTAlertViewController *alertViewController;
 
 @end
 
@@ -101,28 +32,16 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
 	self = [super init];
     if (self != nil)
     {
-        self.titleColor = kRtAlertViewTitleColor;
-        self.titleFont = kRtAlertViewTitleFont;
-        self.messageColor = kRtAlertViewMessageColor;
-        self.messageFont = kRtAlertViewMessageFont;
-        self.cancelButtonColor = kRtAlertViewCancelButtonColor;
-        self.cancelButtonFont = kRtAlertViewCancelButtonFont;
-        self.otherButtonColor = kRtAlertViewOtherButtonColor;
-        self.otherButtonFont = kRtAlertViewOtherButtonFont;
-
-        self.title = title;
-        self.message = message;
-        self.delegate = delegate;
-        self.visible = NO;
-        self.cancelButtonIndex = -1;
-        self.firstOtherButtonIndex = -1;
-        self.clickedButtonIndex = -1;
+        // Initialise properties
+        self.alertViewController.alertViewTitle = title;
+        self.alertViewController.alertViewMessage = message;
+        self.alertViewController.delegate = delegate;
         
         // Create cancel button if specified
         if (cancelButtonTitle != nil)
         {
-            self.cancelButtonTitle = cancelButtonTitle;
-            self.cancelButtonIndex = [self addButtonWithTitle:cancelButtonTitle];
+            self.alertViewController.cancelButtonTitle = cancelButtonTitle;
+            self.alertViewController.cancelButtonIndex = [self.alertViewController addButtonWithTitle:cancelButtonTitle];
         }
 
         // Variable number of otherButtonTitles
@@ -130,7 +49,7 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
         va_start(args, otherButtonTitles);
         for (NSString *arg = otherButtonTitles; arg != nil; arg = va_arg(args, NSString*))
         {
-            [self addButtonWithTitle:arg];
+            [self.alertViewController addButtonWithTitle:arg];
         }
         va_end(args);
     }
@@ -139,866 +58,230 @@ static CGFloat kRtAlertViewDoubleTextFieldBackgroundHeight = 59.0f;
 }
 
 
-- (void)dealloc
-{
-    self.buttonArray = nil;
-    self.buttonTitleArray = nil;
-}
-
-
-#pragma mark - Getters
-
-- (NSInteger)numberOfButtons
-{
-    return self.buttonTitleArray.count;
-}
-
-
-- (NSInteger)firstOtherButtonIndex
-{
-    if ((self.cancelButtonIndex == 0) &&
-        (self.numberOfButtons > 1))
-    {
-        // Cancel button is first button, two or more buttons exist
-        return 1;
-    }
-    else if ((self.cancelButtonIndex == -1) &&
-             (self.numberOfButtons > 0))
-    {
-        // No cancel button, one or more buttons exist
-        return 0;
-    }
-    else if ((self.cancelButtonIndex > 0) &&
-             (self.numberOfButtons > 1))
-    {
-        // Cancel button is not first button
-        return 0;
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-
-- (NSMutableArray *)textFieldArray
-{
-    if (_textFieldArray == nil)
-    {
-        switch (self.alertViewStyle)
-        {
-            case UIAlertViewStyleLoginAndPasswordInput:
-            {
-                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:2];
-                
-                UITextField *loginTextField = [[UITextField alloc] init];
-                loginTextField.secureTextEntry = NO;
-                loginTextField.backgroundColor = [UIColor clearColor];
-                loginTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                loginTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                loginTextField.returnKeyType = UIReturnKeyNext;
-                loginTextField.borderStyle = UITextBorderStyleNone;
-                loginTextField.font = [loginTextField.font fontWithSize:13.0f];
-                loginTextField.placeholder = @"Login";
-                [_textFieldArray addObject:loginTextField];
-                
-                UITextField *passwordTextField = [[UITextField alloc] init];
-                passwordTextField.secureTextEntry = YES;
-                passwordTextField.backgroundColor = [UIColor clearColor];
-                passwordTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                passwordTextField.returnKeyType = UIReturnKeyNext;
-                passwordTextField.borderStyle = UITextBorderStyleNone;
-                passwordTextField.font = [passwordTextField.font fontWithSize:13.0f];
-                passwordTextField.placeholder = @"Password";
-                [_textFieldArray addObject:passwordTextField];
-            }
-                break;
-            case UIAlertViewStyleSecureTextInput:
-            {
-                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
-                UITextField *secureTextField = [[UITextField alloc] init];
-                secureTextField.secureTextEntry = YES;
-                secureTextField.backgroundColor = [UIColor clearColor];
-                secureTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                secureTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                secureTextField.returnKeyType = UIReturnKeyNext;
-                secureTextField.borderStyle = UITextBorderStyleNone;
-                secureTextField.font = [secureTextField.font fontWithSize:13.0f];
-                [_textFieldArray addObject:secureTextField];
-            }
-                break;
-            case UIAlertViewStylePlainTextInput:
-            {
-                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
-                UITextField *plainTextField = [[UITextField alloc] init];
-                plainTextField.secureTextEntry = NO;
-                plainTextField.backgroundColor = [UIColor clearColor];
-                plainTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                plainTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                plainTextField.returnKeyType = UIReturnKeyNext;
-                plainTextField.borderStyle = UITextBorderStyleNone;
-                plainTextField.font = [plainTextField.font fontWithSize:13.0f];
-                [_textFieldArray addObject:plainTextField];
-            }
-                break;
-            case UIAlertViewStyleDefault:
-            default:
-            {
-                _textFieldArray = nil;
-            }
-                break;
-        }
-    }
-    
-    return _textFieldArray;
-}
-
-
-#pragma mark - Setters
-
-- (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
-{
-    self.textFieldArray = nil;
-    _alertViewStyle = alertViewStyle;
-}
-
-
-- (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
-{
-    // Is cancelButtonIndex valid?
-    if (cancelButtonIndex < self.numberOfButtons)
-    {
-        // Yes, save it
-        _cancelButtonIndex = cancelButtonIndex;
-    }
-}
-
-
-#pragma mark - "Public" methods
+#pragma mark - Public methods
 
 - (NSInteger)addButtonWithTitle:(NSString *)title
 {
-    if (title != nil)
-    {
-        // Lazy instantiation
-        if (self.buttonTitleArray == nil)
-        {
-            self.buttonTitleArray = [[NSMutableArray alloc] init];
-        }
-        
-        [self.buttonTitleArray addObject:title];
-        
-        return (self.numberOfButtons - 1);
-    }
-    else
-    {
-        return -1;
-    }
+    return [self.alertViewController addButtonWithTitle:title];
 }
 
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex
 {
-    if ((buttonIndex < self.numberOfButtons) &&
-        (buttonIndex > -1))
-    {
-        return [self.buttonTitleArray objectAtIndex:buttonIndex];
-    }
-    else
-    {
-        return nil;
-    }
+    return [self.alertViewController buttonTitleAtIndex:buttonIndex];
 }
 
 
 - (void)show
 {
-    if ([self.delegate respondsToSelector:@selector(willPresentAlertView:)])
-    {
-        [self.delegate willPresentAlertView:self];
-    }
-    
-    [self setupPositions];
-	[self setupWindow];
-    [self showAlertView];
-    
-    self.visible = YES;
-    
-    if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)])
-    {
-        [self.delegate didPresentAlertView:self];
-    }
+    [self.alertViewController show];
 }
 
 
 - (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex
 {
-    // TODO: Raise NSRangeException if textFieldIndex is inconsistent with alertViewStyle
-    if (self.alertViewStyle == UIAlertViewStyleDefault)
-    {
-        return nil;
-    }
-    
-    if (textFieldIndex < 0)
-    {
-        return nil;
-    }
-
-    if ((self.alertViewStyle == UIAlertViewStyleLoginAndPasswordInput) &&
-        (textFieldIndex > 1))
-    {
-        return nil;
-    }
-    
-    if (((self.alertViewStyle == UIAlertViewStylePlainTextInput) ||
-         (self.alertViewStyle == UIAlertViewStyleSecureTextInput)) &&
-        (textFieldIndex > 0))
-    {
-        return nil;
-    }
-
-    return [self.textFieldArray objectAtIndex:textFieldIndex];
+    return [self.alertViewController textFieldAtIndex:textFieldIndex];
 }
 
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex
                              animated:(BOOL)animated
 {
-    if (buttonIndex < self.numberOfButtons)
-    {
-        self.clickedButtonIndex = buttonIndex;
-    }
-    
-    [self dismiss];
+    [self.alertViewController dismissWithClickedButtonIndex:buttonIndex
+                                                   animated:animated];
 }
 
 
-#pragma mark - "Internal" methods
+#pragma mark - Public Getters
 
-- (void)setupPositions
+- (id<RTAlertViewDelegate>)delegate
 {
-    CGFloat labelWidth = kRtAlertViewWidth - (kRtAlertViewSideMargin * 2.0f);
-    
-    CGFloat yOffset = kRtAlertViewTopAndBottomMargin;
-
-    CGFloat scrollViewOffset = 0.0f;
-
-    if (self.title != nil)
-    {
-        NSDictionary *attributes = @{
-                                     NSForegroundColorAttributeName:self.titleColor,
-                                     NSFontAttributeName:self.titleFont
-                                   };
-        
-        self.titleLabel = [[UILabel alloc] init];
-        self.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:self.title
-                                                                         attributes:attributes];
-        self.titleLabel.numberOfLines = 0;
-        self.titleLabel.textAlignment = NSTextAlignmentCenter;
-        self.titleLabel.backgroundColor = [UIColor clearColor];
-        
-        CGSize sizeThatFits = [self.titleLabel sizeThatFits:CGSizeMake(labelWidth,
-                                                                       MAXFLOAT)];
-        self.titleLabel.frame = CGRectMake(kRtAlertViewSideMargin,
-                                           scrollViewOffset,
-                                           labelWidth,
-                                           sizeThatFits.height);
-
-        yOffset += self.titleLabel.frame.size.height;
-        scrollViewOffset += self.titleLabel.frame.size.height;
-    }
-    
-    // 4pt gap between title and message, even if a title doesn't exist
-    yOffset += 4.0f;
-    
-    if (self.message != nil)
-    {
-        self.messageLabel = [[UILabel alloc] init];
-        self.messageLabel.numberOfLines = 0;
-        self.messageLabel.backgroundColor = [UIColor clearColor];
-
-        NSDictionary *attributes = @{
-                                     NSForegroundColorAttributeName:self.messageColor,
-                                     NSFontAttributeName:self.messageFont
-                                   };
-        
-        self.messageLabel.attributedText = [[NSAttributedString alloc] initWithString:self.message
-                                                                           attributes:attributes];
-        self.messageLabel.textAlignment = NSTextAlignmentCenter;
-        
-        CGSize sizeThatFits = [self.messageLabel sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
-        self.messageLabel.frame = CGRectMake(kRtAlertViewSideMargin,
-                                             scrollViewOffset,
-                                             labelWidth,
-                                             sizeThatFits.height);
-
-        yOffset += self.messageLabel.frame.size.height;
-        scrollViewOffset += self.messageLabel.frame.size.height;
-    }
-
-    UIScrollView *scrollView = nil;
-    if ((self.title != nil) ||
-        (self.message != nil))
-    {
-        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                    kRtAlertViewTopAndBottomMargin,
-                                                                    kRtAlertViewWidth,
-                                                                    scrollViewOffset)];
-        scrollView.backgroundColor = [UIColor clearColor];
-        if (self.title != nil)
-        {
-            [scrollView addSubview:self.titleLabel];
-        }
-        if (self.message != nil)
-        {
-            [scrollView addSubview:self.messageLabel];
-        }
-    }
-
-    UIView *textFieldContainerView = nil;
-    switch (self.alertViewStyle)
-    {
-        case UIAlertViewStylePlainTextInput:
-        case UIAlertViewStyleSecureTextInput:
-        {
-            CGFloat textFieldContainerViewHeight = kRtAlertViewSingleTextFieldContainerHeight;
-            textFieldContainerView = [[UIView alloc] init];
-            textFieldContainerView.frame = CGRectMake(0.0f,
-                                                      yOffset,
-                                                      kRtAlertViewWidth,
-                                                      textFieldContainerViewHeight);
-            
-            UIImageView *textFieldBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kRtAlertViewSingleTextFieldBackgroundImage]];
-            textFieldBackground.frame = CGRectMake(kRtAlertViewTextFieldOriginX,
-                                                   kRtAlertViewTextFieldOriginY,
-                                                   kRtAlertViewTextFieldBackgroundWidth,
-                                                   kRtAlertViewSingleTextFieldBackgroundHeight);
-            [textFieldContainerView addSubview:textFieldBackground];
-
-            UITextField *textField1 = [self textFieldAtIndex:0];
-            textField1.frame = CGRectMake(kRtAlertViewTextFieldOriginX + 6.0f,
-                                          kRtAlertViewTextFieldOriginY,
-                                          kRtAlertViewTextFieldBackgroundWidth - 6.0f,
-                                          kRtAlertViewSingleTextFieldBackgroundHeight);
-            [textFieldContainerView addSubview:textField1];
-
-            yOffset += textFieldContainerViewHeight;
-        }
-            break;
-        case UIAlertViewStyleLoginAndPasswordInput:
-        {
-            CGFloat textFieldContainerViewHeight = kRtAlertViewDoubleTextFieldContainerHeight;
-            textFieldContainerView = [[UIView alloc] init];
-            textFieldContainerView.frame = CGRectMake(0.0f,
-                                                      yOffset,
-                                                      kRtAlertViewWidth,
-                                                      textFieldContainerViewHeight);
-            
-            UIImageView *textFieldBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:kRtAlertViewDoubleTextFieldBackgroundImage]];
-            textFieldBackground.frame = CGRectMake(kRtAlertViewTextFieldOriginX,
-                                                   kRtAlertViewTextFieldOriginY,
-                                                   kRtAlertViewTextFieldBackgroundWidth,
-                                                   kRtAlertViewDoubleTextFieldBackgroundHeight);
-            [textFieldContainerView addSubview:textFieldBackground];
-            
-            UITextField *textField1 = [self textFieldAtIndex:0];
-            UITextField *textField2 = [self textFieldAtIndex:1];
-            textField1.frame = CGRectMake(kRtAlertViewTextFieldOriginX + 6.0f,
-                                          kRtAlertViewTextFieldOriginY,
-                                          kRtAlertViewTextFieldBackgroundWidth - 6.0f,
-                                          kRtAlertViewSingleTextFieldBackgroundHeight);
-            textField2.frame = CGRectMake(kRtAlertViewTextFieldOriginX + 6.0f,
-                                          kRtAlertViewTextFieldOriginY + kRtAlertViewSingleTextFieldBackgroundHeight,
-                                          kRtAlertViewTextFieldBackgroundWidth - 6.0f,
-                                          kRtAlertViewSingleTextFieldBackgroundHeight);
-            [textFieldContainerView addSubview:textField1];
-            [textFieldContainerView addSubview:textField2];
-            
-            yOffset += textFieldContainerViewHeight;
-        }
-            break;
-        case UIAlertViewStyleDefault:
-        default:
-        {
-            // Do nothing, no textfield
-        }
-            break;
-    }
-    
-    yOffset += kRtAlertViewTopAndBottomMargin;
-
-    UIView *buttonContainerView = nil;
-    if (self.numberOfButtons == 2)
-    {
-        buttonContainerView = [[UIView alloc] init];
-        buttonContainerView.frame = CGRectMake(0.0f,
-                                               yOffset,
-                                               kRtAlertViewWidth,
-                                               kRtAlertViewButtonHeight);
-        buttonContainerView.backgroundColor = [UIColor clearColor];
-//        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
-
-        UIView *dividerLineView = [self setupDividerLineAtY:0.0f];
-        [buttonContainerView addSubview:dividerLineView];
-//        NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
-        
-        UIView *horizontalDividerLineView = [self setupHorizontalDividerLineAtY:0.0f];
-        [buttonContainerView addSubview:horizontalDividerLineView];
-//        NSLog(@"horizontalDividerLineView: x=%f, y=%f, w=%f, h=%f", horizontalDividerLineView.frame.origin.x, horizontalDividerLineView.frame.origin.y, horizontalDividerLineView.frame.size.width, horizontalDividerLineView.frame.size.height);
-        
-        for (int i=0; i<self.numberOfButtons; i++)
-        {
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            if (self.buttonArray == nil)
-            {
-                self.buttonArray = [[NSMutableArray alloc] init];
-            }
-            [self.buttonArray addObject:button];
-            
-            [button setTitle:[self.buttonTitleArray objectAtIndex:i]
-                    forState:UIControlStateNormal];
-            button.titleEdgeInsets = UIEdgeInsetsMake(1.0f,
-                                                      0.0f,
-                                                      0.0f,
-                                                      0.0f);
-
-            if (i == self.cancelButtonIndex)
-            {
-                [button setTitleColor:self.cancelButtonColor
-                             forState:UIControlStateNormal];
-                button.titleLabel.font = self.cancelButtonFont;
-                [button setBackgroundImage:[self imageFromColor:[self.cancelButtonColor colorWithAlphaComponent:0.1f]]
-                                  forState:UIControlStateHighlighted];
-            }
-            else
-            {
-                [button setTitleColor:self.otherButtonColor
-                             forState:UIControlStateNormal];
-                button.titleLabel.font = self.otherButtonFont;
-                [button setBackgroundImage:[self imageFromColor:[self.otherButtonColor colorWithAlphaComponent:0.1f]]
-                                  forState:UIControlStateHighlighted];
-            }
-            
-            [button addTarget:self
-                       action:@selector(buttonTapped:)
-             forControlEvents:UIControlEventTouchUpInside];
-
-            button.frame = CGRectMake((i * (kRtAlertViewWidth / 2.0f)),
-                                      yOffset - buttonContainerView.frame.origin.y,
-                                      (kRtAlertViewWidth / 2.0f),
-                                      kRtAlertViewButtonHeight);
-            button.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-                                      UIViewAutoresizingFlexibleTopMargin;
-
-//            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
-            [buttonContainerView addSubview:button];
-        }
-        
-        yOffset += kRtAlertViewButtonHeight;
-    }
-    else if (self.numberOfButtons > 0)
-    {
-        buttonContainerView = [[UIView alloc] init];
-        buttonContainerView.frame = CGRectMake(0.0f,
-                                               yOffset,
-                                               kRtAlertViewWidth,
-                                               (self.numberOfButtons * kRtAlertViewButtonHeight));
-        buttonContainerView.backgroundColor = [UIColor clearColor];
-//        NSLog(@"buttonContainerView: x=%f, y=%f, w=%f, h=%f", buttonContainerView.frame.origin.x, buttonContainerView.frame.origin.y, buttonContainerView.frame.size.width, buttonContainerView.frame.size.height);
-
-        for (int i=0; i<self.numberOfButtons; i++)
-        {
-            UIView *dividerLineView = [self setupDividerLineAtY:(yOffset - buttonContainerView.frame.origin.y)];
-            [buttonContainerView addSubview:dividerLineView];
-//            NSLog(@"dividerLineView: x=%f, y=%f, w=%f, h=%f", dividerLineView.frame.origin.x, dividerLineView.frame.origin.y, dividerLineView.frame.size.width, dividerLineView.frame.size.height);
-
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            if (self.buttonArray == nil)
-            {
-                self.buttonArray = [[NSMutableArray alloc] init];
-            }
-            [self.buttonArray addObject:button];
-
-            [button setTitle:[self.buttonTitleArray objectAtIndex:i]
-                    forState:UIControlStateNormal];
-            button.titleEdgeInsets = UIEdgeInsetsMake(1.0f,
-                                                      0.0f,
-                                                      0.0f,
-                                                      0.0f);
-
-            if (i == self.cancelButtonIndex)
-            {
-                [button setTitleColor:self.cancelButtonColor
-                             forState:UIControlStateNormal];
-                button.titleLabel.font = self.cancelButtonFont;
-                [button setBackgroundImage:[self imageFromColor:[self.cancelButtonColor colorWithAlphaComponent:0.1f]]
-                                  forState:UIControlStateHighlighted];
-            }
-            else
-            {
-                [button setTitleColor:self.otherButtonColor
-                             forState:UIControlStateNormal];
-                button.titleLabel.font = self.otherButtonFont;
-                [button setBackgroundImage:[self imageFromColor:[self.otherButtonColor colorWithAlphaComponent:0.1f]]
-                                  forState:UIControlStateHighlighted];
-            }
-            
-            [button addTarget:self
-                       action:@selector(buttonTapped:)
-             forControlEvents:UIControlEventTouchUpInside];
-
-            button.frame = CGRectMake(0.0f,
-                                      yOffset - buttonContainerView.frame.origin.y,
-                                      kRtAlertViewWidth,
-                                      kRtAlertViewButtonHeight);
-            button.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-                                      UIViewAutoresizingFlexibleTopMargin;
-
-//            NSLog(@"button: x=%f, y=%f, w=%f, h=%f", button.frame.origin.x, button.frame.origin.y, button.frame.size.width, button.frame.size.height);
-            [buttonContainerView addSubview:button];
-
-            yOffset += kRtAlertViewButtonHeight;
-        }
-    }
-
-    CGFloat alertHeight = yOffset;
-    [self setupWithSize:CGSizeMake(kRtAlertViewWidth,
-                                   alertHeight)];
-    
-    // Add everything to the content view
-    if (scrollView != nil)
-    {
-        [self.contentView addSubview:scrollView];
-    }
-    if (textFieldContainerView != nil)
-    {
-        [self.contentView addSubview:textFieldContainerView];
-    }
-    if (buttonContainerView != nil)
-    {
-        [self.contentView addSubview:buttonContainerView];
-    }
+    return self.alertViewController.delegate;
 }
 
 
-- (UIView *)setupDividerLineAtY:(CGFloat)yOffset
+- (UIAlertViewStyle)alertViewStyle
 {
-    UIView *dividerLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                       yOffset - 1.0f,
-                                                                       kRtAlertViewWidth,
-                                                                       1.0f)];
-    dividerLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-                                       UIViewAutoresizingFlexibleTopMargin;
+    return self.alertViewController.alertViewStyle;
+}
 
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-        ([UIScreen mainScreen].scale == 2.0))
+
+- (NSString *)title
+{
+    return self.alertViewController.alertViewTitle;
+}
+
+
+- (NSString *)message
+{
+    return self.alertViewController.alertViewMessage;
+}
+
+
+- (BOOL)isVisible
+{
+    return self.alertViewController.isAlertViewVisible;
+}
+
+
+- (NSInteger)numberOfButtons
+{
+    return self.alertViewController.numberOfButtons;
+}
+
+
+- (NSInteger)cancelButtonIndex
+{
+    return self.alertViewController.cancelButtonIndex;
+}
+
+
+- (NSInteger)firstOtherButtonIndex
+{
+    return self.alertViewController.firstOtherButtonIndex;
+}
+
+
+- (UIColor *)titleColor
+{
+    return self.alertViewController.titleColor;
+}
+
+
+- (UIFont *)titleFont
+{
+    return self.alertViewController.titleFont;
+}
+
+
+- (UIColor *)messageColor
+{
+    return self.alertViewController.messageColor;
+}
+
+
+- (UIFont *)messageFont
+{
+    return self.alertViewController.messageFont;
+}
+
+
+- (UIColor *)cancelButtonColor
+{
+    return self.alertViewController.cancelButtonColor;
+}
+
+
+- (UIFont *)cancelButtonFont
+{
+    return self.alertViewController.cancelButtonFont;
+}
+
+
+- (UIColor *)otherButtonColor
+{
+    return self.alertViewController.otherButtonColor;
+}
+
+
+- (UIFont *)otherButtonFont
+{
+    return self.alertViewController.otherButtonFont;
+}
+
+
+#pragma mark - Public Setters
+
+- (void)setDelegate:(id<RTAlertViewDelegate>)delegate
+{
+    self.alertViewController.delegate = delegate;
+}
+
+
+- (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
+{
+    self.alertViewController.alertViewStyle = alertViewStyle;
+}
+
+
+- (void)setTitle:(NSString *)title
+{
+    self.alertViewController.alertViewTitle = title;
+}
+
+
+- (void)setMessage:(NSString *)message
+{
+    self.alertViewController.alertViewMessage = message;
+}
+
+
+- (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
+{
+    self.alertViewController.cancelButtonIndex = cancelButtonIndex;
+}
+
+
+- (void)setTitleColor:(UIColor *)titleColor
+{
+    self.alertViewController.titleColor = titleColor;
+}
+
+
+- (void)setTitleFont:(UIFont *)titleFont
+{
+    self.alertViewController.titleFont = titleFont;
+}
+
+
+- (void)setMessageColor:(UIColor *)messageColor
+{
+    self.alertViewController.messageColor = messageColor;
+}
+
+
+- (void)setMessageFont:(UIFont *)messageFont
+{
+    self.alertViewController.messageFont = messageFont;
+}
+
+
+- (void)setCancelButtonColor:(UIColor *)cancelButtonColor
+{
+    self.alertViewController.cancelButtonColor = cancelButtonColor;
+}
+
+
+- (void)setCancelButtonFont:(UIFont *)cancelButtonFont
+{
+    self.alertViewController.cancelButtonFont = cancelButtonFont;
+}
+
+
+- (void)setOtherButtonColor:(UIColor *)otherButtonColor
+{
+    self.alertViewController.otherButtonColor = otherButtonColor;
+}
+
+
+- (void)setOtherButtonFont:(UIFont *)otherButtonFont
+{
+    self.alertViewController.otherButtonFont = otherButtonFont;
+}
+
+
+#pragma mark - Private Getters
+
+- (RTAlertViewController *)alertViewController
+{
+    if (_alertViewController == nil)
     {
-        // Retina display, divider line is 0.5px high
-        UIView *dividerLineViewInner = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                0.5f,
-                                                                                kRtAlertViewWidth,
-                                                                                0.5f)];
-        dividerLineViewInner.backgroundColor = kRtAlertViewDividerLineColor;
-        dividerLineViewInner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [dividerLineView addSubview:dividerLineViewInner];
-    }
-    else
-    {
-        // Non-retina display, divider line is 1px high
-        dividerLineView.backgroundColor = kRtAlertViewDividerLineColor;
-    }
-
-    return dividerLineView;
-}
-
-
-- (UIView *)setupHorizontalDividerLineAtY:(CGFloat)yOffset
-{
-    UIView *horizontalDividerLineView = [[UIView alloc] initWithFrame:CGRectMake((kRtAlertViewWidth / 2.0f),
-                                                                                 yOffset,
-                                                                                 1.0f,
-                                                                                 kRtAlertViewButtonHeight)];
-    horizontalDividerLineView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-                                                 UIViewAutoresizingFlexibleTopMargin;
-    UIView *horizontalDividerLineViewInner = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                      0.0f,
-                                                                                      0.5f,
-                                                                                      kRtAlertViewButtonHeight)];
-    horizontalDividerLineViewInner.backgroundColor = kRtAlertViewDividerLineColor;
-    horizontalDividerLineViewInner.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [horizontalDividerLineView addSubview:horizontalDividerLineViewInner];
-    
-    return horizontalDividerLineView;
-}
-
-
-- (UIImage *)imageFromColor:(UIColor *)color
-{
-    CGRect rect = CGRectMake(0.0f,
-                             0.0f,
-                             1.0f,
-                             1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-	
-    return image;
-}
-
-
-- (void)setupWithSize:(CGSize)size
-{
-	// Main container that fits the whole screen
-	self.fullScreenContainerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                            0.0f,
-                                                                            [[UIScreen mainScreen] bounds].size.width,
-                                                                            [[UIScreen mainScreen] bounds].size.height)];
-	self.fullScreenContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.fullScreenContainerView.backgroundColor = [UIColor clearColor];
-	
-	self.backgroundTransparentView = [[UIView alloc] initWithFrame:self.fullScreenContainerView.frame];
-	self.backgroundTransparentView.backgroundColor = kRtAlertViewBackgroundViewColor;
-	self.backgroundTransparentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	[self.fullScreenContainerView addSubview:self.backgroundTransparentView];
-    
-	CGRect maskRect = CGRectMake(0.0f,
-                                 0.0f,
-                                 size.width,
-                                 size.height);
-	
-	CGPoint origin = CGPointMake([self.backgroundTransparentView bounds].size.width/2.0 - maskRect.size.width/2.0,
-                                 [self.backgroundTransparentView bounds].size.height/2.0 - maskRect.size.height/2.0);
-	self.alertContainerView = [[UIView alloc] initWithFrame:CGRectMake(origin.x,
-                                                                       origin.y,
-                                                                       maskRect.size.width,
-                                                                       maskRect.size.height)];
-	self.alertContainerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin |
-                                               UIViewAutoresizingFlexibleRightMargin |
-                                               UIViewAutoresizingFlexibleTopMargin |
-                                               UIViewAutoresizingFlexibleBottomMargin;
-	[self.alertContainerView.layer setMasksToBounds:YES];
-    self.alertContainerView.backgroundColor = [UIColor clearColor];
-	[self.alertContainerView.layer setCornerRadius:kRtAlertViewCornerRadius];
-    
-	self.guassianBlurView = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f,
-                                                                        0.0f,
-                                                                        self.alertContainerView.frame.size.width,
-                                                                        self.alertContainerView.frame.size.height)];
-	self.guassianBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	[self.alertContainerView addSubview:self.guassianBlurView];
-	
-	self.alertBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                        0.0f,
-                                                                        self.alertContainerView.frame.size.width,
-                                                                        self.alertContainerView.frame.size.height)];
-	self.alertBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	
-	UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Radial.png"]];
-	imageView.frame = self.guassianBlurView.frame;
-	imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	[self.alertBackgroundView addSubview:imageView];
-    self.alertBackgroundView.alpha = 0.2f;
-    
-    [self.alertContainerView addSubview:self.alertBackgroundView];
-
-	self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                0.0f,
-                                                                self.alertContainerView.frame.size.width,
-                                                                self.alertContainerView.frame.size.height)];
-	self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.contentView.backgroundColor = [UIColor clearColor];
-	[self.alertContainerView addSubview:self.contentView];
-	
-	[self.alertContainerView addSubview:self];
-	
-	[self.fullScreenContainerView addSubview:self.alertContainerView];
-}
-
-
-- (void)setupWindow
-{
-	id<UIApplicationDelegate> appDelegate = [[UIApplication sharedApplication] delegate];
-	
-	self.window = [[UIWindow alloc] initWithFrame:[appDelegate window].frame];
-	
-	UIViewController *viewController = [[UIViewController alloc] init];
-	viewController.view = self.fullScreenContainerView;
-	
-	self.window.rootViewController = viewController;
-	// Without this, the alert background will appear black on rotation
-	self.window.backgroundColor = [UIColor clearColor];
-	self.window.windowLevel = UIWindowLevelAlert;
-	self.window.hidden = NO;
-	
-	[self.window makeKeyAndVisible];
-}
-
-
-- (void)showAlertView
-{
-    [CATransaction begin];
-    {
-		CATransform3D transformFrom = CATransform3DMakeScale(1.26, 1.26, 1.0);
-		CATransform3D transformTo = CATransform3DMakeScale(1.0, 1.0, 1.0);
-		
-		kSpringAnimationClassName *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
-		modalTransformAnimation.fromValue = [NSValue valueWithCATransform3D:transformFrom];
-		modalTransformAnimation.toValue = [NSValue valueWithCATransform3D:transformTo];
-		self.alertContainerView.layer.transform = transformTo;
-		
-		// Zoom in the modal
-		[self.alertContainerView.layer addAnimation:modalTransformAnimation
-                                             forKey:@"transform"];
-		
-		kSpringAnimationClassName *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
-		opacityAnimation.fromValue = @0.0f;
-		opacityAnimation.toValue = @1.0f;
-		self.alertBackgroundView.layer.opacity = 1.0f;
-		self.guassianBlurView.layer.opacity = 1.0f;
-		self.alertBackgroundView.layer.opacity = 1.0f;
-		self.contentView.layer.opacity = 1.0f;
-		
-		// Fade in the gray background
-		[self.alertBackgroundView.layer addAnimation:opacityAnimation
-                                              forKey:@"opacity"];
-        
-		// Fade in the modal
-		// Would love to fade in all these things at once, but UIToolbar doesn't like it
-		[self.guassianBlurView.layer addAnimation:opacityAnimation
-                                           forKey:@"opacity"];
-		[self.alertBackgroundView.layer addAnimation:opacityAnimation
-                                              forKey:@"opacity"];
-		[self.contentView.layer addAnimation:opacityAnimation
-                                      forKey:@"opacity"];
-	}
-    [CATransaction commit];
-}
-
-
-- (id)springAnimationForKeyPath:(NSString *)keyPath
-{
-	kSpringAnimationClassName *animation = [[kSpringAnimationClassName alloc] init];
-	
-	// Values reversed engineered from iOS 7 UIAlertView
-	animation.keyPath = keyPath;
-	animation.velocity = 0.0;
-	animation.mass = 3.0;
-	animation.stiffness = 1000.0;
-	animation.damping = 500.0;
-	// todo - figure out how iOS is deriving this number
-	animation.duration = 0.5058237314224243;
-	
-	return animation;
-}
-
-
-- (void)buttonTapped:(id)sender
-{
-    self.clickedButtonIndex = -1;
-    int i = 0;
-    while ((i < self.buttonArray.count) &&
-           (self.clickedButtonIndex == -1))
-    {
-        if ([self.buttonArray objectAtIndex:i] == sender)
-        {
-            self.clickedButtonIndex = i;
-        }
-
-        i++;
-    }
-
-//    NSLog(@"Button %ld (%@) tapped", (long)self.clickedButtonIndex, [self.buttonTitleArray objectAtIndex:self.clickedButtonIndex]);
-    if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)])
-    {
-        [self.delegate alertView:self
-            clickedButtonAtIndex:self.clickedButtonIndex];
-    }
-
-    [self dismiss];
-}
-
-
-- (void)dismiss
-{
-    if ([self.delegate respondsToSelector:@selector(alertView:willDismissWithButtonIndex:)])
-    {
-        [self.delegate alertView:self
-      willDismissWithButtonIndex:self.clickedButtonIndex];
+        _alertViewController = [[RTAlertViewController alloc] initWithNibName:nil
+                                                                       bundle:nil];
+        _alertViewController.alertView = self;
     }
     
-    if ((self.cancelButtonIndex == self.clickedButtonIndex) &&
-        ([self.delegate respondsToSelector:@selector(alertViewCancel:)]))
-    {
-        [self.delegate alertViewCancel:self];
-    }
-
-    [self dismissAlertView];
-    
-    if ([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)])
-    {
-        [self.delegate alertView:self
-       didDismissWithButtonIndex:self.clickedButtonIndex];
-    }
-}
-
-
-- (void)dismissAlertView
-{
-	[CATransaction begin];
-    {
-		CATransform3D transformFrom = CATransform3DMakeScale(1.0, 1.0, 1.0);
-		CATransform3D transformTo = CATransform3DMakeScale(0.840, 0.840, 1.0);
-		
-		kSpringAnimationClassName *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
-		modalTransformAnimation.fromValue = [NSValue valueWithCATransform3D:transformFrom];
-		modalTransformAnimation.toValue = [NSValue valueWithCATransform3D:transformTo];
-		modalTransformAnimation.delegate = self;
-		self.alertContainerView.layer.transform = transformTo;
-		
-		// Zoom out the modal
-		[self.alertContainerView.layer addAnimation:modalTransformAnimation
-                                             forKey:@"transform"];
-		
-		kSpringAnimationClassName *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
-		opacityAnimation.fromValue = @1.0f;
-		opacityAnimation.toValue = @0.0f;
-		self.backgroundTransparentView.layer.opacity = 0.0;
-		self.guassianBlurView.layer.opacity = 0.0;
-		self.fullScreenContainerView.layer.opacity = 0.0;
-		self.contentView.layer.opacity = 0.0;
-		
-		// Fade out the gray background
-		[self.backgroundTransparentView.layer addAnimation:opacityAnimation
-                                                    forKey:@"opacity"];
-		
-		// Fade out the modal
-		// Would love to fade out all these things at once, but UIToolbar doesn't like it
-		[self.guassianBlurView.layer addAnimation:opacityAnimation
-                                           forKey:@"opacity"];
-		[self.fullScreenContainerView.layer addAnimation:opacityAnimation
-                                                  forKey:@"opacity"];
-		[self.contentView.layer addAnimation:opacityAnimation
-                                      forKey:@"opacity"];
-	}
-    [CATransaction commit];
-}
-
-
-- (void)animationDidStop:(CAAnimation *)theAnimation
-                finished:(BOOL)flag
-{
-	// Temporary bugfix
-	[self removeFromSuperview];
-
-    self.visible = NO;
-
-	// Release window from memory
-	self.window.hidden = YES;
-	self.window = nil;
+    return _alertViewController;
 }
 
 
