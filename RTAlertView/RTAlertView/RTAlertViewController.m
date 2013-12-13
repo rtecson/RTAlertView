@@ -377,45 +377,46 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 	UIToolbar *toolbar = [[UIToolbar alloc] init];
 	[self.gaussianBlurContainerView addSubview:toolbar];
     toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeLeading
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeLeading
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeTrailing
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeTrailing
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeTop
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeTop
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeBottom
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeBottom
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
 /*
-    NSDictionary *views = NSDictionaryOfVariableBindings(toolbar);
-    [toolbar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[toolbar]|"
-                                                                    options:0
-                                                                    metrics:0
-                                                                      views:views]];
-    [toolbar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[toolbar]|"
-                                                                    options:0
-                                                                    metrics:0
-                                                                      views:views]];
+    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.gaussianBlurContainerView
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f]];
+    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.gaussianBlurContainerView
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f]];
+    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.gaussianBlurContainerView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f]];
+    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.gaussianBlurContainerView
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f]];
 */
+    NSDictionary *views = NSDictionaryOfVariableBindings(toolbar);
+    [self.gaussianBlurContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[toolbar]|"
+                                                                                           options:0
+                                                                                           metrics:0
+                                                                                             views:views]];
+    [self.gaussianBlurContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[toolbar]|"
+                                                                                           options:0
+                                                                                           metrics:0
+                                                                                             views:views]];
+
 	[self.alertContainerView.layer setMasksToBounds:YES];
 	[self.alertContainerView.layer setCornerRadius:kRtAlertViewCornerRadius];
 }
