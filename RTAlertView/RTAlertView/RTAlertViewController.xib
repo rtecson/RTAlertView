@@ -45,7 +45,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
-                        <view alpha="0.10000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wOH-xV-zwU" userLabel="whiteView">
+                        <view alpha="0.050000000000000017" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wOH-xV-zwU" userLabel="whiteView">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="124"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -110,19 +110,27 @@
                                         <constraint firstAttribute="height" constant="44" id="K0k-VT-Oy4"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="OzZ-yv-2Bo" userLabel="buttonRow1ContainerView">
+                                    <rect key="frame" x="0.0" y="124" width="270" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="bxh-Xn-xfx" firstAttribute="trailing" secondItem="R0U-Mx-iHb" secondAttribute="trailing" id="Lv6-59-VxT"/>
+                                <constraint firstItem="OzZ-yv-2Bo" firstAttribute="leading" secondItem="wbd-i8-Twu" secondAttribute="leading" id="48X-Ma-bWI"/>
+                                <constraint firstAttribute="trailing" secondItem="R0U-Mx-iHb" secondAttribute="trailing" id="67Q-xI-abF"/>
+                                <constraint firstAttribute="trailing" secondItem="vvV-OK-5S3" secondAttribute="trailing" id="7St-hz-FtH"/>
+                                <constraint firstItem="OzZ-yv-2Bo" firstAttribute="top" secondItem="bxh-Xn-xfx" secondAttribute="bottom" id="I27-5f-Lnu"/>
+                                <constraint firstAttribute="bottom" secondItem="OzZ-yv-2Bo" secondAttribute="bottom" id="Inb-we-aR9"/>
                                 <constraint firstItem="vvV-OK-5S3" firstAttribute="top" secondItem="R0U-Mx-iHb" secondAttribute="bottom" id="Mbw-Qh-7Ym"/>
                                 <constraint firstItem="bxh-Xn-xfx" firstAttribute="top" secondItem="vvV-OK-5S3" secondAttribute="bottom" id="RUS-so-Dcz"/>
                                 <constraint firstItem="R0U-Mx-iHb" firstAttribute="top" secondItem="wbd-i8-Twu" secondAttribute="top" id="WP8-ef-wTh"/>
+                                <constraint firstItem="R0U-Mx-iHb" firstAttribute="leading" secondItem="wbd-i8-Twu" secondAttribute="leading" id="cpG-Ok-OZw"/>
                                 <constraint firstItem="bxh-Xn-xfx" firstAttribute="leading" secondItem="wbd-i8-Twu" secondAttribute="leading" id="hlG-nb-2gQ"/>
-                                <constraint firstItem="vvV-OK-5S3" firstAttribute="trailing" secondItem="bxh-Xn-xfx" secondAttribute="trailing" id="kJO-00-rXQ"/>
-                                <constraint firstItem="vvV-OK-5S3" firstAttribute="leading" secondItem="bxh-Xn-xfx" secondAttribute="leading" id="qDh-7U-Ze1"/>
+                                <constraint firstItem="vvV-OK-5S3" firstAttribute="leading" secondItem="wbd-i8-Twu" secondAttribute="leading" id="q8M-85-ZaI"/>
+                                <constraint firstAttribute="trailing" secondItem="OzZ-yv-2Bo" secondAttribute="trailing" id="qLS-O5-glf"/>
                                 <constraint firstAttribute="trailing" secondItem="bxh-Xn-xfx" secondAttribute="trailing" id="ug0-Sr-DxU"/>
-                                <constraint firstItem="bxh-Xn-xfx" firstAttribute="leading" secondItem="R0U-Mx-iHb" secondAttribute="leading" id="xQR-Ry-okB"/>
-                                <constraint firstAttribute="bottom" secondItem="bxh-Xn-xfx" secondAttribute="bottom" id="xxZ-IU-FtF"/>
                             </constraints>
                         </view>
                     </subviews>
