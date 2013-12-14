@@ -8,6 +8,7 @@
 
 
 #import "RTAlertViewController.h"
+#import "RTAlertViewRecursiveButtonContainerView.h"
 
 
 // Constants
@@ -54,6 +55,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (weak, nonatomic) IBOutlet UIView *alertContainerView;
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 
 
 // Private properties
@@ -106,6 +108,17 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 	// Do any additional setup after loading the view.
     
     [self setupAlertView];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSLog(@"buttonContainerView frame: %@", NSStringFromCGRect(self.buttonContainerView.frame));
+    NSLog(@"contentView frame: %@", NSStringFromCGRect(self.contentView.frame));
+    NSLog(@"alertContainerView frame: %@", NSStringFromCGRect(self.alertContainerView.frame));
+    NSLog(@"gaussianBlurContainerView frame: %@", NSStringFromCGRect(self.gaussianBlurContainerView.frame));
 }
 
 
@@ -377,36 +390,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 	UIToolbar *toolbar = [[UIToolbar alloc] init];
 	[self.gaussianBlurContainerView addSubview:toolbar];
     toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-/*
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeLeading
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeLeading
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeTrailing
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeTrailing
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeTop
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeTop
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
-    [self.gaussianBlurContainerView addConstraint:[NSLayoutConstraint constraintWithItem:toolbar
-                                                        attribute:NSLayoutAttributeBottom
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.gaussianBlurContainerView
-                                                        attribute:NSLayoutAttributeBottom
-                                                       multiplier:1.0f
-                                                         constant:0.0f]];
-*/
+
     NSDictionary *views = NSDictionaryOfVariableBindings(toolbar);
     [self.gaussianBlurContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[toolbar]|"
                                                                                            options:0
@@ -417,8 +401,31 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                            metrics:0
                                                                                              views:views]];
 
+    [self setupButtons];
+
 	[self.alertContainerView.layer setMasksToBounds:YES];
 	[self.alertContainerView.layer setCornerRadius:kRtAlertViewCornerRadius];
+}
+
+
+- (void)setupButtons
+{
+/*
+    RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView = [[RTAlertViewRecursiveButtonContainerView alloc] init];
+    [self.buttonContainerView addSubview:recursiveButtonContainerView];
+    NSLog(@"recursiveButtonContainerView frame=%@", NSStringFromCGRect(recursiveButtonContainerView.frame));
+
+    NSDictionary *views = NSDictionaryOfVariableBindings(recursiveButtonContainerView);
+
+    [self.buttonContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[recursiveButtonContainerView]|"
+                                                                                     options:0
+                                                                                     metrics:0
+                                                                                       views:views]];
+    [self.buttonContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[recursiveButtonContainerView]|"
+                                                                                     options:0
+                                                                                     metrics:0
+                                                                                       views:views]];
+*/
 }
 
 

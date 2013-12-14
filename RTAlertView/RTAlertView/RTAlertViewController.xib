@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="alertContainerView" destination="hh5-Kl-FGE" id="Td1-K5-y9f"/>
                 <outlet property="blackTransparentContainerView" destination="uV7-2h-Lby" id="WMD-jE-xFI"/>
+                <outlet property="buttonContainerView" destination="bxh-Xn-xfx" id="tga-0Q-vct"/>
                 <outlet property="contentView" destination="wbd-i8-Twu" id="QBn-Rd-iua"/>
                 <outlet property="gaussianBlurContainerView" destination="TKa-2p-Gsh" id="WR7-lB-TKR"/>
                 <outlet property="view" destination="1" id="9pR-Sf-2rU"/>
@@ -104,7 +105,7 @@
                                         <constraint firstAttribute="height" placeholder="YES" id="ldt-PB-G1j"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bxh-Xn-xfx" userLabel="buttonRow0ContainerView">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bxh-Xn-xfx" userLabel="buttonContainerView">
                                     <rect key="frame" x="0.0" y="80" width="270" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
