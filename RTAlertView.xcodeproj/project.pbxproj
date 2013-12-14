@@ -26,6 +26,8 @@
 		2A4F3E091850395B00971351 /* RTAlertView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A4F3E081850395B00971351 /* RTAlertView.xcassets */; };
 		2A8F49F7185389CB005855E7 /* RTAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */; };
 		2A8F49FA1853AD4F005855E7 /* RTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */; };
+		2AFB9563185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFB9562185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m */; };
+		2AFB9565185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AFB9564185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,9 @@
 		2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTAlertViewController.xib; sourceTree = "<group>"; };
 		2A8F49F81853AD4F005855E7 /* RTAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertViewController.h; sourceTree = "<group>"; };
 		2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewController.m; sourceTree = "<group>"; };
+		2AFB9561185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertViewRecursiveButtonContainerView.h; sourceTree = "<group>"; };
+		2AFB9562185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewRecursiveButtonContainerView.m; sourceTree = "<group>"; };
+		2AFB9564185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTAlertViewRecursiveButtonContainerView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +179,9 @@
 				2A8F49F81853AD4F005855E7 /* RTAlertViewController.h */,
 				2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */,
 				2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */,
+				2AFB9561185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.h */,
+				2AFB9562185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m */,
+				2AFB9564185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib */,
 				2A4F3E081850395B00971351 /* RTAlertView.xcassets */,
 			);
 			path = RTAlertView;
@@ -257,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A3DA4B218419F8B00378872 /* Main_iPad.storyboard in Resources */,
+				2AFB9565185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib in Resources */,
 				2A8F49F7185389CB005855E7 /* RTAlertViewController.xib in Resources */,
 				2A3DA4B718419F8B00378872 /* Images.xcassets in Resources */,
 				2A3DA4AF18419F8B00378872 /* Main_iPhone.storyboard in Resources */,
@@ -285,6 +294,7 @@
 				2A3DA4B518419F8B00378872 /* ViewController.m in Sources */,
 				2A3DA4A818419F8B00378872 /* main.m in Sources */,
 				2A8F49FA1853AD4F005855E7 /* RTAlertViewController.m in Sources */,
+				2AFB9563185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
