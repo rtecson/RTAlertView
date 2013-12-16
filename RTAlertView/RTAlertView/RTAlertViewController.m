@@ -64,7 +64,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) NSMutableArray *buttonTitleArray;
-@property (strong, nonatomic) NSMutableArray *buttonArray;
+//@property (strong, nonatomic) NSMutableArray *buttonArray;
 @property (nonatomic) NSInteger clickedButtonIndex;
 @property (strong, nonatomic) NSMutableArray *textFieldArray;
 
@@ -302,12 +302,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 {
     if (title != nil)
     {
-        // Lazy instantiation
-        if (self.buttonTitleArray == nil)
-        {
-            self.buttonTitleArray = [[NSMutableArray alloc] init];
-        }
-        
         [self.buttonTitleArray addObject:title];
         
         return (self.numberOfButtons - 1);
@@ -385,11 +379,11 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 - (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex
                              animated:(BOOL)animated
 {
-//    if (buttonIndex < self.numberOfButtons)
-//    {
-//        self.clickedButtonIndex = buttonIndex;
-//    }
-    
+    if (buttonIndex < self.numberOfButtons)
+    {
+        self.clickedButtonIndex = buttonIndex;
+    }
+
     [self dismiss];
 }
 
@@ -400,6 +394,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                              tappedButtonNumber:(NSInteger)buttonNumber
 {
     NSLog(@"Button %d tapped", buttonNumber);
+    self.clickedButtonIndex = buttonNumber;
     [self dismiss];
 }
 
@@ -431,6 +426,12 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 - (void)setupButtons
 {
+    // Any buttons added?
+    if (self.numberOfButtons == 0)
+    {
+        return;
+    }
+
     // Create first recursiveButtonContainerView
     self.recursiveButtonContainerView = [[RTAlertViewRecursiveButtonContainerView alloc] init];
     self.recursiveButtonContainerView.delegate = self;
@@ -450,13 +451,14 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                      metrics:0
                                                                                        views:views]];
 
-    [self.recursiveButtonContainerView recursivelyAddButtons:3
+    // Add rest of buttons
+    [self.recursiveButtonContainerView recursivelyAddButtons:(self.numberOfButtons - 1)
                                                  useSplitRow:NO];
     
-    for (int i=0; i<4; i++)
+    // Set up button titles
+    for (int i=0; i<self.numberOfButtons; i++)
     {
-        NSString *buttonTitle = [NSString stringWithFormat:@"Button %d", i];
-        [self.recursiveButtonContainerView setTitle:buttonTitle
+        [self.recursiveButtonContainerView setTitle:[self buttonTitleAtIndex:i]
                                           forButton:i];
     }
 }
@@ -472,7 +474,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 	self.window.backgroundColor = [UIColor clearColor];
 	self.window.windowLevel = UIWindowLevelAlert;
 	self.window.hidden = NO;
-	
+
 	[self.window makeKeyAndVisible];
 }
 

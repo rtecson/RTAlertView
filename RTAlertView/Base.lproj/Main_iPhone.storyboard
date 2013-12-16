@@ -60,6 +60,8 @@
                                 <segments>
                                     <segment title="0"/>
                                     <segment title="1"/>
+                                    <segment title="2"/>
+                                    <segment title="3"/>
                                 </segments>
                                 <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                 <connections>

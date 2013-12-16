@@ -259,12 +259,22 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
     if (buttonNumber == 0)
     {
-        self.button0.titleLabel.text = buttonTitle;
+        [self.button0 setTitle:buttonTitle
+                      forState:UIControlStateNormal];
+        self.button0.titleEdgeInsets = UIEdgeInsetsMake(1.0f,
+                                                        0.0f,
+                                                        0.0f,
+                                                        0.0f);
     }
     else if ((buttonNumber == 1) &&
              (self.button1Enabled == YES))
     {
-        self.button1.titleLabel.text = buttonTitle;
+        [self.button1 setTitle:buttonTitle
+                      forState:UIControlStateNormal];
+        self.button1.titleEdgeInsets = UIEdgeInsetsMake(1.0f,
+                                                        0.0f,
+                                                        0.0f,
+                                                        0.0f);
     }
     else
     {

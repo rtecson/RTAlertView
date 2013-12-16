@@ -27,9 +27,15 @@
 - (void)recursivelyAddButtons:(NSInteger)numButtons
                   useSplitRow:(BOOL)useSplitRow;
 
-// Must call recursivelyAddButtons (if numButtons > 1) before calling this
+// Must call recursivelyAddButtons (if numButtons > 1) before calling these set methods
 - (void)setTitle:(NSString *)buttonTitle
        forButton:(NSInteger)buttonNumber;
+
+- (void)setTitleColor:(UIColor *)buttonTitleColor
+            forButton:(NSInteger)buttonNumber;
+
+- (void)setTitleFont:(UIFont *)buttonTitleFont
+           forButton:(NSInteger)buttonNumber;
 
 @property (weak, nonatomic) id<RTAlertViewRecursiveButtonContainerViewDelegate> delegate;
 
