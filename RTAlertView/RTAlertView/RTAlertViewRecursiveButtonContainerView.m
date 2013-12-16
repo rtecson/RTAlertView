@@ -297,12 +297,12 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
     
     if (buttonNumber == 0)
     {
-        [self setButton0Color:buttonTitleColor];
+        self.button0Color = buttonTitleColor;
     }
     else if ((buttonNumber == 1) &&
              (self.button1Enabled == YES))
     {
-        [self setButton1Color:buttonTitleColor];
+        self.button1Color = buttonTitleColor;
     }
     else
     {
@@ -325,12 +325,12 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
     
     if (buttonNumber == 0)
     {
-        [self setButton0Font:buttonTitleFont];
+        self.button0Font = buttonTitleFont;
     }
     else if ((buttonNumber == 1) &&
              (self.button1Enabled == YES))
     {
-        [self setButton1Font:buttonTitleFont];
+        self.button1Font = buttonTitleFont;
     }
     else
     {
