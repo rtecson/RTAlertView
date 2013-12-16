@@ -26,6 +26,10 @@
 		2A4F3E091850395B00971351 /* RTAlertView.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A4F3E081850395B00971351 /* RTAlertView.xcassets */; };
 		2A8F49F7185389CB005855E7 /* RTAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */; };
 		2A8F49FA1853AD4F005855E7 /* RTAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */; };
+		2A968A48185ED7B5002CDF59 /* RTAlertViewSingleTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A968A47185ED7B5002CDF59 /* RTAlertViewSingleTextFieldView.m */; };
+		2A968A4A185ED7D0002CDF59 /* RTAlertViewSingleTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A968A49185ED7D0002CDF59 /* RTAlertViewSingleTextFieldView.xib */; };
+		2A968A4D185ED7E7002CDF59 /* RTAlertViewDoubleTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A968A4C185ED7E7002CDF59 /* RTAlertViewDoubleTextFieldView.m */; };
+		2A968A4F185ED7FC002CDF59 /* RTAlertViewDoubleTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A968A4E185ED7FC002CDF59 /* RTAlertViewDoubleTextFieldView.xib */; };
 		2AFB9563185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFB9562185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m */; };
 		2AFB9565185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AFB9564185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib */; };
 /* End PBXBuildFile section */
@@ -67,6 +71,12 @@
 		2A8F49F6185389CB005855E7 /* RTAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTAlertViewController.xib; sourceTree = "<group>"; };
 		2A8F49F81853AD4F005855E7 /* RTAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertViewController.h; sourceTree = "<group>"; };
 		2A8F49F91853AD4F005855E7 /* RTAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewController.m; sourceTree = "<group>"; };
+		2A968A46185ED7B5002CDF59 /* RTAlertViewSingleTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertViewSingleTextFieldView.h; sourceTree = "<group>"; };
+		2A968A47185ED7B5002CDF59 /* RTAlertViewSingleTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewSingleTextFieldView.m; sourceTree = "<group>"; };
+		2A968A49185ED7D0002CDF59 /* RTAlertViewSingleTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTAlertViewSingleTextFieldView.xib; sourceTree = "<group>"; };
+		2A968A4B185ED7E7002CDF59 /* RTAlertViewDoubleTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertViewDoubleTextFieldView.h; sourceTree = "<group>"; };
+		2A968A4C185ED7E7002CDF59 /* RTAlertViewDoubleTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewDoubleTextFieldView.m; sourceTree = "<group>"; };
+		2A968A4E185ED7FC002CDF59 /* RTAlertViewDoubleTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTAlertViewDoubleTextFieldView.xib; sourceTree = "<group>"; };
 		2AFB9561185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTAlertViewRecursiveButtonContainerView.h; sourceTree = "<group>"; };
 		2AFB9562185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTAlertViewRecursiveButtonContainerView.m; sourceTree = "<group>"; };
 		2AFB9564185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTAlertViewRecursiveButtonContainerView.xib; sourceTree = "<group>"; };
@@ -182,6 +192,12 @@
 				2AFB9561185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.h */,
 				2AFB9562185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m */,
 				2AFB9564185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib */,
+				2A968A46185ED7B5002CDF59 /* RTAlertViewSingleTextFieldView.h */,
+				2A968A47185ED7B5002CDF59 /* RTAlertViewSingleTextFieldView.m */,
+				2A968A49185ED7D0002CDF59 /* RTAlertViewSingleTextFieldView.xib */,
+				2A968A4B185ED7E7002CDF59 /* RTAlertViewDoubleTextFieldView.h */,
+				2A968A4C185ED7E7002CDF59 /* RTAlertViewDoubleTextFieldView.m */,
+				2A968A4E185ED7FC002CDF59 /* RTAlertViewDoubleTextFieldView.xib */,
 				2A4F3E081850395B00971351 /* RTAlertView.xcassets */,
 			);
 			path = RTAlertView;
@@ -266,9 +282,11 @@
 			files = (
 				2A3DA4B218419F8B00378872 /* Main_iPad.storyboard in Resources */,
 				2AFB9565185BF89E0095B732 /* RTAlertViewRecursiveButtonContainerView.xib in Resources */,
+				2A968A4A185ED7D0002CDF59 /* RTAlertViewSingleTextFieldView.xib in Resources */,
 				2A8F49F7185389CB005855E7 /* RTAlertViewController.xib in Resources */,
 				2A3DA4B718419F8B00378872 /* Images.xcassets in Resources */,
 				2A3DA4AF18419F8B00378872 /* Main_iPhone.storyboard in Resources */,
+				2A968A4F185ED7FC002CDF59 /* RTAlertViewDoubleTextFieldView.xib in Resources */,
 				2A3DA4A618419F8B00378872 /* InfoPlist.strings in Resources */,
 				2A4F3E091850395B00971351 /* RTAlertView.xcassets in Resources */,
 			);
@@ -291,9 +309,11 @@
 			files = (
 				2A3DA4AC18419F8B00378872 /* AppDelegate.m in Sources */,
 				2A3DA4D81841A05C00378872 /* RTAlertView.m in Sources */,
+				2A968A48185ED7B5002CDF59 /* RTAlertViewSingleTextFieldView.m in Sources */,
 				2A3DA4B518419F8B00378872 /* ViewController.m in Sources */,
 				2A3DA4A818419F8B00378872 /* main.m in Sources */,
 				2A8F49FA1853AD4F005855E7 /* RTAlertViewController.m in Sources */,
+				2A968A4D185ED7E7002CDF59 /* RTAlertViewDoubleTextFieldView.m in Sources */,
 				2AFB9563185BF1550095B732 /* RTAlertViewRecursiveButtonContainerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

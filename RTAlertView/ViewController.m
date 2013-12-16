@@ -55,8 +55,8 @@
 - (IBAction)nativeButtonTapped:(id)sender
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Test"
-//                                                        message:@"Message here"
-                                                        message:@"Message here. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+                                                        message:@"Message here"
+//                                                        message:@"Message here. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
                                                        delegate:nil
                                               cancelButtonTitle:nil
                                               otherButtonTitles:nil];
@@ -78,8 +78,8 @@
 - (IBAction)customButtonTapped:(id)sender
 {
     RTAlertView *customAlertView = [[RTAlertView alloc] initWithTitle:@"Test"
-//                                                              message:@"Message here"
-                                                                                            message:@"Message here. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+                                                              message:@"Message here"
+//                                                                                            message:@"Message here. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
                                                              delegate:nil
                                                     cancelButtonTitle:nil
                                                     otherButtonTitles:nil];
@@ -98,13 +98,6 @@
     customAlertView.cancelButtonColor = kCustomColor;
 
 	[customAlertView show];
-/*
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0f * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
-    {
-        [customAlertView dismissWithClickedButtonIndex:0
-                                              animated:YES];
-    });
-*/
 }
 
 
