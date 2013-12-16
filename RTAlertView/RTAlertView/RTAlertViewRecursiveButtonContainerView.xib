@@ -74,7 +74,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" id="2KO-QN-qMS"/>
+                        <constraint firstAttribute="height" placeholder="YES" id="2KO-QN-qMS"/>
                     </constraints>
                 </view>
             </subviews>

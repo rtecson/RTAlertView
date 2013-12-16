@@ -187,7 +187,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
 - (void)addRecursiveButtonContainerView:(RTAlertViewRecursiveButtonContainerView *)nextRecursiveButtonContainerView
 {
-    // Remove existing constraints in nextButtonContainer
+    nextRecursiveButtonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.nextButtonContainer addSubview:nextRecursiveButtonContainerView];
     
     NSDictionary *views = NSDictionaryOfVariableBindings(nextRecursiveButtonContainerView);
