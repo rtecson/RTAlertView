@@ -448,7 +448,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 /*
     RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView2 = [[RTAlertViewRecursiveButtonContainerView alloc] init];
     recursiveButtonContainerView2.delegate = self;
-//    recursiveButtonContainerView2.button2Enabled = YES;
     [recursiveButtonContainerView addRecursiveButtonContainerView:recursiveButtonContainerView2];
 */
 }
