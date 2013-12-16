@@ -11,7 +11,9 @@
                 <outlet property="buttonContainerView" destination="bxh-Xn-xfx" id="tga-0Q-vct"/>
                 <outlet property="contentView" destination="wbd-i8-Twu" id="QBn-Rd-iua"/>
                 <outlet property="gaussianBlurContainerView" destination="TKa-2p-Gsh" id="WR7-lB-TKR"/>
+                <outlet property="messageLabel" destination="baY-vs-0iJ" id="RNJ-zF-GBp"/>
                 <outlet property="textFieldContainerView" destination="vvV-OK-5S3" id="RBO-ro-3NM"/>
+                <outlet property="titleLabel" destination="6lc-N9-C6M" id="ZDP-LZ-2i5"/>
                 <outlet property="view" destination="1" id="9pR-Sf-2rU"/>
             </connections>
         </placeholder>

@@ -51,6 +51,8 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 // IBOutlets
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UIView *blackTransparentContainerView;
 @property (weak, nonatomic) IBOutlet UIView *alertContainerView;
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
@@ -417,6 +419,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                            metrics:0
                                                                                              views:views]];
 
+    [self setupLabels];
     [self setupButtons];
 
 	[self.alertContainerView.layer setMasksToBounds:YES];
@@ -455,12 +458,34 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     [self.recursiveButtonContainerView recursivelyAddButtons:(self.numberOfButtons - 1)
                                                  useSplitRow:NO];
     
-    // Set up button titles
+    // Set up button titles, button title colours, button title fonts
     for (int i=0; i<self.numberOfButtons; i++)
     {
         [self.recursiveButtonContainerView setTitle:[self buttonTitleAtIndex:i]
                                           forButton:i];
+
+        if (i == self.cancelButtonIndex)
+        {
+            [self.recursiveButtonContainerView setTitleColor:self.cancelButtonColor
+                                                   forButton:i];
+            [self.recursiveButtonContainerView setTitleFont:self.cancelButtonFont
+                                                  forButton:i];
+        }
+        else
+        {
+            [self.recursiveButtonContainerView setTitleColor:self.otherButtonColor
+                                                   forButton:i];
+            [self.recursiveButtonContainerView setTitleFont:self.otherButtonFont
+                                                  forButton:i];
+        }
     }
+}
+
+
+- (void)setupLabels
+{
+    self.titleLabel.text = self.alertViewTitle;
+    self.messageLabel.text = self.alertViewMessage;
 }
 
 

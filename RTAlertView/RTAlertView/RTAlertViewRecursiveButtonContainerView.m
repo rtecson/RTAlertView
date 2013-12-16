@@ -285,6 +285,62 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 }
 
 
+- (void)setTitleColor:(UIColor *)buttonTitleColor
+            forButton:(NSInteger)buttonNumber
+{
+    // Check for valid buttonTitle
+    if (buttonTitleColor == nil)
+    {
+        // Do nothing
+        return;
+    }
+    
+    if (buttonNumber == 0)
+    {
+        [self setButton0Color:buttonTitleColor];
+    }
+    else if ((buttonNumber == 1) &&
+             (self.button1Enabled == YES))
+    {
+        [self setButton1Color:buttonTitleColor];
+    }
+    else
+    {
+        // Recursively set button title
+        [self.recursiveButtonContainerView setTitleColor:buttonTitleColor
+                                               forButton:(buttonNumber - 1)];
+    }
+}
+
+
+- (void)setTitleFont:(UIFont *)buttonTitleFont
+           forButton:(NSInteger)buttonNumber
+{
+    // Check for valid buttonTitle
+    if (buttonTitleFont == nil)
+    {
+        // Do nothing
+        return;
+    }
+    
+    if (buttonNumber == 0)
+    {
+        [self setButton0Font:buttonTitleFont];
+    }
+    else if ((buttonNumber == 1) &&
+             (self.button1Enabled == YES))
+    {
+        [self setButton1Font:buttonTitleFont];
+    }
+    else
+    {
+        // Recursively set button title
+        [self.recursiveButtonContainerView setTitleFont:buttonTitleFont
+                                              forButton:(buttonNumber - 1)];
+    }
+}
+
+
 #pragma mark - Layout methods
 
 - (void)updateConstraints

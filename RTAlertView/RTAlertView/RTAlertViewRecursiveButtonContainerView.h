@@ -24,10 +24,12 @@
 
 // Recursively add RTAlertViewRecursiveButtonContainerViews, useSplitRow
 // only applies if numButtons==2 (put two buttons in one row)
+
 - (void)recursivelyAddButtons:(NSInteger)numButtons
                   useSplitRow:(BOOL)useSplitRow;
 
-// Must call recursivelyAddButtons (if numButtons > 1) before calling these set methods
+// Must call recursivelyAddButtons (if numButtons > 1) before calling these setTitle... methods
+
 - (void)setTitle:(NSString *)buttonTitle
        forButton:(NSInteger)buttonNumber;
 
