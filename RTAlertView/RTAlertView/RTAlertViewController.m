@@ -479,7 +479,11 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 - (void)setupLabels
 {
     self.titleLabel.text = self.alertViewTitle;
+    self.titleLabel.textColor = self.titleColor;
+    self.titleLabel.font = self.titleFont;
     self.messageLabel.text = self.alertViewMessage;
+    self.messageLabel.textColor = self.messageColor;
+    self.messageLabel.font = self.messageFont;
 }
 
 
@@ -518,19 +522,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 		opacityAnimation.toValue = @1.0f;
 		self.blackTransparentContainerView.layer.opacity = 1.0f;
 		self.gaussianBlurContainerView.layer.opacity = 1.0f;
-		self.view.layer.opacity = 1.0f;
 		self.contentView.layer.opacity = 1.0f;
 		
 		// Fade in
 		[self.blackTransparentContainerView.layer addAnimation:opacityAnimation
                                               forKey:@"opacity"];
-
-		// Fade in the modal
-		// Would love to fade in all these things at once, but UIToolbar doesn't like it
 		[self.gaussianBlurContainerView.layer addAnimation:opacityAnimation
                                                     forKey:@"opacity"];
-//		[self.view.layer addAnimation:opacityAnimation
-//                                              forKey:@"opacity"];
 		[self.contentView.layer addAnimation:opacityAnimation
                                       forKey:@"opacity"];
 	} [CATransaction commit];
@@ -552,7 +550,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     }
     
     [self dismissAlertView];
-    
+
     if ([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)])
     {
         [self.delegate alertView:self.alertView
@@ -566,37 +564,29 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 	[CATransaction begin]; {
 		CATransform3D transformFrom = CATransform3DMakeScale(1.0, 1.0, 1.0);
 		CATransform3D transformTo = CATransform3DMakeScale(0.840, 0.840, 1.0);
-		
+
 		RTSpringAnimation *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
 		modalTransformAnimation.fromValue = [NSValue valueWithCATransform3D:transformFrom];
 		modalTransformAnimation.toValue = [NSValue valueWithCATransform3D:transformTo];
 		modalTransformAnimation.delegate = self;
 		self.alertContainerView.layer.transform = transformTo;
-		
+
 		// Zoom out the modal
 		[self.alertContainerView.layer addAnimation:modalTransformAnimation
                                              forKey:@"transform"];
-		
+
 		RTSpringAnimation *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
 		opacityAnimation.fromValue = @1.0f;
 		opacityAnimation.toValue = @0.0f;
 		self.blackTransparentContainerView.layer.opacity = 0.0;
 		self.gaussianBlurContainerView.layer.opacity = 0.0;
-		self.view.layer.opacity = 0.0;
 		self.contentView.layer.opacity = 0.0;
-		
-		// Fade out the gray background
+
+		// Fade out
 		[self.blackTransparentContainerView.layer addAnimation:opacityAnimation
                                                     forKey:@"opacity"];
-
-		// Fade out the modal
-		// Would love to fade out all these things at once, but UIToolbar doesn't like it
 		[self.gaussianBlurContainerView.layer addAnimation:opacityAnimation
                                                     forKey:@"opacity"];
-/*
-		[self.view.layer addAnimation:opacityAnimation
-                               forKey:@"opacity"];
-*/
 		[self.contentView.layer addAnimation:opacityAnimation
                                       forKey:@"opacity"];
 	} [CATransaction commit];
@@ -625,16 +615,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 - (void)animationDidStop:(CAAnimation *)theAnimation
                 finished:(BOOL)flag
 {
-	// Temporary bugfix
-//	[self removeFromSuperview];
-    
-//    self.visible = NO;
+    self.alertViewVisible = NO;
     
 	// Release window from memory
 	self.window.hidden = YES;
 	self.window = nil;
 
-    // Release RTAlertView, important or retain cycle or not broken
+    // Release RTAlertView, important or retain cycle is not broken
     self.alertView = nil;
 }
 
