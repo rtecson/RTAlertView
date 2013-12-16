@@ -115,13 +115,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     [self setupAlertView];
 }
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-
+/*
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
@@ -133,7 +127,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     NSLog(@"buttonContainerView frame: %@", NSStringFromCGRect(self.buttonContainerView.frame));
     NSLog(@"textFieldContainerView frame: %@", NSStringFromCGRect(self.textFieldContainerView.frame));
 }
-
+*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -456,7 +450,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
     // Add rest of buttons
     [self.recursiveButtonContainerView recursivelyAddButtons:(self.numberOfButtons - 1)
-                                                 useSplitRow:NO];
+                                                 useSplitRow:YES];
     
     // Set up button titles, button title colours, button title fonts
     for (int i=0; i<self.numberOfButtons; i++)
