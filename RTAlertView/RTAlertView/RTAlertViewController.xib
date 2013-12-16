@@ -11,6 +11,7 @@
                 <outlet property="buttonContainerView" destination="bxh-Xn-xfx" id="tga-0Q-vct"/>
                 <outlet property="contentView" destination="wbd-i8-Twu" id="QBn-Rd-iua"/>
                 <outlet property="gaussianBlurContainerView" destination="TKa-2p-Gsh" id="WR7-lB-TKR"/>
+                <outlet property="textFieldContainerView" destination="vvV-OK-5S3" id="RBO-ro-3NM"/>
                 <outlet property="view" destination="1" id="9pR-Sf-2rU"/>
             </connections>
         </placeholder>
@@ -74,6 +75,9 @@
                                             <rect key="frame" x="15" y="19" width="240" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="240" id="nnN-Gh-A4d"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -133,21 +137,21 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="wOH-xV-zwU" secondAttribute="trailing" id="3AW-HS-hw9"/>
-                        <constraint firstAttribute="bottom" secondItem="wbd-i8-Twu" secondAttribute="bottom" id="5J8-yb-ILm"/>
+                        <constraint firstAttribute="bottom" secondItem="wbd-i8-Twu" secondAttribute="bottom" id="4o5-7n-c2j"/>
                         <constraint firstAttribute="bottom" secondItem="wOH-xV-zwU" secondAttribute="bottom" id="6wu-5A-Lyb"/>
                         <constraint firstItem="MPt-XW-qUS" firstAttribute="top" secondItem="hh5-Kl-FGE" secondAttribute="top" id="FDA-y6-fHo"/>
+                        <constraint firstItem="wbd-i8-Twu" firstAttribute="top" secondItem="hh5-Kl-FGE" secondAttribute="top" id="GVC-lo-2yH"/>
                         <constraint firstAttribute="trailing" secondItem="TKa-2p-Gsh" secondAttribute="trailing" id="Ix8-aG-BrS"/>
                         <constraint firstAttribute="trailing" secondItem="MPt-XW-qUS" secondAttribute="trailing" id="N4o-Mb-j8n"/>
-                        <constraint firstItem="wbd-i8-Twu" firstAttribute="leading" secondItem="hh5-Kl-FGE" secondAttribute="leading" id="Qfh-lt-NOb"/>
                         <constraint firstItem="wOH-xV-zwU" firstAttribute="leading" secondItem="hh5-Kl-FGE" secondAttribute="leading" id="RoB-Oz-KWE"/>
                         <constraint firstItem="MPt-XW-qUS" firstAttribute="leading" secondItem="hh5-Kl-FGE" secondAttribute="leading" id="SJj-XA-lqh"/>
                         <constraint firstItem="wOH-xV-zwU" firstAttribute="top" secondItem="hh5-Kl-FGE" secondAttribute="top" id="Tie-6K-5Ke"/>
                         <constraint firstAttribute="bottom" secondItem="MPt-XW-qUS" secondAttribute="bottom" id="UA4-hP-tKp"/>
-                        <constraint firstItem="wbd-i8-Twu" firstAttribute="top" secondItem="hh5-Kl-FGE" secondAttribute="top" id="ZdR-17-3KP"/>
                         <constraint firstItem="TKa-2p-Gsh" firstAttribute="top" secondItem="hh5-Kl-FGE" secondAttribute="top" id="c1R-w1-i3M"/>
-                        <constraint firstAttribute="trailing" secondItem="wbd-i8-Twu" secondAttribute="trailing" id="f4o-3s-HqK"/>
                         <constraint firstAttribute="bottom" secondItem="TKa-2p-Gsh" secondAttribute="bottom" id="gqG-yf-kCe"/>
+                        <constraint firstItem="wbd-i8-Twu" firstAttribute="leading" secondItem="hh5-Kl-FGE" secondAttribute="leading" id="hpe-yI-TZe"/>
                         <constraint firstItem="TKa-2p-Gsh" firstAttribute="leading" secondItem="hh5-Kl-FGE" secondAttribute="leading" id="i7D-Zm-IfM"/>
+                        <constraint firstAttribute="trailing" secondItem="wbd-i8-Twu" secondAttribute="trailing" id="nbW-Xj-5aT"/>
                     </constraints>
                 </view>
             </subviews>

@@ -97,12 +97,13 @@
     customAlertView.cancelButtonColor = kCustomColor;
 
 	[customAlertView show];
-    
+/*
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0f * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void)
     {
         [customAlertView dismissWithClickedButtonIndex:0
                                               animated:YES];
     });
+*/
 }
 
 

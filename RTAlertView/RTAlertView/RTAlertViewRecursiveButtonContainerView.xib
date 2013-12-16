@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RTAlertViewRecursiveButtonContainerView"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1" customClass="RTAlertViewRecursiveButtonContainerView">
             <rect key="frame" x="0.0" y="0.0" width="270" height="44"/>
@@ -14,22 +14,33 @@
                     <rect key="frame" x="0.0" y="0.0" width="270" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDB-ps-TiE" userLabel="button1">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDB-ps-TiE" userLabel="button0">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Button 1">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="eQd-Kf-lXd"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Button 0">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="button1Tapped:" destination="1" eventType="touchUpInside" id="gIq-eN-AAL"/>
+                            </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ol-el-OyS" userLabel="button2">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ol-el-OyS" userLabel="button1">
                             <rect key="frame" x="270" y="0.0" width="0.0" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="width" placeholder="YES" id="adv-iA-e2N"/>
+                                <constraint firstAttribute="width" id="adv-iA-e2N"/>
                             </constraints>
-                            <state key="normal" title="Button 2">
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Button 1">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="button2Tapped:" destination="1" eventType="touchUpInside" id="fQh-JB-arA"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -83,6 +94,13 @@
                 <constraint firstAttribute="trailing" secondItem="4Ay-zI-LHa" secondAttribute="trailing" id="xZH-CX-h89"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="button0" destination="LDB-ps-TiE" id="AvN-ZG-aec"/>
+                <outlet property="button1" destination="1Ol-el-OyS" id="s02-Um-6g1"/>
+                <outlet property="horizontalDividerLine" destination="eus-Ej-PNw" id="zGl-80-0ki"/>
+                <outlet property="nextButtonContainer" destination="G1E-dK-D3q" id="PAj-C0-ZaI"/>
+                <outlet property="verticalDividerLine" destination="HP5-yD-EJN" id="sJa-4t-3M9"/>
+            </connections>
         </view>
     </objects>
 </document>

@@ -42,7 +42,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @end
 
 
-@interface RTAlertViewController () <UITextFieldDelegate>
+@interface RTAlertViewController () <RTAlertViewRecursiveButtonContainerViewDelegate>
 
 // Override public read-only properties
 
@@ -55,6 +55,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (weak, nonatomic) IBOutlet UIView *alertContainerView;
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIView *textFieldContainerView;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 
 
@@ -114,11 +115,19 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    NSLog(@"buttonContainerView frame: %@", NSStringFromCGRect(self.buttonContainerView.frame));
-    NSLog(@"contentView frame: %@", NSStringFromCGRect(self.contentView.frame));
+}
+
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+
+    NSLog(@"In viewDidLayoutSubviews");
     NSLog(@"alertContainerView frame: %@", NSStringFromCGRect(self.alertContainerView.frame));
     NSLog(@"gaussianBlurContainerView frame: %@", NSStringFromCGRect(self.gaussianBlurContainerView.frame));
+    NSLog(@"contentView frame: %@", NSStringFromCGRect(self.contentView.frame));
+    NSLog(@"buttonContainerView frame: %@", NSStringFromCGRect(self.buttonContainerView.frame));
+    NSLog(@"textFieldContainerView frame: %@", NSStringFromCGRect(self.textFieldContainerView.frame));
 }
 
 
@@ -383,6 +392,15 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 }
 
 
+#pragma mark - RTAlertViewRecursiveButtonContainerViewDelegate methods
+
+- (void)rtAlertViewRecursiveButtonContainerView:(RTAlertViewRecursiveButtonContainerView *)rtAlertViewRecursiveButtonContainerView
+                             tappedButtonNumber:(NSInteger)buttonNumber
+{
+    NSLog(@"Button %d tapped", buttonNumber);
+}
+
+
 #pragma mark - Private methods
 
 - (void)setupAlertView
@@ -410,8 +428,10 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 - (void)setupButtons
 {
-/*
     RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView = [[RTAlertViewRecursiveButtonContainerView alloc] init];
+    recursiveButtonContainerView.delegate = self;
+//    recursiveButtonContainerView.button2Enabled = YES;
+//    recursiveButtonContainerView.button2Enabled = NO;
     [self.buttonContainerView addSubview:recursiveButtonContainerView];
     NSLog(@"recursiveButtonContainerView frame=%@", NSStringFromCGRect(recursiveButtonContainerView.frame));
 
@@ -425,7 +445,11 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                      options:0
                                                                                      metrics:0
                                                                                        views:views]];
-*/
+    
+    RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView2 = [[RTAlertViewRecursiveButtonContainerView alloc] init];
+    recursiveButtonContainerView2.delegate = self;
+    recursiveButtonContainerView2.button2Enabled = YES;
+    [recursiveButtonContainerView addRecursiveButtonContainerView:recursiveButtonContainerView2];
 }
 
 
