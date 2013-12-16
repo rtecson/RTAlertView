@@ -68,6 +68,8 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (nonatomic) NSInteger clickedButtonIndex;
 @property (strong, nonatomic) NSMutableArray *textFieldArray;
 
+@property (strong, nonatomic) RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView;
+
 @end
 
 
@@ -398,6 +400,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                              tappedButtonNumber:(NSInteger)buttonNumber
 {
     NSLog(@"Button %d tapped", buttonNumber);
+    [self dismiss];
 }
 
 
@@ -428,15 +431,16 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 - (void)setupButtons
 {
-    RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView = [[RTAlertViewRecursiveButtonContainerView alloc] init];
-    recursiveButtonContainerView.delegate = self;
-    recursiveButtonContainerView.button2Enabled = YES;
-//    recursiveButtonContainerView.button2Enabled = NO;
-    [self.buttonContainerView addSubview:recursiveButtonContainerView];
-    NSLog(@"recursiveButtonContainerView frame=%@", NSStringFromCGRect(recursiveButtonContainerView.frame));
+    // Create first recursiveButtonContainerView
+    self.recursiveButtonContainerView = [[RTAlertViewRecursiveButtonContainerView alloc] init];
+    self.recursiveButtonContainerView.delegate = self;
+    [self.buttonContainerView addSubview:self.recursiveButtonContainerView];
+//    NSLog(@"recursiveButtonContainerView frame=%@", NSStringFromCGRect(recursiveButtonContainerView.frame));
 
+    // Set up autolayout constraints
+    self.recursiveButtonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+    RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView = self.recursiveButtonContainerView;
     NSDictionary *views = NSDictionaryOfVariableBindings(recursiveButtonContainerView);
-
     [self.buttonContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[recursiveButtonContainerView]|"
                                                                                      options:0
                                                                                      metrics:0
@@ -446,13 +450,15 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                      metrics:0
                                                                                        views:views]];
 
-    RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView2 = [[RTAlertViewRecursiveButtonContainerView alloc] init];
-    recursiveButtonContainerView2.delegate = self;
-    [recursiveButtonContainerView addRecursiveButtonContainerView:recursiveButtonContainerView2];
+    [self.recursiveButtonContainerView recursivelyAddButtons:3
+                                                 useSplitRow:NO];
     
-    RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView3 = [[RTAlertViewRecursiveButtonContainerView alloc] init];
-    recursiveButtonContainerView3.delegate = self;
-    [recursiveButtonContainerView2 addRecursiveButtonContainerView:recursiveButtonContainerView3];
+    for (int i=0; i<4; i++)
+    {
+        NSString *buttonTitle = [NSString stringWithFormat:@"Button %d", i];
+        [self.recursiveButtonContainerView setTitle:buttonTitle
+                                          forButton:i];
+    }
 }
 
 

@@ -22,11 +22,19 @@
 
 @interface RTAlertViewRecursiveButtonContainerView : UIView
 
-- (void)addRecursiveButtonContainerView:(RTAlertViewRecursiveButtonContainerView *)nextRecursiveButtonContainerView;
+// Recursively add RTAlertViewRecursiveButtonContainerViews, useSplitRow
+// only applies if numButtons==2 (put two buttons in one row)
+- (void)recursivelyAddButtons:(NSInteger)numButtons
+                  useSplitRow:(BOOL)useSplitRow;
+
+// Must call recursivelyAddButtons (if numButtons > 1) before calling this
+- (void)setTitle:(NSString *)buttonTitle
+       forButton:(NSInteger)buttonNumber;
 
 @property (weak, nonatomic) id<RTAlertViewRecursiveButtonContainerViewDelegate> delegate;
 
-@property (nonatomic) BOOL button2Enabled;
+@property (nonatomic, readonly) NSInteger numButtons;
+@property (nonatomic, readonly) BOOL button1Enabled;
 @property (strong, nonatomic) UIColor *button0Color;
 @property (strong, nonatomic) UIFont *button0Font;
 @property (strong, nonatomic) UIColor *button1Color;

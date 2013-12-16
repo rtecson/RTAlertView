@@ -19,7 +19,9 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 #define kRtAlertViewDefaultButtonFont  [UIFont systemFontOfSize:17.0f]
 
 
-@interface RTAlertViewRecursiveButtonContainerView ()
+@interface RTAlertViewRecursiveButtonContainerView () <RTAlertViewRecursiveButtonContainerViewDelegate>
+
+// IBOutlets
 
 @property (weak, nonatomic) IBOutlet UIButton *button0;
 @property (weak, nonatomic) IBOutlet UIButton *button1;
@@ -27,8 +29,17 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 @property (weak, nonatomic) IBOutlet UIView *verticalDividerLine;
 @property (weak, nonatomic) IBOutlet UIView *nextButtonContainer;
 
+// Overridden readonly public properties
+
+@property (nonatomic, readwrite) BOOL button1Enabled;
+@property (nonatomic, readwrite) NSInteger numButtons;
+
+// Private properties
+
 @property (nonatomic) BOOL button2EnabledFlagHasChanged;
 @property (nonatomic) BOOL displayIsRetina;
+
+@property (strong, nonatomic) RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView;
 
 @end
 
@@ -64,7 +75,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
 - (void)initialiseProperties
 {
-    _button2Enabled = NO;
+    _button1Enabled = NO;
     _button2EnabledFlagHasChanged = NO;
     
     // Check for retina?
@@ -106,7 +117,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
     self.button1Color = kRtAlertViewDefaultButtonColor;
     self.button1Font = kRtAlertViewDefaultButtonFont;
     
-    
+    self.numButtons = 1;
 }
 
 
@@ -128,11 +139,11 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
 #pragma mark - Setter methods
 
-- (void)setButton2Enabled:(BOOL)button2Enabled
+- (void)setButton1Enabled:(BOOL)button2Enabled
 {
-    if (button2Enabled != _button2Enabled)
+    if (button2Enabled != _button1Enabled)
     {
-        _button2Enabled = button2Enabled;
+        _button1Enabled = button2Enabled;
         _button2EnabledFlagHasChanged = YES;
     }
 }
@@ -185,21 +196,82 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
 #pragma mark - Public methods
 
-- (void)addRecursiveButtonContainerView:(RTAlertViewRecursiveButtonContainerView *)nextRecursiveButtonContainerView
+- (void)recursivelyAddButtons:(NSInteger)numButtons
+                  useSplitRow:(BOOL)useSplitRow
 {
-    nextRecursiveButtonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.nextButtonContainer addSubview:nextRecursiveButtonContainerView];
+    NSLog(@"In recursivelyAddButtons:(%d) useSplitRow:(%d)", numButtons, useSplitRow);
+    if (numButtons == 0)
+    {
+        // Do nothing, end recursion
+        return;
+    }
+    else if ((numButtons == 1) &&
+             (useSplitRow == YES))
+    {
+        // Enable button 2
+        self.button1Enabled = YES;
+        
+        // End recursion
+        return;
+    }
+    else
+    {
+        // Save numButtons
+        self.numButtons = numButtons;
+
+        // Add recursive button container view into nextButtonContainer
+        self.recursiveButtonContainerView = [[RTAlertViewRecursiveButtonContainerView alloc] init];
+        self.recursiveButtonContainerView.delegate = self;
+        [self.nextButtonContainer addSubview:self.recursiveButtonContainerView];
+
+        // Set up autolayout constraints
+        self.recursiveButtonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+        RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView = self.recursiveButtonContainerView;
+        NSDictionary *views = NSDictionaryOfVariableBindings(recursiveButtonContainerView);
+        [self.nextButtonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[recursiveButtonContainerView]|"
+                                                                                         options:0
+                                                                                         metrics:0
+                                                                                           views:views]];
+        [self.nextButtonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[recursiveButtonContainerView]|"
+                                                                                         options:0
+                                                                                         metrics:0
+                                                                                           views:views]];
+
+        // Recursively add additional buttons
+        [self.recursiveButtonContainerView recursivelyAddButtons:(numButtons - 1)
+                                                     useSplitRow:NO];
+    }
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(nextRecursiveButtonContainerView);
-    
-    [self.nextButtonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[nextRecursiveButtonContainerView]|"
-                                                                                     options:0
-                                                                                     metrics:0
-                                                                                       views:views]];
-    [self.nextButtonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[nextRecursiveButtonContainerView]|"
-                                                                                     options:0
-                                                                                     metrics:0
-                                                                                       views:views]];
+    return;
+}
+
+
+- (void)setTitle:(NSString *)buttonTitle
+       forButton:(NSInteger)buttonNumber
+{
+    // Check for valid buttonTitle
+    if ((buttonTitle == nil) ||
+        (buttonTitle.length == 0))
+    {
+        // Do nothing
+        return;
+    }
+
+    if (buttonNumber == 0)
+    {
+        self.button0.titleLabel.text = buttonTitle;
+    }
+    else if ((buttonNumber == 1) &&
+             (self.button1Enabled == YES))
+    {
+        self.button1.titleLabel.text = buttonTitle;
+    }
+    else
+    {
+        // Recursively set button title
+        [self.recursiveButtonContainerView setTitle:buttonTitle
+                                          forButton:(buttonNumber - 1)];
+    }
 }
 
 
@@ -219,7 +291,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
         // Enabling or disabling?
         CGFloat button2Width;
-        if (self.button2Enabled == YES)
+        if (self.button1Enabled == YES)
         {
             // Enabling, show button2 and vertical divider
             self.button1.hidden = NO;
@@ -284,6 +356,20 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
     {
         [self.delegate rtAlertViewRecursiveButtonContainerView:self
                                             tappedButtonNumber:1];
+    }
+}
+
+
+#pragma mark - RTAlertViewRecursiveButtonContainerViewDelegate methods
+
+- (void)rtAlertViewRecursiveButtonContainerView:(RTAlertViewRecursiveButtonContainerView *)rtAlertViewRecursiveButtonContainerView
+                             tappedButtonNumber:(NSInteger)buttonNumber
+{
+    if ([self.delegate respondsToSelector:@selector(rtAlertViewRecursiveButtonContainerView:tappedButtonNumber:)] == YES)
+    {
+        // Pass through to delegate
+        [self.delegate rtAlertViewRecursiveButtonContainerView:self
+                                            tappedButtonNumber:(buttonNumber + 1)];
     }
 }
 
