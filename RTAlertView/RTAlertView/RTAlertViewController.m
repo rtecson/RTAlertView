@@ -461,13 +461,27 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
             break;
         case UIAlertViewStyleLoginAndPasswordInput:
         {
+            // Create doubleTextFieldView
+            RTAlertViewDoubleTextFieldView *doubleTextFieldView = [[RTAlertViewDoubleTextFieldView alloc] init];
+            [self.textFieldContainerView addSubview:doubleTextFieldView];
             
+            // Set up autolayout constraints
+            doubleTextFieldView.translatesAutoresizingMaskIntoConstraints = NO;
+            NSDictionary *views = NSDictionaryOfVariableBindings(doubleTextFieldView);
+            [self.textFieldContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[doubleTextFieldView]|"
+                                                                                                options:0
+                                                                                                metrics:0
+                                                                                                  views:views]];
+            [self.textFieldContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[doubleTextFieldView]|"
+                                                                                                options:0
+                                                                                                metrics:0
+                                                                                                  views:views]];
         }
             break;
         case UIAlertViewStyleDefault:
         default:
         {
-            
+            // Do nothing
         }
             break;
     }

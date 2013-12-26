@@ -10,6 +10,14 @@
 #import "RTAlertViewDoubleTextFieldView.h"
 
 
+@interface RTAlertViewDoubleTextFieldView ()
+
+@property (weak, nonatomic) IBOutlet UITextField *textField1;
+@property (weak, nonatomic) IBOutlet UITextField *textField2;
+
+@end
+
+
 @implementation RTAlertViewDoubleTextFieldView
 
 
@@ -36,6 +44,15 @@
     }
 
     return self;
+}
+
+
+#pragma mark - UIView methods
+
+- (CGSize)intrinsicContentSize
+{
+    return CGSizeMake(270.f,
+                      77.0f);
 }
 
 

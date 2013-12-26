@@ -46,13 +46,6 @@
 }
 
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    NSLog(@"RTAlertViewSingleTextFieldView layoutSubviews, frame = %@", NSStringFromCGRect(self.frame));
-}
-
-
 #pragma mark - UIView methods
 
 - (CGSize)intrinsicContentSize
