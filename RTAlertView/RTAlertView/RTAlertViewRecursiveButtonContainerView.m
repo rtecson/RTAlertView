@@ -10,10 +10,11 @@
 #import "RTAlertViewRecursiveButtonContainerView.h"
 
 
-static CGFloat kButton2EnabledWidth = 135.0f;
-static CGFloat kButton2DisabledWidth = 0.0f;
+static CGFloat kButton1EnabledWidth = 135.0f;
+static CGFloat kButton1DisabledWidth = 0.0f;
 static CGFloat kDividerThicknessRetina = 0.5f;
 static CGFloat kDividerThicknessNonRetina = 1.0f;
+static CGFloat kHorizontalDividerTopConstraintAdjustment = -0.5f;
 
 #define kRtAlertViewDefaultButtonColor [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
 #define kRtAlertViewDefaultButtonFont  [UIFont systemFontOfSize:17.0f]
@@ -28,6 +29,10 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 @property (weak, nonatomic) IBOutlet UIView *horizontalDividerLine;
 @property (weak, nonatomic) IBOutlet UIView *verticalDividerLine;
 @property (weak, nonatomic) IBOutlet UIView *nextButtonContainer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstraintForButton1;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraintForHorizontalDividerLine;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstraintForVerticalDividerLine;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraintForHorizontalDividerLine;
 
 // Overridden readonly public properties
 
@@ -36,7 +41,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
 // Private properties
 
-@property (nonatomic) BOOL button2EnabledFlagHasChanged;
+@property (nonatomic) BOOL button1EnabledFlagHasChanged;
 @property (nonatomic) BOOL displayIsRetina;
 
 @property (strong, nonatomic) RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView;
@@ -76,51 +81,24 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 - (void)initialiseProperties
 {
     _button1Enabled = NO;
-    _button2EnabledFlagHasChanged = NO;
+    _button1EnabledFlagHasChanged = NO;
     
     // Check for retina?
-    CGFloat dividerThickness;
     if (self.displayIsRetina == YES)
     {
-        // Retina
-        dividerThickness = kDividerThicknessRetina;
+        // Update width constraints of divider lines
+        self.heightConstraintForHorizontalDividerLine.constant = kDividerThicknessRetina;
+        self.widthConstraintForVerticalDividerLine.constant = kDividerThicknessRetina;
+        
+        // Update top constraint or horizontal divider line
+        self.topConstraintForHorizontalDividerLine.constant -= kHorizontalDividerTopConstraintAdjustment;
     }
     else
     {
-        // Non-retina
-        dividerThickness = kDividerThicknessNonRetina;
+        // Update width constraints of divider lines
+        self.heightConstraintForHorizontalDividerLine.constant = kDividerThicknessNonRetina;
+        self.widthConstraintForVerticalDividerLine.constant = kDividerThicknessNonRetina;
     }
-    
-    // Set constraint for horizontal divider height
-    NSLayoutConstraint *hDividerHeight = [NSLayoutConstraint constraintWithItem:self.horizontalDividerLine
-                                                                      attribute:NSLayoutAttributeHeight
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:nil
-                                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                                     multiplier:1.0f
-                                                                       constant:dividerThickness];
-    [self.horizontalDividerLine addConstraint:hDividerHeight];
-
-    // Set constraint for vertical divider height
-    NSLayoutConstraint *vDividerWidth = [NSLayoutConstraint constraintWithItem:self.verticalDividerLine
-                                                                      attribute:NSLayoutAttributeWidth
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:nil
-                                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                                     multiplier:1.0f
-                                                                       constant:dividerThickness];
-    [self.verticalDividerLine addConstraint:vDividerWidth];
-    
-/*
-    // Set constraint for top space
-    UIView *verticalDividerLine = self.verticalDividerLine;
-    verticalDividerLine.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *views = NSDictionaryOfVariableBindings(verticalDividerLine);
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0.5)-[verticalDividerLine]"
-                                                                 options:0
-                                                                 metrics:0
-                                                                   views:views]];
-*/
 
     // Set default button colours and fonts
     self.button0Color = kRtAlertViewDefaultButtonColor;
@@ -136,17 +114,17 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 {
     [super awakeFromNib];
     
-    NSLog(@"In RTAlertViewRecursiveButtonContainerView awakeFromNib");
+//    NSLog(@"In RTAlertViewRecursiveButtonContainerView awakeFromNib");
 //    NSLog(@"self frame: %@", NSStringFromCGRect(self.frame));
     [self initialiseProperties];
 }
 
-
+/*
 - (void)dealloc
 {
     NSLog(@"In RTAlertViewRecursiveButtonContainerView dealloc");
 }
-
+*/
 
 #pragma mark - Setter methods
 
@@ -155,7 +133,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
     if (button2Enabled != _button1Enabled)
     {
         _button1Enabled = button2Enabled;
-        _button2EnabledFlagHasChanged = YES;
+        _button1EnabledFlagHasChanged = YES;
     }
 }
 
@@ -356,64 +334,41 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 
 - (void)updateConstraints
 {
-    // Has button2Enabled flag changed?
-    if (self.button2EnabledFlagHasChanged == YES)
+    // Has button1Enabled flag changed?
+    if (self.button1EnabledFlagHasChanged == YES)
     {
         // Clear flag
-        self.button2EnabledFlagHasChanged = NO;
-
-        // Clear button2 constraints, width should be the only existing constraint
-        NSArray *button2Constraints = self.button1.constraints;
-        [self.button1 removeConstraints:button2Constraints];
+        self.button1EnabledFlagHasChanged = NO;
 
         // Enabling or disabling?
-        CGFloat button2Width;
+        CGFloat button1Width;
         if (self.button1Enabled == YES)
         {
-            // Enabling, show button2 and vertical divider
+            // Enabling, show button1 and vertical divider
             self.button1.hidden = NO;
             self.verticalDividerLine.hidden = NO;
 
-            // Set button2 width
-            button2Width = kButton2EnabledWidth;
+            // Set button1 width
+            button1Width = kButton1EnabledWidth;
         }
         else
         {
-            // Disabling, hide button2 and vertical divider
+            // Disabling, hide button1 and vertical divider
             self.button1.hidden = YES;
             self.verticalDividerLine.hidden = YES;
 
-            // Set button2 width
-            button2Width = kButton2DisabledWidth;
+            // Set button1 width
+            button1Width = kButton1DisabledWidth;
         }
 
-        // Set constraint for button2 width
-        NSLayoutConstraint *newConstraint = [NSLayoutConstraint constraintWithItem:self.button1
-                                                     attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:nil
-                                                     attribute:NSLayoutAttributeNotAnAttribute
-                                                    multiplier:1.0f
-                                                      constant:button2Width];
-        [self.button1 addConstraint:newConstraint];
+        // Update constraint for button1 width
+        self.widthConstraintForButton1.constant = button1Width;
     }
     
     // Call super after we're done
     [super updateConstraints];
 }
 
-/*
-- (void)drawRect:(CGRect)rect
-{
-    [super drawRect:rect];
-    
-    NSLog(@"Button 1, frame=%@", NSStringFromCGRect(self.button1.frame));
-    NSLog(@"Button 2, frame=%@", NSStringFromCGRect(self.button2.frame));
-    NSLog(@"Horizontal divider line, frame=%@", NSStringFromCGRect(self.horizontalDividerLine.frame));
-    NSLog(@"Vertical divider line, frame=%@", NSStringFromCGRect(self.verticalDividerLine.frame));
-    NSLog(@"Next button container, frame=%@", NSStringFromCGRect(self.nextButtonContainer.frame));
-}
-*/
 
 #pragma mark - IBAction methods
 

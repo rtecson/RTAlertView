@@ -103,7 +103,7 @@
 
 	[customAlertView show];
     
-    self.alertView = customAlertView;
+    self.alertView = (UIAlertView *)customAlertView;
 }
 
 

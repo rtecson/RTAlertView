@@ -165,12 +165,12 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     // Dispose of any resources that can be recreated.
 }
 
-
+/*
 - (void)dealloc
 {
     NSLog(@"In RTAlertViewController dealloc");
 }
-
+*/
 
 #pragma mark - Public Getters
 
