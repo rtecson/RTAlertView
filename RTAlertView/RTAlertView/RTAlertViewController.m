@@ -69,7 +69,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) NSMutableArray *buttonTitleArray;
-//@property (strong, nonatomic) NSMutableArray *buttonArray;
 @property (nonatomic) NSInteger clickedButtonIndex;
 @property (strong, nonatomic) NSMutableArray *textFieldArray;
 
@@ -144,20 +143,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                   object:nil];
 }
 
-
-/*
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-
-    NSLog(@"In viewDidLayoutSubviews");
-    NSLog(@"alertContainerView frame: %@", NSStringFromCGRect(self.alertContainerView.frame));
-    NSLog(@"gaussianBlurContainerView frame: %@", NSStringFromCGRect(self.gaussianBlurContainerView.frame));
-    NSLog(@"contentView frame: %@", NSStringFromCGRect(self.contentView.frame));
-    NSLog(@"buttonContainerView frame: %@", NSStringFromCGRect(self.buttonContainerView.frame));
-    NSLog(@"textFieldContainerView frame: %@", NSStringFromCGRect(self.textFieldContainerView.frame));
-}
-*/
 
 - (void)didReceiveMemoryWarning
 {
