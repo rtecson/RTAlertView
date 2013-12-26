@@ -421,6 +421,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 {
     NSLog(@"Button %d tapped", buttonNumber);
     self.clickedButtonIndex = buttonNumber;
+    
+    if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)])
+    {
+        [self.delegate alertView:self.alertView
+            clickedButtonAtIndex:self.clickedButtonIndex];
+    }
+
     [self dismiss];
 }
 
@@ -486,6 +493,22 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                                 metrics:0
                                                                                                   views:views]];
 
+            // Set up textField properties
+            singleTextFieldView.textField.backgroundColor = [UIColor clearColor];
+            singleTextFieldView.textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+            singleTextFieldView.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            singleTextFieldView.textField.returnKeyType = UIReturnKeyNext;
+            singleTextFieldView.textField.borderStyle = UITextBorderStyleNone;
+            singleTextFieldView.textField.font = [singleTextFieldView.textField.font fontWithSize:13.0f];
+            if (self.alertViewStyle == UIAlertViewStylePlainTextInput)
+            {
+                singleTextFieldView.textField.secureTextEntry = NO;
+            }
+            else
+            {
+                singleTextFieldView.textField.secureTextEntry = YES;
+            }
+            
             // Set first responder (keyboard shows)
             [singleTextFieldView.textField becomeFirstResponder];
             
@@ -512,6 +535,24 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                                 metrics:0
                                                                                                   views:views]];
             
+            // Set up textField properties
+            doubleTextFieldView.textField1.backgroundColor = [UIColor clearColor];
+            doubleTextFieldView.textField1.keyboardAppearance = UIKeyboardAppearanceAlert;
+            doubleTextFieldView.textField1.clearButtonMode = UITextFieldViewModeWhileEditing;
+            doubleTextFieldView.textField1.returnKeyType = UIReturnKeyNext;
+            doubleTextFieldView.textField1.borderStyle = UITextBorderStyleNone;
+            doubleTextFieldView.textField1.font = [doubleTextFieldView.textField1.font fontWithSize:13.0f];
+            doubleTextFieldView.textField1.secureTextEntry = NO;
+            doubleTextFieldView.textField1.placeholder = @"Login";
+            doubleTextFieldView.textField2.backgroundColor = [UIColor clearColor];
+            doubleTextFieldView.textField2.keyboardAppearance = UIKeyboardAppearanceAlert;
+            doubleTextFieldView.textField2.clearButtonMode = UITextFieldViewModeWhileEditing;
+            doubleTextFieldView.textField2.returnKeyType = UIReturnKeyNext;
+            doubleTextFieldView.textField2.borderStyle = UITextBorderStyleNone;
+            doubleTextFieldView.textField2.font = [doubleTextFieldView.textField2.font fontWithSize:13.0f];
+            doubleTextFieldView.textField2.secureTextEntry = YES;
+            doubleTextFieldView.textField2.placeholder = @"Password";
+
             // Set first responder (keyboard shows)
             [doubleTextFieldView.textField1 becomeFirstResponder];
 

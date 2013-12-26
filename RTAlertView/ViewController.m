@@ -23,6 +23,8 @@
 @property (nonatomic) NSInteger numberOfOtherButtons;
 @property (nonatomic) UIAlertViewStyle alertViewStyle;
 
+@property (weak, nonatomic) UIAlertView *alertView;
+
 @end
 
 
@@ -72,6 +74,8 @@
     NSLog(@"cancelButtonIndex = %ld", (long)alertView.cancelButtonIndex);
 
 	[alertView show];
+    
+    self.alertView = alertView;
 }
 
 
@@ -98,6 +102,8 @@
     customAlertView.cancelButtonColor = kCustomColor;
 
 	[customAlertView show];
+    
+    self.alertView = customAlertView;
 }
 
 
@@ -192,6 +198,35 @@
 - (void)alertViewCancel:(RTAlertView *)alertView
 {
     NSLog(@"Will cancel %@", [[alertView class] description]);
+    [self displayTextFieldsContent];
+}
+
+
+#pragma mark - Private methods
+
+- (void)displayTextFieldsContent
+{
+    int numTextFields = 0;
+    switch (self.alertViewStyle)
+    {
+        case UIAlertViewStylePlainTextInput:
+        case UIAlertViewStyleSecureTextInput:
+            numTextFields = 1;
+            break;
+        case UIAlertViewStyleLoginAndPasswordInput:
+            numTextFields = 2;
+            break;
+        case UIAlertViewStyleDefault:
+        default:
+            numTextFields = 0;
+            break;
+    }
+    
+    for (int i=0; i < numTextFields; i++)
+    {
+        UITextField *textField = [self.alertView textFieldAtIndex:i];
+        NSLog(@"TextField %d = %@", i, textField.text);
+    }
 }
 
 

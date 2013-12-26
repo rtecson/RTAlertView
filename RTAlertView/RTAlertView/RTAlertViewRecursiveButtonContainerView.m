@@ -137,7 +137,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
     [super awakeFromNib];
     
     NSLog(@"In RTAlertViewRecursiveButtonContainerView awakeFromNib");
-    NSLog(@"self frame: %@", NSStringFromCGRect(self.frame));
+//    NSLog(@"self frame: %@", NSStringFromCGRect(self.frame));
     [self initialiseProperties];
 }
 
@@ -210,7 +210,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
 - (void)recursivelyAddButtons:(NSInteger)numButtons
                   useSplitRow:(BOOL)useSplitRow
 {
-    NSLog(@"In recursivelyAddButtons:(%d) useSplitRow:(%d)", numButtons, useSplitRow);
+//    NSLog(@"In recursivelyAddButtons:(%d) useSplitRow:(%d)", numButtons, useSplitRow);
     if (numButtons == 0)
     {
         // Do nothing, end recursion
