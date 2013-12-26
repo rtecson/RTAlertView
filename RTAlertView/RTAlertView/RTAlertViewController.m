@@ -9,6 +9,8 @@
 
 #import "RTAlertViewController.h"
 #import "RTAlertViewRecursiveButtonContainerView.h"
+#import "RTAlertViewSingleTextFieldView.h"
+#import "RTAlertViewDoubleTextFieldView.h"
 
 
 // Constants
@@ -414,10 +416,61 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                              views:views]];
 
     [self setupLabels];
+    [self setupTextFields];
     [self setupButtons];
 
 	[self.alertContainerView.layer setMasksToBounds:YES];
 	[self.alertContainerView.layer setCornerRadius:kRtAlertViewCornerRadius];
+}
+
+
+- (void)setupLabels
+{
+    self.titleLabel.text = self.alertViewTitle;
+    self.titleLabel.textColor = self.titleColor;
+    self.titleLabel.font = self.titleFont;
+    self.messageLabel.text = self.alertViewMessage;
+    self.messageLabel.textColor = self.messageColor;
+    self.messageLabel.font = self.messageFont;
+}
+
+
+- (void)setupTextFields
+{
+    switch (self.alertViewStyle)
+    {
+        case UIAlertViewStylePlainTextInput:
+        case UIAlertViewStyleSecureTextInput:
+        {
+            // Create singleTextFieldView
+            RTAlertViewSingleTextFieldView *singleTextFieldView = [[RTAlertViewSingleTextFieldView alloc] init];
+            [self.textFieldContainerView addSubview:singleTextFieldView];
+            
+            // Set up autolayout constraints
+            singleTextFieldView.translatesAutoresizingMaskIntoConstraints = NO;
+            NSDictionary *views = NSDictionaryOfVariableBindings(singleTextFieldView);
+            [self.textFieldContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[singleTextFieldView]|"
+                                                                                                options:0
+                                                                                                metrics:0
+                                                                                                  views:views]];
+            [self.textFieldContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[singleTextFieldView]|"
+                                                                                                options:0
+                                                                                                metrics:0
+                                                                                                  views:views]];
+        }
+            break;
+        case UIAlertViewStyleLoginAndPasswordInput:
+        {
+            
+        }
+            break;
+        case UIAlertViewStyleDefault:
+        default:
+        {
+            
+        }
+            break;
+    }
 }
 
 
@@ -448,7 +501,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                      metrics:0
                                                                                        views:views]];
 
-    // Add rest of buttons
+    // Add rest of recursiveButtonContainerViews
     [self.recursiveButtonContainerView recursivelyAddButtons:(self.numberOfButtons - 1)
                                                  useSplitRow:YES];
     
@@ -473,17 +526,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                   forButton:i];
         }
     }
-}
-
-
-- (void)setupLabels
-{
-    self.titleLabel.text = self.alertViewTitle;
-    self.titleLabel.textColor = self.titleColor;
-    self.titleLabel.font = self.titleFont;
-    self.messageLabel.text = self.alertViewMessage;
-    self.messageLabel.textColor = self.messageColor;
-    self.messageLabel.font = self.messageFont;
 }
 
 

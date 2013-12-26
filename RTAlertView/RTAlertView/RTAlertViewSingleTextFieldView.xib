@@ -10,19 +10,29 @@
             <rect key="frame" x="0.0" y="0.0" width="270" height="48"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg-single-textfield" translatesAutoresizingMaskIntoConstraints="NO" id="8Ci-yP-lwI">
-                    <rect key="frame" x="15" y="22" width="240" height="30"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-single-textfield" translatesAutoresizingMaskIntoConstraints="NO" id="8Ci-yP-lwI">
+                    <rect key="frame" x="15" y="3" width="240" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C09-JT-0wO">
-                    <rect key="frame" x="21" y="22" width="234" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C09-JT-0wO">
+                    <rect key="frame" x="21" y="3" width="234" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="C09-JT-0wO" secondAttribute="bottom" constant="15" id="7NS-Rg-n6C"/>
+                <constraint firstItem="8Ci-yP-lwI" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="15" id="Xyi-3N-Ln2"/>
+                <constraint firstItem="C09-JT-0wO" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="21" id="bqK-Hc-aIY"/>
+                <constraint firstItem="C09-JT-0wO" firstAttribute="top" secondItem="1" secondAttribute="top" constant="3" id="daB-QF-FRU"/>
+                <constraint firstAttribute="trailing" secondItem="C09-JT-0wO" secondAttribute="trailing" constant="15" id="fEu-Ol-8fq"/>
+                <constraint firstAttribute="bottom" secondItem="8Ci-yP-lwI" secondAttribute="bottom" constant="15" id="ghj-P3-7lb"/>
+                <constraint firstItem="8Ci-yP-lwI" firstAttribute="top" secondItem="1" secondAttribute="top" constant="3" id="mzK-ba-BeM"/>
+                <constraint firstAttribute="trailing" secondItem="8Ci-yP-lwI" secondAttribute="trailing" constant="15" id="yGm-xB-0tN"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="textField" destination="C09-JT-0wO" id="Zbj-qS-WzX"/>

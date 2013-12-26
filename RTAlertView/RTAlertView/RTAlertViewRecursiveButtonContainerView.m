@@ -91,7 +91,7 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
         dividerThickness = kDividerThicknessNonRetina;
     }
     
-    // Set constraint for vertical divider height
+    // Set constraint for horizontal divider height
     NSLayoutConstraint *hDividerHeight = [NSLayoutConstraint constraintWithItem:self.horizontalDividerLine
                                                                       attribute:NSLayoutAttributeHeight
                                                                       relatedBy:NSLayoutRelationEqual
@@ -111,6 +111,17 @@ static CGFloat kDividerThicknessNonRetina = 1.0f;
                                                                        constant:dividerThickness];
     [self.verticalDividerLine addConstraint:vDividerWidth];
     
+/*
+    // Set constraint for top space
+    UIView *verticalDividerLine = self.verticalDividerLine;
+    verticalDividerLine.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *views = NSDictionaryOfVariableBindings(verticalDividerLine);
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0.5)-[verticalDividerLine]"
+                                                                 options:0
+                                                                 metrics:0
+                                                                   views:views]];
+*/
+
     // Set default button colours and fonts
     self.button0Color = kRtAlertViewDefaultButtonColor;
     self.button0Font = kRtAlertViewDefaultButtonFont;
