@@ -12,4 +12,6 @@
 
 @interface RTAlertViewSingleTextFieldView : UIView
 
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+
 @end

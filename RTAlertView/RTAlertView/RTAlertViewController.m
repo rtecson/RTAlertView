@@ -61,6 +61,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIView *textFieldContainerView;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraintForKeyboardSizeMirroringView;
 
 
 // Private properties
@@ -116,6 +117,33 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     
     [self setupAlertView];
 }
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    // Register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    // Set keyboard height constraint
+    self.heightConstraintForKeyboardSizeMirroringView.constant = 0.0f;
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    // De-register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+}
+
 
 /*
 - (void)viewDidLayoutSubviews
@@ -219,7 +247,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     return _buttonTitleArray;
 }
 
-
+/*
 - (NSMutableArray *)textFieldArray
 {
     if (_textFieldArray == nil)
@@ -292,7 +320,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     
     return _textFieldArray;
 }
-
+*/
 
 #pragma mark - Public methods
 
@@ -457,6 +485,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                                 options:0
                                                                                                 metrics:0
                                                                                                   views:views]];
+
+            // Set first responder (keyboard shows)
+            [singleTextFieldView.textField becomeFirstResponder];
+            
+            // Set up textFieldArray
+            self.textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
+            [self.textFieldArray addObject:singleTextFieldView.textField];
         }
             break;
         case UIAlertViewStyleLoginAndPasswordInput:
@@ -476,6 +511,14 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                                 options:0
                                                                                                 metrics:0
                                                                                                   views:views]];
+            
+            // Set first responder (keyboard shows)
+            [doubleTextFieldView.textField1 becomeFirstResponder];
+
+            // Set up textFieldArray
+            self.textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
+            [self.textFieldArray addObject:doubleTextFieldView.textField1];
+            [self.textFieldArray addObject:doubleTextFieldView.textField2];
         }
             break;
         case UIAlertViewStyleDefault:
@@ -607,6 +650,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     
     [self dismissAlertView];
 
+    // Release keyboard for each text field
+    for (int i=0; i<self.textFieldArray.count; i++)
+    {
+        UITextField *textField = [self.textFieldArray objectAtIndex:i];
+        [textField resignFirstResponder];
+    }
+
     if ([self.delegate respondsToSelector:@selector(alertView:didDismissWithButtonIndex:)])
     {
         [self.delegate alertView:self.alertView
@@ -679,6 +729,22 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
     // Release RTAlertView, important or retain cycle is not broken
     self.alertView = nil;
+}
+
+
+#pragma mark - UINotification handlers
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrame = [kbFrame CGRectValue];
+
+    BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
+    CGFloat keyboardHeight = isPortrait ? keyboardFrame.size.height : keyboardFrame.size.width;
+    
+    // Change bottom layout constraint of height adjustable container view
+    self.heightConstraintForKeyboardSizeMirroringView.constant = keyboardHeight;
 }
 
 

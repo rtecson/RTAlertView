@@ -12,4 +12,7 @@
 
 @interface RTAlertViewDoubleTextFieldView : UIView
 
+@property (weak, nonatomic) IBOutlet UITextField *textField1;
+@property (weak, nonatomic) IBOutlet UITextField *textField2;
+
 @end
