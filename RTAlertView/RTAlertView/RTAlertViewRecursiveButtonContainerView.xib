@@ -22,7 +22,7 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="button1Tapped:" destination="1" eventType="touchUpInside" id="gIq-eN-AAL"/>
+                                <action selector="button0Tapped:" destination="1" eventType="touchUpInside" id="Nfa-zr-bLg"/>
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ol-el-OyS" userLabel="button1">
@@ -36,7 +36,7 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="button2Tapped:" destination="1" eventType="touchUpInside" id="fQh-JB-arA"/>
+                                <action selector="button1Tapped:" destination="1" eventType="touchUpInside" id="MtB-ra-iwD"/>
                             </connections>
                         </button>
                     </subviews>

@@ -10,14 +10,14 @@
 #import "RTAlertViewRecursiveButtonContainerView.h"
 
 
-static CGFloat kButton1EnabledWidth = 135.0f;
-static CGFloat kButton1DisabledWidth = 0.0f;
-static CGFloat kDividerThicknessRetina = 0.5f;
-static CGFloat kDividerThicknessNonRetina = 1.0f;
-static CGFloat kHorizontalDividerTopConstraintAdjustment = -0.5f;
+static CGFloat kRtAlertViewWidthButton1Enabled = 135.0f;
+static CGFloat kRtAlertViewWidthButton1Disabled = 0.0f;
+static CGFloat kRtAlertViewThicknessDividerRetina = 0.5f;
+static CGFloat kRtAlertViewThicknessDividerNonRetina = 1.0f;
+static CGFloat kRtAlertViewTopConstraintConstantAdjustmentHorizontalDivider = -0.5f;
 
-#define kRtAlertViewDefaultButtonColor [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
-#define kRtAlertViewDefaultButtonFont  [UIFont systemFontOfSize:17.0f]
+#define kRtAlertViewDefaultColourButton [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
+#define kRtAlertViewDefaultFontButton  [UIFont systemFontOfSize:17.0f]
 
 
 @interface RTAlertViewRecursiveButtonContainerView () <RTAlertViewRecursiveButtonContainerViewDelegate>
@@ -87,24 +87,24 @@ static CGFloat kHorizontalDividerTopConstraintAdjustment = -0.5f;
     if (self.displayIsRetina == YES)
     {
         // Update width constraints of divider lines
-        self.heightConstraintForHorizontalDividerLine.constant = kDividerThicknessRetina;
-        self.widthConstraintForVerticalDividerLine.constant = kDividerThicknessRetina;
+        self.heightConstraintForHorizontalDividerLine.constant = kRtAlertViewThicknessDividerRetina;
+        self.widthConstraintForVerticalDividerLine.constant = kRtAlertViewThicknessDividerRetina;
         
-        // Update top constraint or horizontal divider line
-        self.topConstraintForHorizontalDividerLine.constant -= kHorizontalDividerTopConstraintAdjustment;
+        // Update top constraint of horizontal divider line
+        self.topConstraintForHorizontalDividerLine.constant -= kRtAlertViewTopConstraintConstantAdjustmentHorizontalDivider;
     }
     else
     {
         // Update width constraints of divider lines
-        self.heightConstraintForHorizontalDividerLine.constant = kDividerThicknessNonRetina;
-        self.widthConstraintForVerticalDividerLine.constant = kDividerThicknessNonRetina;
+        self.heightConstraintForHorizontalDividerLine.constant = kRtAlertViewThicknessDividerNonRetina;
+        self.widthConstraintForVerticalDividerLine.constant = kRtAlertViewThicknessDividerNonRetina;
     }
 
     // Set default button colours and fonts
-    self.button0Color = kRtAlertViewDefaultButtonColor;
-    self.button0Font = kRtAlertViewDefaultButtonFont;
-    self.button1Color = kRtAlertViewDefaultButtonColor;
-    self.button1Font = kRtAlertViewDefaultButtonFont;
+    self.button0Color = kRtAlertViewDefaultColourButton;
+    self.button0Font = kRtAlertViewDefaultFontButton;
+    self.button1Color = kRtAlertViewDefaultColourButton;
+    self.button1Font = kRtAlertViewDefaultFontButton;
     
     self.numButtons = 1;
 }
@@ -349,7 +349,7 @@ static CGFloat kHorizontalDividerTopConstraintAdjustment = -0.5f;
             self.verticalDividerLine.hidden = NO;
 
             // Set button1 width
-            button1Width = kButton1EnabledWidth;
+            button1Width = kRtAlertViewWidthButton1Enabled;
         }
         else
         {
@@ -358,7 +358,7 @@ static CGFloat kHorizontalDividerTopConstraintAdjustment = -0.5f;
             self.verticalDividerLine.hidden = YES;
 
             // Set button1 width
-            button1Width = kButton1DisabledWidth;
+            button1Width = kRtAlertViewWidthButton1Disabled;
         }
 
         // Update constraint for button1 width
@@ -372,7 +372,7 @@ static CGFloat kHorizontalDividerTopConstraintAdjustment = -0.5f;
 
 #pragma mark - IBAction methods
 
-- (IBAction)button1Tapped:(id)sender
+- (IBAction)button0Tapped:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(rtAlertViewRecursiveButtonContainerView:tappedButtonNumber:)] == YES)
     {
@@ -382,7 +382,7 @@ static CGFloat kHorizontalDividerTopConstraintAdjustment = -0.5f;
 }
 
 
-- (IBAction)button2Tapped:(id)sender
+- (IBAction)button1Tapped:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(rtAlertViewRecursiveButtonContainerView:tappedButtonNumber:)] == YES)
     {

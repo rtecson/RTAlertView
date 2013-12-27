@@ -14,16 +14,19 @@
 
 
 // Constants
-#define kRtAlertViewTitleColor [UIColor blackColor]
-#define kRtAlertViewTitleFont  [UIFont boldSystemFontOfSize:17.0f]
-#define kRtAlertViewMessageColor [UIColor blackColor]
-#define kRtAlertViewMessageFont  [UIFont systemFontOfSize:14.0f]
-#define kRtAlertViewCancelButtonColor [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
-#define kRtAlertViewCancelButtonFont  [UIFont boldSystemFontOfSize:17.0f]
-#define kRtAlertViewOtherButtonColor [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
-#define kRtAlertViewOtherButtonFont  [UIFont systemFontOfSize:17.0f]
+#define kRtAlertViewColourTitle [UIColor blackColor]
+#define kRtAlertViewFontTitle  [UIFont boldSystemFontOfSize:17.0f]
+#define kRtAlertViewColourMessage [UIColor blackColor]
+#define kRtAlertViewFontMessage  [UIFont systemFontOfSize:14.0f]
+#define kRtAlertViewColourCancelButton [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
+#define kRtAlertViewFontCancelButton  [UIFont boldSystemFontOfSize:17.0f]
+#define kRtAlertViewColourOtherButton [UIColor colorWithRed:0.0f/255.0f green:122.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
+#define kRtAlertViewFontOtherButton  [UIFont systemFontOfSize:17.0f]
+#define kRtAlertViewFontTextFieldPlacholder [UIFont systemFontOfSize:13.0f]
 
-static CGFloat kRtAlertViewCornerRadius = 7.0f;
+
+static CGFloat kRtAlertViewRadiusCorner = 7.0f;
+static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 
 
 #define RTSpringAnimation CASpringAnimation
@@ -67,12 +70,11 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 // Private properties
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView;
 
 @property (strong, nonatomic) NSMutableArray *buttonTitleArray;
 @property (nonatomic) NSInteger clickedButtonIndex;
 @property (strong, nonatomic) NSMutableArray *textFieldArray;
-
-@property (strong, nonatomic) RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView;
 
 @end
 
@@ -90,14 +92,15 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     if (self != nil)
     {
         // Initialize properties to default values
-        self.titleColor = kRtAlertViewTitleColor;
-        self.titleFont = kRtAlertViewTitleFont;
-        self.messageColor = kRtAlertViewMessageColor;
-        self.messageFont = kRtAlertViewMessageFont;
-        self.cancelButtonColor = kRtAlertViewCancelButtonColor;
-        self.cancelButtonFont = kRtAlertViewCancelButtonFont;
-        self.otherButtonColor = kRtAlertViewOtherButtonColor;
-        self.otherButtonFont = kRtAlertViewOtherButtonFont;
+        self.titleColor = kRtAlertViewColourTitle;
+        self.titleFont = kRtAlertViewFontTitle;
+        self.messageColor = kRtAlertViewColourMessage;
+        self.messageFont = kRtAlertViewFontMessage;
+        self.cancelButtonColor = kRtAlertViewColourCancelButton;
+        self.cancelButtonFont = kRtAlertViewFontCancelButton;
+        self.otherButtonColor = kRtAlertViewColourOtherButton;
+        self.otherButtonFont = kRtAlertViewFontOtherButton;
+        self.textFieldPlaceholderFont = kRtAlertViewFontTextFieldPlacholder;
 
         self.alertViewVisible = NO;
         self.cancelButtonIndex = -1;
@@ -114,6 +117,9 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    // Initialise keyboard height constraint
+    self.heightConstraintForKeyboardSizeMirroringView.constant = kRtAlertViewHeightKeyboardHidden;
+
     [self setupAlertView];
 }
 
@@ -122,14 +128,11 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 {
     [super viewWillAppear:animated];
 
-    // Register for keyboard notifications
+    // Register for keyboard show notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-    
-    // Set keyboard height constraint
-    self.heightConstraintForKeyboardSizeMirroringView.constant = 0.0f;
 }
 
 
@@ -137,7 +140,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 {
     [super viewWillDisappear:animated];
 
-    // De-register for keyboard notifications
+    // De-register for keyboard show notifications
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIKeyboardWillShowNotification
                                                   object:nil];
@@ -158,12 +161,6 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 */
 
 #pragma mark - Public Getters
-
-- (BOOL)isAlertViewVisible
-{
-    return _alertViewVisible;
-}
-
 
 - (NSInteger)numberOfButtons
 {
@@ -226,86 +223,13 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 {
     if (_buttonTitleArray == nil)
     {
+        // Lazy instantiation
         _buttonTitleArray = [[NSMutableArray alloc] init];
     }
     
     return _buttonTitleArray;
 }
 
-/*
-- (NSMutableArray *)textFieldArray
-{
-    if (_textFieldArray == nil)
-    {
-        switch (self.alertViewStyle)
-        {
-            case UIAlertViewStyleLoginAndPasswordInput:
-            {
-                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:2];
-                
-                UITextField *loginTextField = [[UITextField alloc] init];
-                loginTextField.secureTextEntry = NO;
-                loginTextField.backgroundColor = [UIColor clearColor];
-                loginTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                loginTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                loginTextField.returnKeyType = UIReturnKeyNext;
-                loginTextField.borderStyle = UITextBorderStyleNone;
-                loginTextField.font = [loginTextField.font fontWithSize:13.0f];
-                loginTextField.placeholder = @"Login";
-                [_textFieldArray addObject:loginTextField];
-                
-                UITextField *passwordTextField = [[UITextField alloc] init];
-                passwordTextField.secureTextEntry = YES;
-                passwordTextField.backgroundColor = [UIColor clearColor];
-                passwordTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                passwordTextField.returnKeyType = UIReturnKeyNext;
-                passwordTextField.borderStyle = UITextBorderStyleNone;
-                passwordTextField.font = [passwordTextField.font fontWithSize:13.0f];
-                passwordTextField.placeholder = @"Password";
-                [_textFieldArray addObject:passwordTextField];
-            }
-                break;
-            case UIAlertViewStyleSecureTextInput:
-            {
-                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
-                UITextField *secureTextField = [[UITextField alloc] init];
-                secureTextField.secureTextEntry = YES;
-                secureTextField.backgroundColor = [UIColor clearColor];
-                secureTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                secureTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                secureTextField.returnKeyType = UIReturnKeyNext;
-                secureTextField.borderStyle = UITextBorderStyleNone;
-                secureTextField.font = [secureTextField.font fontWithSize:13.0f];
-                [_textFieldArray addObject:secureTextField];
-            }
-                break;
-            case UIAlertViewStylePlainTextInput:
-            {
-                _textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
-                UITextField *plainTextField = [[UITextField alloc] init];
-                plainTextField.secureTextEntry = NO;
-                plainTextField.backgroundColor = [UIColor clearColor];
-                plainTextField.keyboardAppearance = UIKeyboardAppearanceAlert;
-                plainTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-                plainTextField.returnKeyType = UIReturnKeyNext;
-                plainTextField.borderStyle = UITextBorderStyleNone;
-                plainTextField.font = [plainTextField.font fontWithSize:13.0f];
-                [_textFieldArray addObject:plainTextField];
-            }
-                break;
-            case UIAlertViewStyleDefault:
-            default:
-            {
-                _textFieldArray = nil;
-            }
-                break;
-        }
-    }
-    
-    return _textFieldArray;
-}
-*/
 
 #pragma mark - Public methods
 
@@ -315,6 +239,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     {
         [self.buttonTitleArray addObject:title];
         
+        // Return index of just-added button
         return (self.numberOfButtons - 1);
     }
     else
@@ -345,15 +270,17 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     {
         return nil;
     }
-    
+
     if (textFieldIndex < 0)
     {
+        // textFieldIndex is valid
         return nil;
     }
     
     if ((self.alertViewStyle == UIAlertViewStyleLoginAndPasswordInput) &&
         (textFieldIndex > 1))
     {
+        // textFieldIndex is valid
         return nil;
     }
     
@@ -361,6 +288,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
          (self.alertViewStyle == UIAlertViewStyleSecureTextInput)) &&
         (textFieldIndex > 0))
     {
+        // textFieldIndex is valid
         return nil;
     }
     
@@ -404,7 +332,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 - (void)rtAlertViewRecursiveButtonContainerView:(RTAlertViewRecursiveButtonContainerView *)rtAlertViewRecursiveButtonContainerView
                              tappedButtonNumber:(NSInteger)buttonNumber
 {
-    NSLog(@"Button %d tapped", buttonNumber);
+//    NSLog(@"Button %d tapped", buttonNumber);
     self.clickedButtonIndex = buttonNumber;
     
     if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)])
@@ -421,6 +349,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
 
 - (void)setupAlertView
 {
+    // Set up blur view
 	UIToolbar *toolbar = [[UIToolbar alloc] init];
 	[self.gaussianBlurContainerView addSubview:toolbar];
     toolbar.translatesAutoresizingMaskIntoConstraints = NO;
@@ -440,7 +369,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
     [self setupButtons];
 
 	[self.alertContainerView.layer setMasksToBounds:YES];
-	[self.alertContainerView.layer setCornerRadius:kRtAlertViewCornerRadius];
+	[self.alertContainerView.layer setCornerRadius:kRtAlertViewRadiusCorner];
 }
 
 
@@ -484,7 +413,7 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
             singleTextFieldView.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
             singleTextFieldView.textField.returnKeyType = UIReturnKeyNext;
             singleTextFieldView.textField.borderStyle = UITextBorderStyleNone;
-            singleTextFieldView.textField.font = [singleTextFieldView.textField.font fontWithSize:13.0f];
+            singleTextFieldView.textField.font = self.textFieldPlaceholderFont;
             if (self.alertViewStyle == UIAlertViewStylePlainTextInput)
             {
                 singleTextFieldView.textField.secureTextEntry = NO;
@@ -521,30 +450,30 @@ static CGFloat kRtAlertViewCornerRadius = 7.0f;
                                                                                                   views:views]];
             
             // Set up textField properties
+            doubleTextFieldView.textField0.backgroundColor = [UIColor clearColor];
+            doubleTextFieldView.textField0.keyboardAppearance = UIKeyboardAppearanceAlert;
+            doubleTextFieldView.textField0.clearButtonMode = UITextFieldViewModeWhileEditing;
+            doubleTextFieldView.textField0.returnKeyType = UIReturnKeyNext;
+            doubleTextFieldView.textField0.borderStyle = UITextBorderStyleNone;
+            doubleTextFieldView.textField0.font = self.textFieldPlaceholderFont;
+            doubleTextFieldView.textField0.secureTextEntry = NO;
+            doubleTextFieldView.textField0.placeholder = @"Login";
             doubleTextFieldView.textField1.backgroundColor = [UIColor clearColor];
             doubleTextFieldView.textField1.keyboardAppearance = UIKeyboardAppearanceAlert;
             doubleTextFieldView.textField1.clearButtonMode = UITextFieldViewModeWhileEditing;
             doubleTextFieldView.textField1.returnKeyType = UIReturnKeyNext;
             doubleTextFieldView.textField1.borderStyle = UITextBorderStyleNone;
-            doubleTextFieldView.textField1.font = [doubleTextFieldView.textField1.font fontWithSize:13.0f];
-            doubleTextFieldView.textField1.secureTextEntry = NO;
-            doubleTextFieldView.textField1.placeholder = @"Login";
-            doubleTextFieldView.textField2.backgroundColor = [UIColor clearColor];
-            doubleTextFieldView.textField2.keyboardAppearance = UIKeyboardAppearanceAlert;
-            doubleTextFieldView.textField2.clearButtonMode = UITextFieldViewModeWhileEditing;
-            doubleTextFieldView.textField2.returnKeyType = UIReturnKeyNext;
-            doubleTextFieldView.textField2.borderStyle = UITextBorderStyleNone;
-            doubleTextFieldView.textField2.font = [doubleTextFieldView.textField2.font fontWithSize:13.0f];
-            doubleTextFieldView.textField2.secureTextEntry = YES;
-            doubleTextFieldView.textField2.placeholder = @"Password";
+            doubleTextFieldView.textField1.font = self.textFieldPlaceholderFont;
+            doubleTextFieldView.textField1.secureTextEntry = YES;
+            doubleTextFieldView.textField1.placeholder = @"Password";
 
             // Set first responder (keyboard shows)
-            [doubleTextFieldView.textField1 becomeFirstResponder];
+            [doubleTextFieldView.textField0 becomeFirstResponder];
 
             // Set up textFieldArray
             self.textFieldArray = [[NSMutableArray alloc] initWithCapacity:1];
+            [self.textFieldArray addObject:doubleTextFieldView.textField0];
             [self.textFieldArray addObject:doubleTextFieldView.textField1];
-            [self.textFieldArray addObject:doubleTextFieldView.textField2];
         }
             break;
         case UIAlertViewStyleDefault:

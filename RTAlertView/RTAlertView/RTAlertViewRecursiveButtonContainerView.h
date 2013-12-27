@@ -26,7 +26,7 @@
 // only applies if numButtons==2 (put two buttons in one row)
 
 - (void)recursivelyAddButtons:(NSInteger)numButtons
-                  useSplitRow:(BOOL)useSplitRow;
+                  useSplitRow:(BOOL)useSplitRow;       // YES: two buttons in one row, NO: one button per row
 
 // Must call recursivelyAddButtons (if numButtons > 1) before calling these setTitle... methods
 
@@ -43,6 +43,7 @@
 
 @property (nonatomic, readonly) NSInteger numButtons;
 @property (nonatomic, readonly) BOOL button1Enabled;
+
 @property (strong, nonatomic) UIColor *button0Color;
 @property (strong, nonatomic) UIFont *button0Font;
 @property (strong, nonatomic) UIColor *button1Color;

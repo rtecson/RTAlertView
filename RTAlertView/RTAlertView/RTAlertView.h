@@ -89,5 +89,6 @@
 @property (strong, nonatomic) UIFont *cancelButtonFont;
 @property (strong, nonatomic) UIColor *otherButtonColor;
 @property (strong, nonatomic) UIFont *otherButtonFont;
+@property (strong, nonatomic) UIFont *textFieldPlaceholderFont;
 
 @end

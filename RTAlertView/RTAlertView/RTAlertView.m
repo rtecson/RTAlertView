@@ -190,6 +190,12 @@
 }
 
 
+- (UIFont *)textFieldPlaceholderFont
+{
+    return self.alertViewController.textFieldPlaceholderFont;
+}
+
+
 #pragma mark - Public Setters
 
 - (void)setDelegate:(id<RTAlertViewDelegate>)delegate
@@ -267,6 +273,12 @@
 - (void)setOtherButtonFont:(UIFont *)otherButtonFont
 {
     self.alertViewController.otherButtonFont = otherButtonFont;
+}
+
+
+- (void)setTextFieldPlaceholderFont:(UIFont *)textFieldPlaceholderFont
+{
+    self.alertViewController.textFieldPlaceholderFont = textFieldPlaceholderFont;
 }
 
 
