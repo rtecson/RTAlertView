@@ -3,12 +3,12 @@ RTAlertView
 
 *UIAlertView replacement for iOS 7*
 
-- Description
-- Installation & Use
-- Credits
+- [Description](#Description)
+- [Installation & Use](#Installation)
+- [Credits](#Credits)
 
 
-Description
+<a name="Description"></a>Description
 -----------
 
 RTAlertView is a customizable alert view that looks identical to the iOS 7 system alert view. It implements the same interface as UIAlertView, but it also allows you to customize the fonts and colours used in the alert view.
@@ -48,12 +48,15 @@ If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two tex
 ![RTAlertView double text fields](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/05-Two-Text-Fields.png)
 
 
-Installation & Use
+<a name="Installation"></a>Installation & Use
 ------------------
 
-1.  Drag the folder RTAlertView/RTAlertView to your project.
+1.  Drag the folder RTAlertView/RTAlertView to your project in Xcode.
 2.  Add the line `#import "RTAlertView.h"` to your class
 
 
-Credits
+<a name="Credits"></a>Credits
 -------
+
+- Thanks to Lee McDermott, author of LMAlertView (https://github.com/lmcd/LMAlertView). The code for making the alert view look as closely as possible to the iOS 7 system alert view, as well as the code for the spring animation when the alert view appears, is heavily borrowed from LMAlertView.
+- Thanks to Jeremy Wiebe for the design pattern of adding UIButtons recursively within an auto layout enabled container.
