@@ -7,7 +7,7 @@ RTAlertView
 Description
 -----------
 
-RTAlertView is a customizable alert view. It implements the same interface as UIAlertView, but it also allows you to customize the fonts and colours used in the alert view.
+RTAlertView is a customizable alert view that looks identical to the iOS 7 system alert view. It implements the same interface as UIAlertView, but it also allows you to customize the fonts and colours used in the alert view.
 
 
 Installation & Use
