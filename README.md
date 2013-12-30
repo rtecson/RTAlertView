@@ -16,6 +16,8 @@ RTAlertView is a customizable alert view that looks identical to the iOS 7 syste
 
 ![RTAlertView](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/00-One-Button.png)
 
+The alert uses auto layout to position itself in the center of the screen, and will automatically adjust its position when the device orientation changes, or when the keyboard is displayed.
+
 The following properties, in addition to those defined for UIAlertView, are defined in RTAlertView:
 
     @property (strong, nonatomic) UIColor *titleColor;
@@ -27,6 +29,8 @@ The following properties, in addition to those defined for UIAlertView, are defi
     @property (strong, nonatomic) UIColor *otherButtonColor;
     @property (strong, nonatomic) UIFont *otherButtonFont;
     @property (strong, nonatomic) UIFont *textFieldPlaceholderFont;
+
+If no values are specified for these properties, the default colours and fonts used will be the same as the ones in UIAlertView.
 
 The highlight colour of a button is automatically derived from the button's colour.
 
