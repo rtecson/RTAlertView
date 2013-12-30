@@ -86,8 +86,8 @@ If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two tex
     customAlertView.otherButtonColor = kCustomColor;
     customAlertView.cancelButtonColor = kCustomColor;
 
-    // Show alert view
-	[customAlertView show];
+    // Display alert view
+    [customAlertView show];
 ```
 
 
