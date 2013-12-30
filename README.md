@@ -5,6 +5,7 @@ RTAlertView
 
 - [Description](#Description)
 - [Installation & Use](#Installation)
+- [Usage](#Usage)
 - [Credits](#Credits)
 
 
@@ -53,6 +54,41 @@ If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two tex
 
 1.  Drag the folder RTAlertView/RTAlertView to your project in Xcode.
 2.  Add the line `#import "RTAlertView.h"` to your class
+
+
+<a name="Usage"></a>Usage
+-------
+
+```objective-c
+    // Alloc and init RTAlertView, button titles may also be set here
+    RTAlertView *customAlertView = [[RTAlertView alloc] initWithTitle:@"Test"
+                                                              message:@"Message here"
+                                                             delegate:nil
+                                                    cancelButtonTitle:nil
+                                                    otherButtonTitles:nil];
+
+    // Conforms to the RTAlertViewDelegate protocol
+    customAlertView.delegate = self;
+
+    // Default is UIAlertViewStyleDefault
+    customAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+
+    // Add other buttons
+    for (int i=0; i<kNumberOfOtherButtons; i++)
+    {
+        [customAlertView addButtonWithTitle:[NSString stringWithFormat:@"Button %d", i]];
+    }
+    
+    // Add cancel button
+    customAlertView.cancelButtonIndex = [customAlertView addButtonWithTitle:@"Done"];
+
+    // Set button colours
+    customAlertView.otherButtonColor = kCustomColor;
+    customAlertView.cancelButtonColor = kCustomColor;
+
+    // Show alert view
+	[customAlertView show];
+```
 
 
 <a name="Credits"></a>Credits
