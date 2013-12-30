@@ -7,6 +7,9 @@ RTAlertView
 Installation & Use
 ------------------
 
-- Drag the folder RTAlertView/RTAlertView to your project.
-- Add the line `#import "RTAlertView.h" to your class
+1.  Drag the folder RTAlertView/RTAlertView to your project.
+2.  Add the line `#import "RTAlertView.h"` to your class
+
+Description
+-----------
 
