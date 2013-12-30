@@ -39,6 +39,14 @@ If three or more buttons are defined, they are laid out vertically.
 
 ![RTAlertView four buttons](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/03-Four-Buttons.png)
 
+Similarly to UIAlertView, if `alertViewStyle` were set to either `UIAlertViewStyleSecureTextInput` or `UIAlertViewStylePlainTextInput`, a single text field will be displayed.
+
+![RTAlertView single text field](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/04-One-Text-Field.png)
+
+If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two text fields will be displayed.
+
+![RTAlertView double text fields](https://github.com/rtecson/RTAlertView/blob/master/Screenshots/05-Two-Text-Fields.png)
+
 
 Installation & Use
 ------------------
