@@ -27,7 +27,7 @@ The following properties, in addition to those defined for UIAlertView, are defi
     @property (strong, nonatomic) UIFont *otherButtonFont;
     @property (strong, nonatomic) UIFont *textFieldPlaceholderFont;
 
-The highlight colour of a button is automatically derived from button's colour.
+The highlight colour of a button is automatically derived from the button's colour.
 
 ![RTAlertView one button highlighted](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/01-One-Button-Highlighted.png)
 
@@ -45,7 +45,7 @@ Similarly to UIAlertView, if `alertViewStyle` were set to either `UIAlertViewSty
 
 If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two text fields will be displayed.
 
-![RTAlertView double text fields](https://github.com/rtecson/RTAlertView/blob/master/Screenshots/05-Two-Text-Fields.png)
+![RTAlertView double text fields](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/05-Two-Text-Fields.png)
 
 
 Installation & Use
