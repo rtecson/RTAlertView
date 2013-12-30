@@ -29,15 +29,15 @@ The following properties, in addition to those defined for UIAlertView, are defi
 
 The highlight colour of a button is automatically derived from button's colour.
 
-![RTAlertView one button highlighted](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/00-One-Button-Highlighted.png)
+![RTAlertView one button highlighted](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/01-One-Button-Highlighted.png)
 
 Similarly to UIAlertView, if two buttons are defined, they are laid out side by side.
 
-![RTAlertView two buttons](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/00-Two-Buttons.png)
+![RTAlertView two buttons](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/02-Two-Buttons.png)
 
 If three or more buttons are defined, they are laid out vertically.
 
-![RTAlertView four buttons](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/00-Four-Buttons.png)
+![RTAlertView four buttons](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/03-Four-Buttons.png)
 
 
 Installation & Use
