@@ -35,6 +35,8 @@
 @property (nonatomic) NSInteger cancelButtonIndex;
 @property (nonatomic, readonly) NSInteger firstOtherButtonIndex;
 
+@property (nonatomic) BOOL dismissesWhenAppGoesToBackground;
+
 @property (strong, nonatomic) UIColor *titleColor;
 @property (strong, nonatomic) UIFont *titleFont;
 @property (strong, nonatomic) UIColor *messageColor;

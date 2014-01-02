@@ -142,6 +142,12 @@
 }
 
 
+- (BOOL)dismissesWhenAppGoesToBackground
+{
+    return self.alertViewController.dismissesWhenAppGoesToBackground;
+}
+
+
 - (UIColor *)titleColor
 {
     return self.alertViewController.titleColor;
@@ -225,6 +231,12 @@
 - (void)setCancelButtonIndex:(NSInteger)cancelButtonIndex
 {
     self.alertViewController.cancelButtonIndex = cancelButtonIndex;
+}
+
+
+- (void)setDismissesWhenAppGoesToBackground:(BOOL)dismissesWhenAppGoesToBackground
+{
+    self.alertViewController.dismissesWhenAppGoesToBackground = dismissesWhenAppGoesToBackground;
 }
 
 

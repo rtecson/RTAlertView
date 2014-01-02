@@ -106,11 +106,14 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
         self.cancelButtonIndex = -1;
         self.firstOtherButtonIndex = -1;
         self.clickedButtonIndex = -1;
+        self.dismissesWhenAppGoesToBackground = YES;
     }
 
     return self;
 }
 
+
+#pragma mark - UIView methods
 
 - (void)viewDidLoad
 {
@@ -153,12 +156,6 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
     // Dispose of any resources that can be recreated.
 }
 
-/*
-- (void)dealloc
-{
-    NSLog(@"In RTAlertViewController dealloc");
-}
-*/
 
 #pragma mark - Public Getters
 
@@ -213,6 +210,25 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
     {
         // Yes, save it
         _cancelButtonIndex = cancelButtonIndex;
+    }
+}
+
+
+- (void)setDismissesWhenAppGoesToBackground:(BOOL)dismissesWhenAppGoesToBackground
+{
+    if (_dismissesWhenAppGoesToBackground == dismissesWhenAppGoesToBackground)
+    {
+        return;
+    }
+
+    _dismissesWhenAppGoesToBackground = dismissesWhenAppGoesToBackground;
+    if (dismissesWhenAppGoesToBackground == YES)
+    {
+        [self registerForApplicationDidEnterBackgroundNotification];
+    }
+    else
+    {
+        [self deregisterForApplicationDidEnterBackgroundNotification];
     }
 }
 
@@ -591,6 +607,8 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 
 - (void)dismiss
 {
+    [self deregisterForApplicationDidEnterBackgroundNotification];
+    
     if ([self.delegate respondsToSelector:@selector(alertView:willDismissWithButtonIndex:)])
     {
         [self.delegate alertView:self.alertView
@@ -687,6 +705,23 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 }
 
 
+- (void)registerForApplicationDidEnterBackgroundNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+}
+
+
+- (void)deregisterForApplicationDidEnterBackgroundNotification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
+}
+
+
 #pragma mark - UINotification handlers
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -700,6 +735,12 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
     
     // Change bottom layout constraint of height adjustable container view
     self.heightConstraintForKeyboardSizeMirroringView.constant = keyboardHeight;
+}
+
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    [self dismiss];
 }
 
 

@@ -19,6 +19,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurDividerLine;
+@property (weak, nonatomic) IBOutlet UISwitch *dismissOnBackgroundSwitch;
 
 @property (nonatomic) NSInteger numberOfOtherButtons;
 @property (nonatomic) UIAlertViewStyle alertViewStyle;
@@ -42,6 +43,10 @@
     
     self.alertViewStyle = UIAlertViewStyleDefault;
     self.numberOfOtherButtons = 0;
+    self.dismissOnBackgroundSwitch.onTintColor = [UIColor colorWithRed:(55.0f / 255.0f)
+                                                                 green:(130.0f / 255.0f)
+                                                                  blue:(75.0f / 255.0f)
+                                                                 alpha:1.0f];
 }
 
 
@@ -103,6 +108,7 @@
 
 	[customAlertView show];
     
+    customAlertView.dismissesWhenAppGoesToBackground = self.dismissOnBackgroundSwitch.on;
     self.alertView = (UIAlertView *)customAlertView;
 }
 

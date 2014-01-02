@@ -38,78 +38,125 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xz0-ro-Akx" userLabel="gaussianBlurContainerView">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="76"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZrJ-VD-Ssf" userLabel="dividerLineView">
+                                <rect key="frame" x="0.0" y="83" width="768" height="1"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="76" id="bYm-5u-mBm"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZrJ-VD-Ssf" userLabel="gaussianBlurDividerLineContainerView">
-                                <rect key="frame" x="0.0" y="76" width="768" height="1"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="31g-CF-vpv"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number of Other Buttons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wF1-GQ-NgM">
-                                <rect key="frame" x="20" y="36" width="204" height="21"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xz0-ro-Akx" userLabel="gaussianBlurContainerView">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="83"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lOm-A6-JD7" userLabel="topControlsContainerView">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="83"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MBu-ff-8da" userLabel="numberOfOtherButtonsSegmentedControl">
-                                <rect key="frame" x="223" y="33" width="164" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="0"/>
-                                    <segment title="1"/>
-                                    <segment title="2"/>
-                                    <segment title="3"/>
-                                </segments>
-                                <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                                <connections>
-                                    <action selector="numberOfOtherButtonsSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="eeB-hG-mZt"/>
-                                </connections>
-                            </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-Ex-nJ3" userLabel="alertViewStyleSegmentedControl">
-                                <rect key="frame" x="395" y="33" width="353" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Default"/>
-                                    <segment title="Plain" width="64"/>
-                                    <segment title="Secure"/>
-                                    <segment title="Login/Password" width="131"/>
-                                </segments>
-                                <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                                <connections>
-                                    <action selector="alertViewStyleSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="kzq-Ot-ijy"/>
-                                </connections>
-                            </segmentedControl>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Other Buttons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wF1-GQ-NgM">
+                                        <rect key="frame" x="20" y="26" width="141" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MBu-ff-8da" userLabel="numberOfOtherButtonsSegmentedControl">
+                                        <rect key="frame" x="20" y="47" width="164" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <segments>
+                                            <segment title="0"/>
+                                            <segment title="1"/>
+                                            <segment title="2"/>
+                                            <segment title="3"/>
+                                        </segments>
+                                        <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                        <connections>
+                                            <action selector="numberOfOtherButtonsSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="eeB-hG-mZt"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Other Buttons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yi4-C1-Ukr">
+                                        <rect key="frame" x="208" y="26" width="141" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-Ex-nJ3" userLabel="alertViewStyleSegmentedControl">
+                                        <rect key="frame" x="208" y="47" width="353" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="353" id="JPn-yl-ujM"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Default"/>
+                                            <segment title="Plain" width="64"/>
+                                            <segment title="Secure"/>
+                                            <segment title="Login/Password" width="131"/>
+                                        </segments>
+                                        <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                        <connections>
+                                            <action selector="alertViewStyleSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="kzq-Ot-ijy"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dismiss custom alert view when app goes to background" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BRu-fd-63b">
+                                        <rect key="frame" x="429" y="26" width="319" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Fx-fe-Dqr" userLabel="dismissOnBackgroundSwitch">
+                                        <rect key="frame" x="699" y="46" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                    </switch>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Tum-Ex-nJ3" firstAttribute="leading" secondItem="MBu-ff-8da" secondAttribute="trailing" constant="24" id="5r7-eH-SE1"/>
+                                    <constraint firstItem="MBu-ff-8da" firstAttribute="leading" secondItem="wF1-GQ-NgM" secondAttribute="leading" id="EbD-bV-pPl"/>
+                                    <constraint firstItem="BRu-fd-63b" firstAttribute="trailing" secondItem="3Fx-fe-Dqr" secondAttribute="trailing" id="KFy-2B-R4r"/>
+                                    <constraint firstItem="Tum-Ex-nJ3" firstAttribute="leading" secondItem="Yi4-C1-Ukr" secondAttribute="leading" id="M6B-qQ-bJY"/>
+                                    <constraint firstAttribute="bottom" secondItem="MBu-ff-8da" secondAttribute="bottom" constant="8" id="Mj7-C3-bf3"/>
+                                    <constraint firstItem="MBu-ff-8da" firstAttribute="top" secondItem="wF1-GQ-NgM" secondAttribute="bottom" constant="6" id="PC1-X2-duX"/>
+                                    <constraint firstItem="BRu-fd-63b" firstAttribute="centerY" secondItem="Yi4-C1-Ukr" secondAttribute="centerY" id="VIk-gd-9Xd"/>
+                                    <constraint firstItem="Tum-Ex-nJ3" firstAttribute="centerY" secondItem="MBu-ff-8da" secondAttribute="centerY" id="eIF-hY-dfc"/>
+                                    <constraint firstItem="wF1-GQ-NgM" firstAttribute="top" secondItem="lOm-A6-JD7" secondAttribute="top" constant="26" id="ku3-WL-Yhh"/>
+                                    <constraint firstItem="MBu-ff-8da" firstAttribute="leading" secondItem="lOm-A6-JD7" secondAttribute="leading" constant="20" id="laH-lB-Xzn"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Fx-fe-Dqr" secondAttribute="trailing" constant="20" id="nJv-8e-2Cx"/>
+                                    <constraint firstItem="Tum-Ex-nJ3" firstAttribute="centerY" secondItem="3Fx-fe-Dqr" secondAttribute="centerY" id="uQC-td-u80"/>
+                                    <constraint firstItem="wF1-GQ-NgM" firstAttribute="centerY" secondItem="Yi4-C1-Ukr" secondAttribute="centerY" id="wgy-zX-BxA"/>
+                                    <constraint firstItem="3Fx-fe-Dqr" firstAttribute="leading" secondItem="Tum-Ex-nJ3" secondAttribute="trailing" constant="138" id="zbj-6K-rS9"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="xz0-ro-Akx" secondAttribute="trailing" id="3wB-bT-XcM"/>
                             <constraint firstAttribute="trailing" secondItem="Tht-dJ-w7m" secondAttribute="trailing" id="4Ez-hh-lhn"/>
                             <constraint firstAttribute="centerY" secondItem="1T1-94-pfj" secondAttribute="centerY" id="4GD-En-rIy"/>
                             <constraint firstAttribute="centerX" secondItem="1T1-94-pfj" secondAttribute="centerX" id="5IH-OH-Znx"/>
-                            <constraint firstItem="ZrJ-VD-Ssf" firstAttribute="top" secondItem="xz0-ro-Akx" secondAttribute="bottom" id="81H-21-mxt"/>
+                            <constraint firstItem="lOm-A6-JD7" firstAttribute="top" secondItem="vko-Hx-0nM" secondAttribute="top" id="A6h-Ul-MAe"/>
                             <constraint firstItem="1T1-94-pfj" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="BaD-WI-j5W"/>
-                            <constraint firstItem="xz0-ro-Akx" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="GHt-wy-SpY"/>
                             <constraint firstAttribute="trailing" secondItem="ZrJ-VD-Ssf" secondAttribute="trailing" id="O9F-ZT-KJp"/>
+                            <constraint firstItem="lOm-A6-JD7" firstAttribute="width" secondItem="xz0-ro-Akx" secondAttribute="width" id="Py9-2Y-ba7"/>
                             <constraint firstItem="1T1-94-pfj" firstAttribute="top" secondItem="vko-Hx-0nM" secondAttribute="top" id="QFT-fP-1gZ"/>
-                            <constraint firstItem="xz0-ro-Akx" firstAttribute="top" secondItem="vko-Hx-0nM" secondAttribute="top" id="af3-7y-ZJW"/>
+                            <constraint firstAttribute="trailing" secondItem="lOm-A6-JD7" secondAttribute="trailing" id="Vku-WB-ihw"/>
+                            <constraint firstItem="lOm-A6-JD7" firstAttribute="centerX" secondItem="xz0-ro-Akx" secondAttribute="centerX" id="YdA-6q-SBA"/>
+                            <constraint firstItem="lOm-A6-JD7" firstAttribute="height" secondItem="xz0-ro-Akx" secondAttribute="height" id="ZkU-ey-iCE"/>
                             <constraint firstItem="Tht-dJ-w7m" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="bcO-z5-j7B"/>
                             <constraint firstItem="ZrJ-VD-Ssf" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="bvD-Vo-pi2"/>
+                            <constraint firstItem="lOm-A6-JD7" firstAttribute="leading" secondItem="vko-Hx-0nM" secondAttribute="leading" id="fky-uq-wWb"/>
+                            <constraint firstItem="ZrJ-VD-Ssf" firstAttribute="top" secondItem="xz0-ro-Akx" secondAttribute="bottom" id="igf-yE-bPY"/>
                             <constraint firstItem="6Y6-gO-IaN" firstAttribute="top" secondItem="Tht-dJ-w7m" secondAttribute="bottom" id="mAZ-n8-WY8"/>
                             <constraint firstAttribute="trailing" secondItem="1T1-94-pfj" secondAttribute="trailing" id="naY-or-bBI"/>
+                            <constraint firstItem="lOm-A6-JD7" firstAttribute="centerY" secondItem="xz0-ro-Akx" secondAttribute="centerY" id="wer-DJ-Xgy"/>
                             <constraint firstItem="6Y6-gO-IaN" firstAttribute="top" secondItem="1T1-94-pfj" secondAttribute="bottom" id="zUB-YX-sNi"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dismissOnBackgroundSwitch" destination="3Fx-fe-Dqr" id="siK-ig-32E"/>
                         <outlet property="gaussianBlurContainerView" destination="xz0-ro-Akx" id="aDy-h1-niZ"/>
                         <outlet property="gaussianBlurDividerLine" destination="ZrJ-VD-Ssf" id="x3z-on-ylw"/>
                     </connections>
