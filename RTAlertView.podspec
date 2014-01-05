@@ -2,6 +2,8 @@ Pod::Spec.new do |s|
   s.name         = 'RTAlertView'
   s.version      = '0.0.1'
   s.summary      = 'Customizable replacement for iOS 7 UIAlertView'
+  s.license      = 'MIT'
+  s.homepage     = 'https://github.com/rtecson/RTAlertView'
   s.author = {
     'Roland Tecson' => 'roland@moozx.com'
   }
