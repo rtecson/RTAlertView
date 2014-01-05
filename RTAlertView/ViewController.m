@@ -171,7 +171,7 @@
 -     (void)alertView:(RTAlertView *)alertView
  clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Clicked button at index %d in %@", buttonIndex, [[alertView class] description]);
+    NSLog(@"Clicked button at index %ld in %@", (long)buttonIndex, [[alertView class] description]);
 }
 
 
@@ -190,14 +190,14 @@
 -           (void)alertView:(RTAlertView *)alertView
  willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Will dismiss %@ with button index %d", [[alertView class] description], buttonIndex);
+    NSLog(@"Will dismiss %@ with button index %ld", [[alertView class] description], (long)buttonIndex);
 }
 
 
 -          (void)alertView:(RTAlertView *)alertView
  didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Did dismiss %@ with button index %d", [[alertView class] description], buttonIndex);
+    NSLog(@"Did dismiss %@ with button index %ld", [[alertView class] description], (long)buttonIndex);
 }
 
 

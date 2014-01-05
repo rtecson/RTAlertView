@@ -11,6 +11,7 @@
 #import "RTAlertViewRecursiveButtonContainerView.h"
 #import "RTAlertViewSingleTextFieldView.h"
 #import "RTAlertViewDoubleTextFieldView.h"
+#import <RBBSpringAnimation.h>
 
 
 // Constants
@@ -27,24 +28,6 @@
 
 static CGFloat kRtAlertViewRadiusCorner = 7.0f;
 static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
-
-
-#define RTSpringAnimation CASpringAnimation
-
-// Animation of alert view, spring type animation
-@interface CASpringAnimation : CABasicAnimation
-
-- (float)damping;
-- (double)durationForEpsilon:(double)arg1;
-- (float)mass;
-- (void)setDamping:(float)arg1;
-- (void)setMass:(float)arg1;
-- (void)setStiffness:(float)arg1;
-- (void)setVelocity:(float)arg1;
-- (float)stiffness;
-- (float)velocity;
-
-@end
 
 
 @interface RTAlertViewController () <RTAlertViewRecursiveButtonContainerViewDelegate>
@@ -578,7 +561,7 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 		CATransform3D transformFrom = CATransform3DMakeScale(1.26, 1.26, 1.0);
 		CATransform3D transformTo = CATransform3DMakeScale(1.0, 1.0, 1.0);
 		
-		RTSpringAnimation *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
+		RBBSpringAnimation *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
 		modalTransformAnimation.fromValue = [NSValue valueWithCATransform3D:transformFrom];
 		modalTransformAnimation.toValue = [NSValue valueWithCATransform3D:transformTo];
 		self.alertContainerView.layer.transform = transformTo;
@@ -586,8 +569,7 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 		// Zoom in the modal
 		[self.alertContainerView.layer addAnimation:modalTransformAnimation
                                              forKey:@"transform"];
-		
-		RTSpringAnimation *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
+		RBBSpringAnimation *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
 		opacityAnimation.fromValue = @0.0f;
 		opacityAnimation.toValue = @1.0f;
 		self.blackTransparentContainerView.layer.opacity = 1.0f;
@@ -644,7 +626,7 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 		CATransform3D transformFrom = CATransform3DMakeScale(1.0, 1.0, 1.0);
 		CATransform3D transformTo = CATransform3DMakeScale(0.840, 0.840, 1.0);
 
-		RTSpringAnimation *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
+		RBBSpringAnimation *modalTransformAnimation = [self springAnimationForKeyPath:@"transform"];
 		modalTransformAnimation.fromValue = [NSValue valueWithCATransform3D:transformFrom];
 		modalTransformAnimation.toValue = [NSValue valueWithCATransform3D:transformTo];
 		modalTransformAnimation.delegate = self;
@@ -654,7 +636,7 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 		[self.alertContainerView.layer addAnimation:modalTransformAnimation
                                              forKey:@"transform"];
 
-		RTSpringAnimation *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
+		RBBSpringAnimation *opacityAnimation = [self springAnimationForKeyPath:@"opacity"];
 		opacityAnimation.fromValue = @1.0f;
 		opacityAnimation.toValue = @0.0f;
 		self.blackTransparentContainerView.layer.opacity = 0.0;
@@ -674,7 +656,7 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 
 - (id)springAnimationForKeyPath:(NSString *)keyPath
 {
-	RTSpringAnimation *animation = [[RTSpringAnimation alloc] init];
+	RBBSpringAnimation *animation = [[RBBSpringAnimation alloc] init];
 
     // Copied from LMAlertView, https://github.com/lmcd/LMAlertView
 
