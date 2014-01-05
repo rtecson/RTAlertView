@@ -7,6 +7,7 @@ RTAlertView
 - [Installation & Use](#Installation)
 - [Usage](#Usage)
 - [Credits](#Credits)
+- [License](#License)
 
 
 <a name="Description"></a>Description
@@ -58,8 +59,12 @@ By default, RTAlertView will automatically dismiss itself when the app goes to t
 <a name="Installation"></a>Installation & Use
 ------------------
 
-1.  Drag the folder RTAlertView/RTAlertView to your project in Xcode.
-2.  Add the line `#import "RTAlertView.h"` to your class
+Using Cocoapods
+
+1.  Create or edit your `Podfile` and add the following line `pod 'RTAlertView', '0.0.2'`
+2.  Perform a `pod install`
+3.  Add the line `#import <RTAlertView.h>` to your class
+4.  Remember to open the `<App>.xcworkspace` file (not `<App>.xcodeproj`) in Xcode from here onwards
 
 
 <a name="Usage"></a>Usage
@@ -100,5 +105,14 @@ By default, RTAlertView will automatically dismiss itself when the app goes to t
 <a name="Credits"></a>Credits
 -------
 
-- Thanks to Lee McDermott, author of LMAlertView (https://github.com/lmcd/LMAlertView). The code for making the alert view look as closely as possible to the iOS 7 system alert view, as well as the code for the spring animation when the alert view appears, is heavily borrowed from LMAlertView.
+- Thanks to Lee McDermott, author of LMAlertView (https://github.com/lmcd/LMAlertView). The code for making the alert view look as closely as possible to the iOS 7 system alert view is heavily borrowed from LMAlertView.
+- Thanks to Robert Böhnke, author of RBBAnimation (https://github.com/robb/RBBAnimation). The spring animation effect is performed using RBBAnimation.
 - Thanks to Jeremy Wiebe for the design pattern of adding UIButtons recursively within an auto layout enabled container.
+
+
+<a name="License"></a>License
+-------
+
+RTAlertView is written by Roland Tecson. It is licensed under the MIT License.
+
+If you use RTAlertView in one of your apps, please send me a quick note. I'd love to hear about it.
