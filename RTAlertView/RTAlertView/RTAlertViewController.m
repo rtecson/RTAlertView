@@ -28,6 +28,7 @@
 
 static CGFloat kRtAlertViewRadiusCorner = 7.0f;
 static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
+static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 
 
 @interface RTAlertViewController () <RTAlertViewRecursiveButtonContainerViewDelegate>
@@ -367,6 +368,7 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
     [self setupLabels];
     [self setupTextFields];
     [self setupButtons];
+    [self setupParallax];
 
 	[self.alertContainerView.layer setMasksToBounds:YES];
 	[self.alertContainerView.layer setCornerRadius:kRtAlertViewRadiusCorner];
@@ -711,6 +713,38 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification
                                                   object:nil];
+}
+
+
+- (void)setupParallax
+{
+    // iOS version?
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+    {
+        // iOS 6.1 or earlier
+        // No parallax
+    }
+    else
+    {
+        // iOS 7 or later, ok. Set vertical effect
+        UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
+                                                                                                            type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        verticalMotionEffect.minimumRelativeValue = @(-1.0f * kRtAlertViewMotionEffectRelativeValue);
+        verticalMotionEffect.maximumRelativeValue = @(kRtAlertViewMotionEffectRelativeValue);
+        
+        // Set horizontal effect
+        UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
+                                                                                                              type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+        horizontalMotionEffect.minimumRelativeValue = @(-1.0f * kRtAlertViewMotionEffectRelativeValue);
+        horizontalMotionEffect.maximumRelativeValue = @(kRtAlertViewMotionEffectRelativeValue);
+        
+        // Create group to combine both
+        UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+        group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
+        
+        // Add both effects to view
+        [self.alertContainerView addMotionEffect:group];
+    }
 }
 
 
