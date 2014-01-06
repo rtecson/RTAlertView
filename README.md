@@ -55,13 +55,15 @@ If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two tex
 
 By default, RTAlertView will automatically dismiss itself when the app goes to the background. This is as per Apple's recommendation so that the user will not be presented with an alert message that may be out of context when the app is resumed. You may override this behaviour by setting the property `dismissesWhenAppGoesToBackground` to `NO` (default value is `YES`).
 
+RTAlertView dims the tintColor of the all the visible controls in your app (at least those that support it), similar to the iOS 7 UIAlertView. RTAlertView also implements the parallax effect present in the iOS 7 UIAlertView.
+
 
 <a name="Installation"></a>Installation & Use
 ------------------
 
 Using Cocoapods
 
-1.  Create or edit your `Podfile` and add the following line `pod 'RTAlertView', '0.0.2'`
+1.  Create or edit your `Podfile` and add the following line `pod 'RTAlertView', '0.0.3'`
 2.  Perform a `pod install`
 3.  Add the line `#import <RTAlertView.h>` to your class
 4.  Remember to open the `<App>.xcworkspace` file (not `<App>.xcodeproj`) in Xcode from here onwards
