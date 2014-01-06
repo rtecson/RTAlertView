@@ -53,7 +53,7 @@ If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two tex
 
 ![RTAlertView double text fields](https://github.com/rtecson/RTAlertView/raw/master/Screenshots/05-Two-Text-Fields.png)
 
-By default, RTAlertView will automatically dismiss itself when the app goes to the background. This is as per Apple's recommendation so that the user will not be presented with an alert message that may be out of context when the app is resumed. You may override this behaviour by setting the property `dismissesWhenAppGoesToBackground`.
+By default, RTAlertView will automatically dismiss itself when the app goes to the background. This is as per Apple's recommendation so that the user will not be presented with an alert message that may be out of context when the app is resumed. You may override this behaviour by setting the property `dismissesWhenAppGoesToBackground` to `NO` (default value is `YES`).
 
 
 <a name="Installation"></a>Installation & Use
