@@ -3,11 +3,23 @@ RTAlertView
 
 *UIAlertView replacement for iOS 7*
 
+- [Highlights](#Highlights)
 - [Description](#Description)
 - [Installation & Use](#Installation)
 - [Usage](#Usage)
 - [Credits](#Credits)
 - [License](#License)
+
+
+<a name="Highlights"></a>Highlights
+-----------
+
+- Customizable alert view that looks identical to the iOS 7 system alert view
+- Same API as UIAlertView
+- Gaussian blur background
+- Dismiss alert view when app goes to background (configurable)
+- Dims tintColor of other visible controls when alert view is displayed
+- Parallax effect similar to UIAlertView
 
 
 <a name="Description"></a>Description
@@ -61,12 +73,19 @@ RTAlertView dims the tintColor of the all the visible controls in your app (at l
 <a name="Installation"></a>Installation & Use
 ------------------
 
-Using Cocoapods
+For use in your app, install with Cocoapods
 
 1.  Create or edit your `Podfile` and add the following line `pod 'RTAlertView', '0.0.3'`
 2.  Perform a `pod install`
 3.  Add the line `#import <RTAlertView.h>` to your class
 4.  Remember to open the `<App>.xcworkspace` file (not `<App>.xcodeproj`) in Xcode from here onwards
+
+To run the test application
+
+1.  Clone the git repository, `git clone https://github.com/rtecson/RTAlertView.git`
+2.  `cd RTAlertView`
+3.  Run pod install, `pod install` (if cocoapods is not installed, see http://http://beta.cocoapods.org)
+4.  Run Xcode 5 (or higher) and open `RTAlertView.xcworkspace`
 
 
 <a name="Usage"></a>Usage
