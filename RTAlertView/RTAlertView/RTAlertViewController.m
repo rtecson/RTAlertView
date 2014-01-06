@@ -53,6 +53,7 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 // Private properties
 
 @property (strong, nonatomic) UIWindow *window;
+@property (weak, nonatomic) UIWindow *appKeyWindow;
 @property (strong, nonatomic) RTAlertViewRecursiveButtonContainerView *recursiveButtonContainerView;
 
 @property (strong, nonatomic) NSMutableArray *buttonTitleArray;
@@ -551,6 +552,9 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 	self.window.windowLevel = UIWindowLevelAlert;
 	self.window.hidden = NO;
 
+    // Save current app keyWindow
+    self.appKeyWindow = [[UIApplication sharedApplication] keyWindow];
+
 	[self.window makeKeyAndVisible];
 }
 
@@ -584,6 +588,9 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 		[self.contentView.layer addAnimation:opacityAnimation
                                       forKey:@"opacity"];
 	} [CATransaction commit];
+
+    // Set tint color of all controls behind alert view to dimmed
+    self.appKeyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
 }
 
 
@@ -651,6 +658,9 @@ static CGFloat kRtAlertViewHeightKeyboardHidden = 0.0f;
 		[self.contentView.layer addAnimation:opacityAnimation
                                       forKey:@"opacity"];
 	} [CATransaction commit];
+    
+    // Set tintColor of all controls behind alert view to normal
+    self.appKeyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
 }
 
 
