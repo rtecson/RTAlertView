@@ -591,8 +591,11 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
                                       forKey:@"opacity"];
 	} [CATransaction commit];
 
-    // Set tint color of all controls behind alert view to dimmed
-    self.appKeyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+    // Set tintColor of all controls behind alert view to dimmed
+    if ([self.appKeyWindow respondsToSelector:@selector(tintAdjustmentMode)])
+    {
+        self.appKeyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+    }
 }
 
 
@@ -662,7 +665,10 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 	} [CATransaction commit];
     
     // Set tintColor of all controls behind alert view to normal
-    self.appKeyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
+    if ([self.appKeyWindow respondsToSelector:@selector(tintAdjustmentMode)])
+    {
+        self.appKeyWindow.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
+    }
 }
 
 
@@ -718,13 +724,8 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 
 - (void)setupParallax
 {
-    // iOS version?
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
-    {
-        // iOS 6.1 or earlier
-        // No parallax
-    }
-    else
+    // Check if parallax classes are available (iOS 7+)
+    if (NSClassFromString(@"UIInterpolatingMotionEffect") != nil)
     {
         // iOS 7 or later, ok. Set vertical effect
         UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
