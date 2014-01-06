@@ -16,7 +16,7 @@ RTAlertView
 
 - Customizable alert view that looks identical to the iOS 7 system alert view
 - Same API as UIAlertView
-- Gaussian blur background
+- Translucent gaussian blur background
 - Dismiss alert view when app goes to background (configurable)
 - Dims tintColor of other visible controls when alert view is displayed
 - Parallax effect similar to UIAlertView
