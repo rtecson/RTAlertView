@@ -128,7 +128,7 @@ To run the test application
 
 - Thanks to Lee McDermott, author of LMAlertView (https://github.com/lmcd/LMAlertView). The code for making the alert view look as closely as possible to the iOS 7 system alert view is heavily borrowed from LMAlertView.
 - Thanks to Robert Böhnke, author of RBBAnimation (https://github.com/robb/RBBAnimation). The spring animation effect is performed using RBBAnimation.
-- Thanks to Jeremy Wiebe for the design pattern of adding UIButtons recursively within an auto layout enabled container.
+- Thanks to Jeremy Wiebe (https://github.com/jeremywiebe) for the design pattern of adding UIButtons recursively within an auto layout enabled container.
 
 
 <a name="License"></a>License
