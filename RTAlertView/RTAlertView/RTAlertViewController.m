@@ -767,6 +767,7 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification
 {
+    self.clickedButtonIndex = -1;
     [self dismiss];
 }
 
