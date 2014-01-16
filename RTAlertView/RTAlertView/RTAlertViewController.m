@@ -351,16 +351,28 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 - (void)setupAlertView
 {
     // Set up blur view
-	UIToolbar *toolbar = [[UIToolbar alloc] init];
-	[self.gaussianBlurContainerView addSubview:toolbar];
-    toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView *blurView;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+    {
+        // iOS 6.1 or earlier
+        blurView = [[UIView alloc] init];
+        blurView.backgroundColor = [UIColor whiteColor];
+        blurView.alpha = 0.95f;
+    }
+    else
+    {
+        // iOS 7 or later
+        blurView = [[UIToolbar alloc] init];
+    }
+	[self.gaussianBlurContainerView addSubview:blurView];
+    blurView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    NSDictionary *views = NSDictionaryOfVariableBindings(toolbar);
-    [self.gaussianBlurContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[toolbar]|"
+    NSDictionary *views = NSDictionaryOfVariableBindings(blurView);
+    [self.gaussianBlurContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[blurView]|"
                                                                                            options:0
                                                                                            metrics:0
                                                                                              views:views]];
-    [self.gaussianBlurContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[toolbar]|"
+    [self.gaussianBlurContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[blurView]|"
                                                                                            options:0
                                                                                            metrics:0
                                                                                              views:views]];

@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurDividerLine;
 @property (weak, nonatomic) IBOutlet UISwitch *dismissOnBackgroundSwitch;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *numberOfOtherButtonsSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *alertStyleSegmentedControl;
 
 @property (nonatomic) NSInteger numberOfOtherButtons;
 @property (nonatomic) UIAlertViewStyle alertViewStyle;
@@ -37,9 +39,21 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
-    UIToolbar *gaussianBlurView = [[UIToolbar alloc] initWithFrame:self.gaussianBlurContainerView.bounds];
-	gaussianBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.gaussianBlurContainerView addSubview:gaussianBlurView];
+    UIView *blurView;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
+    {
+        // iOS 6 and earlier
+        blurView = [[UIView alloc] initWithFrame:self.gaussianBlurContainerView.bounds];
+        blurView.backgroundColor = [UIColor whiteColor];
+        blurView.alpha = 0.95f;
+    }
+    else
+    {
+        // iOS 7 and later
+        blurView = [[UIToolbar alloc] initWithFrame:self.gaussianBlurContainerView.bounds];
+    }
+	blurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.gaussianBlurContainerView addSubview:blurView];
     
     self.alertViewStyle = UIAlertViewStyleDefault;
     self.numberOfOtherButtons = 0;
