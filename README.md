@@ -1,7 +1,7 @@
 RTAlertView
 ===========
 
-*UIAlertView replacement for iOS 7*
+*UIAlertView replacement for iOS 7 and iOS 6*
 
 - [Highlights](#Highlights)
 - [Description](#Description)
@@ -15,8 +15,9 @@ RTAlertView
 -----------
 
 - Customizable alert view that looks identical to the iOS 7 system alert view
+- Supports both iOS 6 and iOS 7
 - Same API as UIAlertView
-- Translucent gaussian blur background
+- Translucent gaussian blur background in iOS 7 (translucent white background in iOS 6)
 - Dismiss alert view when app goes to background (configurable)
 - Dims tintColor of other visible controls when alert view is displayed
 - Parallax effect similar to UIAlertView
