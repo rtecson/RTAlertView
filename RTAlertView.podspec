@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'RTAlertView'
-  s.version      = '0.0.4'
+  s.version      = '0.0.5'
   s.summary      = 'Customizable replacement for iOS 7 UIAlertView'
   s.license      = 'MIT'
   s.homepage     = 'https://github.com/rtecson/RTAlertView'
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/rtecson/RTAlertView.git',
-    :tag => 'v0.0.4'
+    :tag => 'v0.0.5'
   }
   s.public_header_files = 'RTAlertView/RTAlertView/RTAlertView.h'
   s.source_files = 'RTAlertView/RTAlertView', 'RTAlertView/RTAlertView/**/*.{h,m}'
