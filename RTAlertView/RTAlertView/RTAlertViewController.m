@@ -179,12 +179,18 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 
 #pragma mark - Public Setters
 
-- (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
+- (void)setAlertViewStyle:(RTAlertViewStyle)alertViewStyle
 {
     _alertViewStyle = alertViewStyle;
     
     // Reinitialize internal data structures for text fields
     _textFieldArray = nil;
+    
+    if (alertViewStyle == RTAlertViewStyleDoublePlainTextInput)
+    {
+        self.textField0PlaceholderText = @"";
+        self.textField1PlaceholderText = @"";
+    }
 }
 
 
@@ -267,7 +273,7 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 - (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex
 {
     // TODO: Raise NSRangeException if textFieldIndex is inconsistent with alertViewStyle
-    if (self.alertViewStyle == UIAlertViewStyleDefault)
+    if (self.alertViewStyle == RTAlertViewStyleDefault)
     {
         return nil;
     }
@@ -278,15 +284,16 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
         return nil;
     }
     
-    if ((self.alertViewStyle == UIAlertViewStyleLoginAndPasswordInput) &&
+    if (((self.alertViewStyle == RTAlertViewStyleLoginAndPasswordInput) ||
+         (self.alertViewStyle == RTAlertViewStyleDoublePlainTextInput)) &&
         (textFieldIndex > 1))
     {
         // textFieldIndex is valid
         return nil;
     }
     
-    if (((self.alertViewStyle == UIAlertViewStylePlainTextInput) ||
-         (self.alertViewStyle == UIAlertViewStyleSecureTextInput)) &&
+    if (((self.alertViewStyle == RTAlertViewStylePlainTextInput) ||
+         (self.alertViewStyle == RTAlertViewStyleSecureTextInput)) &&
         (textFieldIndex > 0))
     {
         // textFieldIndex is valid
@@ -402,8 +409,8 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
 {
     switch (self.alertViewStyle)
     {
-        case UIAlertViewStylePlainTextInput:
-        case UIAlertViewStyleSecureTextInput:
+        case RTAlertViewStylePlainTextInput:
+        case RTAlertViewStyleSecureTextInput:
         {
             // Create singleTextFieldView
             RTAlertViewSingleTextFieldView *singleTextFieldView = [[RTAlertViewSingleTextFieldView alloc] init];
@@ -428,7 +435,7 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
             singleTextFieldView.textField.returnKeyType = UIReturnKeyNext;
             singleTextFieldView.textField.borderStyle = UITextBorderStyleNone;
             singleTextFieldView.textField.font = self.textFieldPlaceholderFont;
-            if (self.alertViewStyle == UIAlertViewStylePlainTextInput)
+            if (self.alertViewStyle == RTAlertViewStylePlainTextInput)
             {
                 singleTextFieldView.textField.secureTextEntry = NO;
             }
@@ -445,7 +452,8 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
             [self.textFieldArray addObject:singleTextFieldView.textField];
         }
             break;
-        case UIAlertViewStyleLoginAndPasswordInput:
+        case RTAlertViewStyleLoginAndPasswordInput:
+        case RTAlertViewStyleDoublePlainTextInput:
         {
             // Create doubleTextFieldView
             RTAlertViewDoubleTextFieldView *doubleTextFieldView = [[RTAlertViewDoubleTextFieldView alloc] init];
@@ -471,15 +479,22 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
             doubleTextFieldView.textField0.borderStyle = UITextBorderStyleNone;
             doubleTextFieldView.textField0.font = self.textFieldPlaceholderFont;
             doubleTextFieldView.textField0.secureTextEntry = NO;
-            doubleTextFieldView.textField0.placeholder = @"Login";
+            doubleTextFieldView.textField0.placeholder = self.textField0PlaceholderText == nil ? @"Login" : self.textField0PlaceholderText;
             doubleTextFieldView.textField1.backgroundColor = [UIColor clearColor];
             doubleTextFieldView.textField1.keyboardAppearance = UIKeyboardAppearanceAlert;
             doubleTextFieldView.textField1.clearButtonMode = UITextFieldViewModeWhileEditing;
             doubleTextFieldView.textField1.returnKeyType = UIReturnKeyNext;
             doubleTextFieldView.textField1.borderStyle = UITextBorderStyleNone;
             doubleTextFieldView.textField1.font = self.textFieldPlaceholderFont;
-            doubleTextFieldView.textField1.secureTextEntry = YES;
-            doubleTextFieldView.textField1.placeholder = @"Password";
+            if (self.alertViewStyle == RTAlertViewStyleLoginAndPasswordInput)
+            {
+                doubleTextFieldView.textField1.secureTextEntry = YES;
+            }
+            else
+            {
+                doubleTextFieldView.textField1.secureTextEntry = NO;
+            }
+            doubleTextFieldView.textField1.placeholder = self.textField1PlaceholderText == nil ? @"Password" : self.textField1PlaceholderText;
 
             // Set first responder (keyboard shows)
             [doubleTextFieldView.textField0 becomeFirstResponder];
@@ -490,7 +505,7 @@ static CGFloat kRtAlertViewMotionEffectRelativeValue = 15.0f;
             [self.textFieldArray addObject:doubleTextFieldView.textField1];
         }
             break;
-        case UIAlertViewStyleDefault:
+        case RTAlertViewStyleDefault:
         default:
         {
             // Do nothing

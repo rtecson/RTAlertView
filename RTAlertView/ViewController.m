@@ -20,11 +20,12 @@
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurContainerView;
 @property (weak, nonatomic) IBOutlet UIView *gaussianBlurDividerLine;
 @property (weak, nonatomic) IBOutlet UISwitch *dismissOnBackgroundSwitch;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *nativeButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *numberOfOtherButtonsSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *alertStyleSegmentedControl;
 
 @property (nonatomic) NSInteger numberOfOtherButtons;
-@property (nonatomic) UIAlertViewStyle alertViewStyle;
+@property (nonatomic) RTAlertViewStyle alertViewStyle;
 
 @property (weak, nonatomic) UIAlertView *alertView;
 
@@ -109,6 +110,12 @@
     customAlertView.delegate = self;
 
     customAlertView.alertViewStyle = self.alertViewStyle;
+    
+    if (self.alertViewStyle == RTAlertViewStyleDoublePlainTextInput)
+    {
+        customAlertView.textField0PlaceholderText = @"Text field 1";
+        customAlertView.textField1PlaceholderText = @"Text field 2";
+    }
 
     for (int i=0; i<self.numberOfOtherButtons; i++)
     {
@@ -144,37 +151,72 @@
 
     switch (selectedSegment)
     {
+        case 4:
+        {
+            self.alertViewStyle = RTAlertViewStyleDoublePlainTextInput;
+            break;
+        }
         case 3:
+        {
             self.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
             break;
+        }
         case 2:
+        {
             self.alertViewStyle = UIAlertViewStyleSecureTextInput;
             break;
+        }
         case 1:
+        {
             self.alertViewStyle = UIAlertViewStylePlainTextInput;
             break;
+        }
         case 0:
         default:
+        {
             self.alertViewStyle = UIAlertViewStyleDefault;
             break;
+        }
+    }
+
+    if (self.alertViewStyle == RTAlertViewStyleDoublePlainTextInput)
+    {
+        self.nativeButton.enabled = NO;
+    }
+    else
+    {
+        self.nativeButton.enabled = YES;
     }
 
     NSString *alertViewStyleString = nil;
     switch (self.alertViewStyle)
     {
+        case RTAlertViewStyleDoublePlainTextInput:
+        {
+            alertViewStyleString = @"Double Plain Text";
+            break;
+        }
         case UIAlertViewStylePlainTextInput:
+        {
             alertViewStyleString = @"Plain Text";
             break;
+        }
         case UIAlertViewStyleSecureTextInput:
+        {
             alertViewStyleString = @"Secure Text";
             break;
+        }
         case UIAlertViewStyleLoginAndPasswordInput:
+        {
             alertViewStyleString = @"Login/Password";
             break;
+        }
         case UIAlertViewStyleDefault:
         default:
+        {
             alertViewStyleString = @"Default";
             break;
+        }
     }
     NSLog(@"Alert view style selected = %@", alertViewStyleString);
 }
@@ -234,6 +276,7 @@
             numTextFields = 1;
             break;
         case UIAlertViewStyleLoginAndPasswordInput:
+        case RTAlertViewStyleDoublePlainTextInput:
             numTextFields = 2;
             break;
         case UIAlertViewStyleDefault:

@@ -24,7 +24,7 @@
 @property (strong, nonatomic) RTAlertView *alertView;
 @property (weak, nonatomic) id<RTAlertViewDelegate> delegate;
 
-@property (nonatomic) UIAlertViewStyle alertViewStyle;
+@property (nonatomic) RTAlertViewStyle alertViewStyle;
 @property (strong, nonatomic) NSString *alertViewTitle;
 @property (strong, nonatomic) NSString *alertViewMessage;
 
@@ -46,6 +46,8 @@
 @property (strong, nonatomic) UIColor *otherButtonColor;
 @property (strong, nonatomic) UIFont *otherButtonFont;
 @property (strong, nonatomic) UIFont *textFieldPlaceholderFont;
+@property (strong, nonatomic) NSString *textField0PlaceholderText;
+@property (strong, nonatomic) NSString *textField1PlaceholderText;
 
 
 @end

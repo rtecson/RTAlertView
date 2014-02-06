@@ -89,9 +89,10 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <segments>
                                             <segment title="Default"/>
-                                            <segment title="Plain" width="44"/>
+                                            <segment title="Plain"/>
                                             <segment title="Secure"/>
-                                            <segment title="Login/Password" width="113"/>
+                                            <segment title="Login/Pwd"/>
+                                            <segment title="2-Text"/>
                                         </segments>
                                         <color key="tintColor" cyan="0.65861265120000001" magenta="0.0" yellow="0.70589717740000002" black="0.22139616940000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                         <connections>
@@ -155,6 +156,7 @@
                         <outlet property="alertStyleSegmentedControl" destination="O1K-ZM-vQh" id="P3T-IS-CjQ"/>
                         <outlet property="dismissOnBackgroundSwitch" destination="MG3-qT-wZM" id="bRX-Vx-eW4"/>
                         <outlet property="gaussianBlurContainerView" destination="ILg-hS-kpK" id="hqG-b3-eLV"/>
+                        <outlet property="nativeButton" destination="PHX-xS-oxd" id="3Nb-2A-nR4"/>
                         <outlet property="numberOfOtherButtonsSegmentedControl" destination="pad-ZQ-RiX" id="o6b-Ve-yBj"/>
                     </connections>
                 </viewController>

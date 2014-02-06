@@ -100,7 +100,7 @@
 }
 
 
-- (UIAlertViewStyle)alertViewStyle
+- (RTAlertViewStyle)alertViewStyle
 {
     return self.alertViewController.alertViewStyle;
 }
@@ -202,6 +202,18 @@
 }
 
 
+- (NSString *)textField0PlaceholderText
+{
+    return self.alertViewController.textField0PlaceholderText;
+}
+
+
+- (NSString *)textField1PlaceholderText
+{
+    return self.alertViewController.textField1PlaceholderText;
+}
+
+
 #pragma mark - Public Setters
 
 - (void)setDelegate:(id<RTAlertViewDelegate>)delegate
@@ -210,7 +222,7 @@
 }
 
 
-- (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
+- (void)setAlertViewStyle:(RTAlertViewStyle)alertViewStyle
 {
     self.alertViewController.alertViewStyle = alertViewStyle;
 }
@@ -291,6 +303,18 @@
 - (void)setTextFieldPlaceholderFont:(UIFont *)textFieldPlaceholderFont
 {
     self.alertViewController.textFieldPlaceholderFont = textFieldPlaceholderFont;
+}
+
+
+- (void)setTextField0PlaceholderText:(NSString *)textField0PlaceholderText
+{
+    self.alertViewController.textField0PlaceholderText = textField0PlaceholderText;
+}
+
+
+- (void)setTextField1PlaceholderText:(NSString *)textField1PlaceholderText
+{
+    self.alertViewController.textField1PlaceholderText = textField1PlaceholderText;
 }
 
 

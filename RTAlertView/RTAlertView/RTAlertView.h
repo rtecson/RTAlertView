@@ -32,6 +32,15 @@
 #import <UIKit/UIKit.h>
 
 
+typedef enum {
+    RTAlertViewStyleDefault = UIAlertViewStyleDefault,
+    RTAlertViewStyleSecureTextInput = UIAlertViewStyleSecureTextInput,
+    RTAlertViewStylePlainTextInput = UIAlertViewStylePlainTextInput,
+    RTAlertViewStyleLoginAndPasswordInput = UIAlertViewStyleLoginAndPasswordInput,
+    RTAlertViewStyleDoublePlainTextInput
+} RTAlertViewStyle;
+
+
 @class RTAlertView;
 
 @protocol RTAlertViewDelegate <NSObject>
@@ -71,7 +80,7 @@
 
 @property (weak, nonatomic) id<RTAlertViewDelegate> delegate;
 
-@property (nonatomic) UIAlertViewStyle alertViewStyle;
+@property (nonatomic) RTAlertViewStyle alertViewStyle;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *message;
 
@@ -92,5 +101,7 @@
 @property (strong, nonatomic) UIColor *otherButtonColor;
 @property (strong, nonatomic) UIFont *otherButtonFont;
 @property (strong, nonatomic) UIFont *textFieldPlaceholderFont;
+@property (strong, nonatomic) NSString *textField0PlaceholderText;
+@property (strong, nonatomic) NSString *textField1PlaceholderText;
 
 @end
