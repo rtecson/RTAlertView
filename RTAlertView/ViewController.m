@@ -84,7 +84,30 @@
                                               otherButtonTitles:nil];
     alertView.delegate = self;
 
-    alertView.alertViewStyle = self.alertViewStyle;
+    switch (self.alertViewStyle)
+    {
+        case RTAlertViewStylePlainTextInput:
+        {
+            alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+        }
+            break;
+        case RTAlertViewStyleSecureTextInput:
+        {
+            alertView.alertViewStyle = UIAlertViewStyleSecureTextInput;
+        }
+            break;
+        case RTAlertViewStyleLoginAndPasswordInput:
+        {
+            alertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        }
+            break;
+        case RTAlertViewStyleDefault:
+        case RTAlertViewStyleDoublePlainTextInput: // This is not supported by UIAlertView
+        {
+            alertView.alertViewStyle = UIAlertViewStyleDefault;
+        }
+            break;
+    }
 
     for (int i=0; i<self.numberOfOtherButtons; i++)
     {
