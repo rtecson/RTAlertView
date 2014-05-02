@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -61,7 +62,7 @@
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HP5-yD-EJN" userLabel="verticalDividerLine">
-                    <rect key="frame" x="270" y="0.0" width="1" height="44"/>
+                    <rect key="frame" x="270" y="1" width="1" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -84,13 +85,13 @@
                 <constraint firstAttribute="trailing" secondItem="eus-Ej-PNw" secondAttribute="trailing" id="8TD-oT-OkM"/>
                 <constraint firstAttribute="bottom" secondItem="G1E-dK-D3q" secondAttribute="bottom" id="FeO-EO-l7V"/>
                 <constraint firstItem="1Ol-el-OyS" firstAttribute="leading" secondItem="HP5-yD-EJN" secondAttribute="leading" id="Rz9-cv-tfU"/>
-                <constraint firstItem="HP5-yD-EJN" firstAttribute="top" secondItem="1" secondAttribute="top" id="SdZ-os-C9a"/>
                 <constraint firstItem="G1E-dK-D3q" firstAttribute="top" secondItem="4Ay-zI-LHa" secondAttribute="bottom" id="ZJv-uq-9lf"/>
                 <constraint firstItem="HP5-yD-EJN" firstAttribute="height" secondItem="4Ay-zI-LHa" secondAttribute="height" id="ZX2-1B-rh8"/>
                 <constraint firstAttribute="trailing" secondItem="4Ay-zI-LHa" secondAttribute="trailing" id="dsq-hk-8wM"/>
                 <constraint firstItem="eus-Ej-PNw" firstAttribute="top" secondItem="1" secondAttribute="top" id="gOH-Md-A7I" userLabel="topConstraintForHorizontalDividerLine"/>
                 <constraint firstAttribute="trailing" secondItem="G1E-dK-D3q" secondAttribute="trailing" id="jei-sf-Ca4"/>
                 <constraint firstItem="G1E-dK-D3q" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="mnb-5i-x5e"/>
+                <constraint firstItem="eus-Ej-PNw" firstAttribute="bottom" secondItem="HP5-yD-EJN" secondAttribute="top" id="p96-D0-X4t"/>
                 <constraint firstItem="eus-Ej-PNw" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="xrc-2D-v4N"/>
                 <constraint firstItem="4Ay-zI-LHa" firstAttribute="top" secondItem="1" secondAttribute="top" id="y79-xm-RPY"/>
             </constraints>
