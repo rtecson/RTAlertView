@@ -58,6 +58,24 @@
 }
 
 
+// Alternative, fixed number of arguments, initializer. This initializer may be bridged from
+// Swift, while the one above may not be called from Swift. Additional other buttons may be added
+// using -addButtonWithTitle:.
+
+- (id)initWithTitle:(NSString *)title
+            message:(NSString *)message
+           delegate:(id)delegate
+  cancelButtonTitle:(NSString *)cancelButtonTitle
+   otherButtonTitle:(NSString *)otherButtonTitle
+{
+    return [self initWithTitle:title
+                       message:message
+                      delegate:delegate
+             cancelButtonTitle:cancelButtonTitle
+             otherButtonTitles:otherButtonTitle, nil];
+}
+
+
 #pragma mark - Public methods
 
 - (NSInteger)addButtonWithTitle:(NSString *)title

@@ -129,7 +129,7 @@
 //                                                                                            message:@"Message here. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
                                                              delegate:nil
                                                     cancelButtonTitle:nil
-                                                    otherButtonTitles:nil];
+                                                     otherButtonTitle:nil];
     customAlertView.delegate = self;
 
     customAlertView.alertViewStyle = self.alertViewStyle;

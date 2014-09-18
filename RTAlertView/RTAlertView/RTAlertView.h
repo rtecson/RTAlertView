@@ -70,6 +70,12 @@ typedef enum {
   cancelButtonTitle:(NSString *)cancelButtonTitle
   otherButtonTitles:(NSString *)otherButtonTitles, ...;
 
+- (id)initWithTitle:(NSString *)title
+            message:(NSString *)message
+           delegate:(id)delegate
+  cancelButtonTitle:(NSString *)cancelButtonTitle
+   otherButtonTitle:(NSString *)otherButtonTitle;
+
 - (NSInteger)addButtonWithTitle:(NSString *)title;
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex;
 - (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex;
