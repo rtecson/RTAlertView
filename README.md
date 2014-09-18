@@ -94,7 +94,7 @@ To get around this, a secondary initializer is provided by RTAlertView that take
 
 For use in your app, install with Cocoapods
 
-1.  Create or edit your `Podfile` and add the following line `pod 'RTAlertView', '0.0.4'`
+1.  Create or edit your `Podfile` and add the following line `pod 'RTAlertView', '0.0.6'`
 2.  Perform a `pod install`
 3.  Add the line `#import <RTAlertView.h>` to your class
 4.  Remember to open the `<App>.xcworkspace` file (not `<App>.xcodeproj`) in Xcode from here onwards
