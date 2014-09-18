@@ -5,6 +5,7 @@ RTAlertView
 
 - [Highlights](#Highlights)
 - [Description](#Description)
+- [Swift Bridging](#Swift)
 - [Installation & Use](#Installation)
 - [Usage](#Usage)
 - [Credits](#Credits)
@@ -21,6 +22,7 @@ RTAlertView
 - Dismiss alert view when app goes to background (configurable)
 - Dims tintColor of other visible controls when alert view is displayed
 - Parallax effect similar to UIAlertView
+- Support for Swift bridging (See [Swift Bridging](#Swift))
 
 
 <a name="Description"></a>Description
@@ -69,6 +71,14 @@ If `alertViewStyle` were set to `UIAlertViewStyleLoginAndPasswordInput`, two tex
 By default, RTAlertView will automatically dismiss itself when the app goes to the background. This is as per Apple's recommendation so that the user will not be presented with an alert message that may be out of context when the app is resumed. You may override this behaviour by setting the property `dismissesWhenAppGoesToBackground` to `NO` (default value is `YES`).
 
 RTAlertView dims the tintColor of the all the visible controls in your app (at least those that support it), similar to the iOS 7 UIAlertView. RTAlertView also implements the parallax effect present in the iOS 7 UIAlertView.
+
+
+<a name="Swift"></a>Swift Bridging
+------------------
+
+Swift does not support direct bridging to Objective C variable arguments methods. Unfortunately, the designated initializer for UIAlertView (and hence RTAlertView as it tries to mirror UIAlertView's public API) is a variable arguments method.
+
+To get around this, a secondary initializer is provided by RTAlertView that takes a fixed number of parameters. This initializer only takes one otherButtonTitle (which may be nil if one does not exist). If additional other button titles are required, the method -addButtonTitle: may be used.
 
 
 <a name="Installation"></a>Installation & Use
