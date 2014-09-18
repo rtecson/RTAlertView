@@ -66,13 +66,13 @@ typedef enum {
 
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
-           delegate:(id)delegate
+           delegate:(id<RTAlertViewDelegate>)delegate
   cancelButtonTitle:(NSString *)cancelButtonTitle
   otherButtonTitles:(NSString *)otherButtonTitles, ...;
 
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
-           delegate:(id)delegate
+           delegate:(id<RTAlertViewDelegate>)delegate
   cancelButtonTitle:(NSString *)cancelButtonTitle
    otherButtonTitle:(NSString *)otherButtonTitle;
 
