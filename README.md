@@ -78,6 +78,14 @@ RTAlertView dims the tintColor of the all the visible controls in your app (at l
 
 Swift does not support direct bridging to Objective C variable arguments methods. Unfortunately, the designated initializer for UIAlertView (and hence RTAlertView as it tries to mirror UIAlertView's public API) is a variable arguments method.
 
+```objective-c
+    - (id)initWithTitle:(NSString *)title
+                message:(NSString *)message
+               delegate:(id)delegate
+      cancelButtonTitle:(NSString *)cancelButtonTitle
+      otherButtonTitles:(NSString *)otherButtonTitles, ...;
+```
+
 To get around this, a secondary initializer is provided by RTAlertView that takes a fixed number of parameters. This initializer only takes one `otherButtonTitle` (which may be nil if one does not exist). If additional other button titles are required, the method `-addButtonTitle:` may be used.
 
 ```objective-c
